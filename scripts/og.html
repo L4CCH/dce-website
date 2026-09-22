@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Social preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&family=Lato:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #faf8f4;
+        --ink: #1c1b18;
+        --ink-soft: #55524b;
+        --accent: #9a5b1a;
+      }
+      * { box-sizing: border-box; margin: 0; }
+      body {
+        width: 1200px;
+        height: 630px;
+        padding: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: 'Lato', sans-serif;
+      }
+      .mark { position: relative; width: 72px; height: 72px; }
+      .mark span { position: absolute; width: 36px; height: 36px; border-radius: 8px; background: var(--accent); }
+      .mark span:first-child { top: 26px; left: 26px; opacity: 0.55; }
+      .mark span:last-child { top: 8px; left: 8px; }
+      h1 {
+        font-family: 'Kumbh Sans', sans-serif;
+        font-weight: 700;
+        font-size: 72px;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        max-width: 18ch;
+      }
+      .name { font-family: 'Kumbh Sans', sans-serif; font-weight: 700; font-size: 30px; margin-top: 28px; }
+      .eyebrow {
+        font-family: 'Kumbh Sans', sans-serif;
+        font-weight: 700;
+        font-size: 19px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      .url { font-size: 26px; color: var(--ink-soft); margin-top: 14px; }
+    </style>
+  </head>
+  <body>
+    <div class="mark"><span></span><span></span></div>
+    <div>
+      <h1>Search digital collections, even with little or no metadata.</h1>
+      <p class="name">Digital Collections Explorer</p>
+    </div>
+    <div>
+      <p class="eyebrow">Open source · Self-hosted · For galleries, libraries, archives and museums</p>
+      <p class="url">digital-collections-explorer.com</p>
+    </div>
+  </body>
+</html>

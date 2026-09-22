@@ -1,0 +1,22 @@
+---
+interface Props {
+  id: string;
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  class?: string;
+  split?: boolean;
+}
+const { id, eyebrow, title, lead, class: extra = '', split = false } = Astro.props;
+---
+
+<section id={id} class={`section ${extra}`} aria-labelledby={`${id}-title`}>
+  <div class:list={['wrap', { split }]}>
+    <div class="section-head">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h2 id={`${id}-title`}>{title}</h2>
+      {lead && <p class="lead">{lead}</p>}
+    </div>
+    <slot />
+  </div>
+</section>

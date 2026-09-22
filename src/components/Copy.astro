@@ -1,0 +1,29 @@
+---
+interface Props {
+  text: string;
+  label?: string;
+  wrap?: boolean;
+}
+const { text, label = 'Copy', wrap = false } = Astro.props;
+---
+
+<div class:list={['copy', { 'copy-wrap': wrap }]}>
+  <div class="copy-bar"><button type="button" data-copy={text} hidden>{label}</button></div>
+  <pre><code>{text}</code></pre>
+</div>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>('button[data-copy]')) {
+    button.hidden = false;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy ?? '');
+        const was = button.textContent;
+        button.textContent = 'Copied';
+        setTimeout(() => (button.textContent = was), 1500);
+      } catch {
+        button.textContent = 'Select and copy';
+      }
+    });
+  }
+</script>
