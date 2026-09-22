@@ -5,9 +5,10 @@ import Audience from '../components/Audience.astro';
 import HowItWorks from '../components/HowItWorks.astro';
 import Templates from '../components/Templates.astro';
 import Start from '../components/Start.astro';
-import { repoStats } from '../lib/github';
+import Community from '../components/Community.astro';
+import { repoStats, topIdeas, goodFirstIssues } from '../lib/github';
 
-const stats = await repoStats();
+const [stats, ideas, issues] = await Promise.all([repoStats(), topIdeas(), goodFirstIssues()]);
 ---
 
 <Base>
@@ -16,4 +17,5 @@ const stats = await repoStats();
   <HowItWorks />
   <Templates />
   <Start />
+  <Community ideas={ideas} issues={issues} />
 </Base>

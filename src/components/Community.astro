@@ -1,0 +1,90 @@
+---
+import Section from './Section.astro';
+import { site } from '../site';
+import type { Idea, Issue } from '../lib/github';
+
+interface Props { ideas: Idea[]; issues: Issue[] }
+const { ideas, issues } = Astro.props;
+
+const helpWithoutCode = [
+  ['Try it on your own collection', 'and tell us what the search got right and wrong. Real material from real institutions is the feedback we cannot get any other way.'],
+  ['Write up how you used it', 'so the next archive with the same problem can find the answer.'],
+  ['Judge search quality', 'for a kind of material you know well: maps, posters, herbarium sheets, textiles.'],
+  ['Translate', 'the visitor-facing text of the interfaces.'],
+];
+---
+
+<Section
+  id="community"
+  eyebrow="Community"
+  title="Built in the open"
+  lead="Help decide what comes next."
+>
+  <article class="card wishlist">
+    <div>
+      <h3>Wishlist</h3>
+      <p class="muted">Ideas live in the project's Discussions. Anyone with a GitHub account can post one or vote for one. The most wanted ideas are what gets built next.</p>
+      {ideas.length > 0 ? (
+        <ol class="ideas">
+          {ideas.map((idea) => (
+            <li>
+              <a href={idea.url} rel="noopener">{idea.title}</a>
+              <span class="faint"> · {idea.upvotes} {idea.upvotes === 1 ? 'vote' : 'votes'} · {idea.comments} {idea.comments === 1 ? 'comment' : 'comments'}</span>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p class="muted">Nothing has been posted yet. Yours would be the first.</p>
+      )}
+    </div>
+    <div class="wishlist-actions">
+      <div class="btn-row">
+        <a class="btn btn-primary" href={site.newIdeaUrl} rel="noopener">Post an idea</a>
+        <a class="btn" href={site.ideasUrl} rel="noopener">See all and vote</a>
+      </div>
+      <p class="faint tip">You do not need to know how it would be built. Say what your collection is, what you wish visitors could do, and what stops you today.</p>
+    </div>
+  </article>
+  <div class="grid grid-2 help">
+    <article class="card">
+      <h3>Help without writing code</h3>
+      <ul>
+        {helpWithoutCode.map(([lead, rest]) => (
+          <li><strong>{lead}</strong> {rest}</li>
+        ))}
+      </ul>
+    </article>
+    <article class="card">
+      <h3>Help with code</h3>
+      {issues.length > 0 ? (
+        <>
+          <p class="muted">Good first issues, picked to be finishable in an afternoon:</p>
+          <ul>
+            {issues.map((issue) => (
+              <li><a href={issue.url} rel="noopener">#{issue.number} {issue.title}</a></li>
+            ))}
+          </ul>
+        </>
+      ) : null}
+      <ul>
+        <li><strong><a href={site.contributingUrl} rel="noopener">Read the contributing guide</a></strong> for how to set up the project and send a change.</li>
+        <li><strong><a href={site.discussionsUrl} rel="noopener">Ask in Discussions</a></strong> what would help most right now.</li>
+        <li><strong><a href={site.ideasUrl} rel="noopener">Pick an idea from the wishlist</a></strong> and say that you are working on it.</li>
+        <li><strong><a href={site.issuesUrl} rel="noopener">Browse all issues</a></strong> for bugs and smaller tasks.</li>
+      </ul>
+    </article>
+  </div>
+</Section>
+
+<style>
+  .wishlist { display: grid; gap: 8px; }
+  .wishlist p:last-child { margin-bottom: 0; }
+  .wishlist-actions .btn-row { margin-top: 8px; }
+  .help { margin-top: 20px; }
+  .ideas { padding-left: 1.2em; }
+  .tip { margin-top: 16px; }
+  @media (min-width: 960px) {
+    .wishlist { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: center; }
+    .wishlist-actions .btn-row { margin-top: 0; }
+  }
+</style>
