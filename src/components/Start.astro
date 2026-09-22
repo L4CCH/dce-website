@@ -1,0 +1,78 @@
+---
+import Section from './Section.astro';
+import Copy from './Copy.astro';
+import { site } from '../site';
+
+const clone = `git clone ${site.repoUrl}
+cd digital-collections-explorer`;
+const agentPrompt = `I have about 8,000 scanned photographs in ~/Pictures/archive. Most have no catalog record and the file names mean nothing. Make them searchable, so that visitors can describe what they are looking for in plain words. Before you build anything, tell me what is and is not possible with this material.`;
+const docker = `docker run --rm -v "$PWD/my-collection:/data" -v /path/to/images:/source:ro ${site.containerImage} ingest /source
+docker run -p 8000:8000 -v "$PWD/my-collection:/data" ${site.containerImage}`;
+const server = `sudo deploy/bootstrap.sh install --name my-collection --source /path/to/images`;
+const aws = `deploy/aws/deploy.sh my-collection --source s3://bucket/prefix --anonymous --https`;
+---
+
+<Section
+  id="start"
+  eyebrow="Get started"
+  title="Three ways to start"
+  lead="Pick the one that matches what you have. Each ends with a search site for your collection."
+>
+  <div class="ways">
+    <article class="card way">
+      <div>
+        <p class="eyebrow">With an AI coding agent</p>
+        <h3>Ask it to make your collection searchable</h3>
+        <p>
+          The repository ships an <a href={site.skillUrl} rel="noopener">Agent Skill</a> that Claude Code, Codex, Gemini CLI, Cursor and others pick up on their own. The agent inspects the collection, says what is and is not possible, asks only the questions a person must answer, then builds the index and starts the site.
+        </p>
+      </div>
+      <div>
+        <p class="step">1. Clone the repository and open your agent in it</p>
+        <Copy text={clone} />
+        <p class="step">2. Describe your collection as you would to a colleague</p>
+        <Copy text={agentPrompt} label="Copy prompt" wrap />
+      </div>
+    </article>
+    <article class="card way">
+      <div>
+        <p class="eyebrow">With Docker</p>
+        <h3>Two commands</h3>
+        <p>One builds the index, the other serves it. They can run on different machines, so you can index on a large one and serve from a small one.</p>
+      </div>
+      <div>
+        <Copy text={docker} />
+      </div>
+    </article>
+    <article class="card way">
+      <div>
+        <p class="eyebrow">On a server or AWS</p>
+        <h3>One command that keeps running</h3>
+        <p>The bootstrap script turns any Linux machine into a collection site that survives reboots. The AWS script creates one small machine, lists what it will cost, and does nothing until you say yes.</p>
+      </div>
+      <div>
+        <p class="step">On any Linux machine</p>
+        <Copy text={server} />
+        <p class="step">On AWS</p>
+        <Copy text={aws} />
+      </div>
+    </article>
+  </div>
+  <p class="muted after">
+    Prefer to read first? The <a href={site.readmeUrl} rel="noopener">README</a> covers a local install with Python,
+    describing your collection to visitors and the limits that protect a public site.
+  </p>
+</Section>
+
+<style>
+  .ways { display: grid; gap: 20px; }
+  .way { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .way h3 { font-size: 1.2rem; }
+  .way p:last-child { margin-bottom: 0; }
+  .way :global(.copy:last-child) { margin-bottom: 0; }
+  .step { font-size: 0.9rem; font-weight: 700; color: var(--ink-soft); margin-bottom: 8px; }
+  .after { margin-top: 28px; }
+  @media (min-width: 960px) {
+    .way { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px; align-items: start; padding: 32px; }
+  }
+</style>
