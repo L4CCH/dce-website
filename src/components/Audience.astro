@@ -1,0 +1,52 @@
+---
+import Section from './Section.astro';
+import ExampleSearch from './ExampleSearch.astro';
+
+const cases = [
+  {
+    title: 'Photographs nobody has cataloged',
+    text: 'Thousands of scans named IMG_2041.jpg. Point it at the folder and visitors can search them the same afternoon.',
+    query: 'a wedding party on a porch',
+    kind: 'photo',
+  },
+  {
+    title: 'Maps, plans and drawings',
+    text: 'Search by what is drawn rather than what the title says.',
+    query: 'a harbor with a breakwater',
+    kind: 'map',
+  },
+  {
+    title: 'Born-digital and scanned documents',
+    text: 'PDFs are indexed page by page and searched by what each page looks like, so handwriting, diagrams, forms and posters are found without OCR.',
+    query: 'a redacted document',
+    kind: 'doc',
+  },
+];
+---
+
+<Section
+  id="who"
+  eyebrow="Who it is for"
+  title="Collections that are hard to search"
+  lead="Manual cataloging does not scale to millions of items, so many digitized and born-digital collections lack basic descriptive metadata. Search here compares a visitor's words with what the images show, so it works even when there is no metadata at all."
+  split
+>
+  <ul class="cases">
+    {cases.map((c) => (
+      <li>
+        <h3>{c.title}</h3>
+        <p>{c.text}</p>
+        <ExampleSearch query={c.query} kind={c.kind} />
+      </li>
+    ))}
+  </ul>
+</Section>
+
+<style>
+  .cases { list-style: none; margin: 0; padding: 0; }
+  .cases li { margin: 0; padding: 28px 0; border-top: 1px solid var(--line); }
+  .cases li:first-child { padding-top: 0; border-top: 0; }
+  .cases li:last-child { padding-bottom: 0; }
+  .cases h3 { font-size: 1.2rem; margin-bottom: 0.4em; }
+  .cases p { color: var(--ink-soft); margin-bottom: 14px; }
+</style>

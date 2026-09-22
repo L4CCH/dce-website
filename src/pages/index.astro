@@ -1,5 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Audience from '../components/Audience.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import { repoStats } from '../lib/github';
+
+const stats = await repoStats();
 ---
 
-<Base />
+<Base>
+  <Hero stats={stats} />
+  <Audience />
+  <HowItWorks />
+</Base>
