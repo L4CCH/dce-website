@@ -2,10 +2,12 @@
 
 The website for [Digital Collections Explorer](https://github.com/hinxcode/digital-collections-explorer):
 what it is, who it is for, how it works, the three interface templates, three ways to start,
-the wishlist, and how to cite it. It also serves the domain's `robots.txt`, `llms.txt` and sitemap.
+the wishlist, and how to cite it. Developer documentation lives under `/docs/`. It also serves
+the domain's `robots.txt`, `llms.txt` and sitemap.
 
-Built with [Astro](https://astro.build). Everything the landing page says about the project lives in `src/site.ts` and the
-components. The star count, wishlist and
+Built with [Astro](https://astro.build) and [Starlight](https://starlight.astro.build) for the
+documentation. Everything the landing page says about the project lives in `src/site.ts` and the
+components; documentation pages live in `src/content/docs/docs/`. The star count, wishlist and
 good-first issues are read from GitHub when the site is built, so a daily rebuild keeps them current.
 
 ## Working on it

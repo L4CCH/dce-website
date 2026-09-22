@@ -1,0 +1,17 @@
+:root {
+  --sl-font: 'Lato', system-ui, sans-serif;
+  --sl-color-accent-low: #f4e6d5;
+  --sl-color-accent: #9a5b1a;
+  --sl-color-accent-high: #5e3608;
+}
+:root[data-theme='dark'] {
+  --sl-color-accent-low: #2b2218;
+  --sl-color-accent: #d9a05b;
+  --sl-color-accent-high: #f1cf9c;
+}
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.site-title {
+  font-family: 'Kumbh Sans', system-ui, sans-serif;
+}

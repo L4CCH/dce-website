@@ -22,6 +22,7 @@ script on a Linux server or the AWS script, which shows its cost before creating
 ## Software
 
 - [Source code and README](${site.repoUrl}): install, configure, deploy
+- [Documentation](${site.url}/docs/): deploying, including under a path on an existing website
 - [Contributing guide](${site.contributingUrl})
 - [Agent Skill for setting up a collection](${site.skillUrl}): for Claude Code, Codex, Gemini CLI, Cursor
 - [Releases](${site.repoUrl}/releases)
