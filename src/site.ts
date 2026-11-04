@@ -1,4 +1,4 @@
-const repo = 'hinxcode/digital-collections-explorer';
+const repo = 'L4CCH/digital-collections-explorer';
 const repoUrl = `https://github.com/${repo}`;
 
 export const site = {
@@ -17,7 +17,7 @@ export const site = {
   issuesUrl: `${repoUrl}/issues`,
   goodFirstIssuesUrl: `${repoUrl}/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22`,
   skillUrl: `${repoUrl}/tree/main/skills/dce-setup`,
-  containerImage: 'ghcr.io/hinxcode/digital-collections-explorer',
+  containerImage: 'ghcr.io/l4cch/digital-collections-explorer',
   zenodoUrl: 'https://doi.org/10.5281/zenodo.15744570',
   paper: {
     title:

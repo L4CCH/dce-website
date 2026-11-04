@@ -5,7 +5,7 @@ description: Technical documentation for running, deploying and extending Digita
 
 These pages are for the people who run Digital Collections Explorer: the person at a gallery, library, archive or museum who sets up a site, and the developer who extends it.
 
-The [README](https://github.com/hinxcode/digital-collections-explorer#readme) still covers installing locally with Python, indexing large or remote collections, running with Docker, describing a collection to visitors, collections split into groups, searching by appearance and by catalog, and the limits that protect a public site. Topics move here as they are written up in more depth.
+The [README](https://github.com/L4CCH/digital-collections-explorer#readme) still covers installing locally with Python, indexing large or remote collections, running with Docker, describing a collection to visitors, collections split into groups, searching by appearance and by catalog, and the limits that protect a public site. Topics move here as they are written up in more depth.
 
 ## Deploying
 

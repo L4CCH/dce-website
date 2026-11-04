@@ -54,7 +54,7 @@ deploy/aws/deploy.sh my-collection --https --domain collection.example.org --cer
 ```bash
 deploy/aws/describe.sh my-collection --file collection.json        # title, introduction, suggested searches
 deploy/aws/configure.sh my-collection --set searches_per_minute=30  # limits, without a restart
-deploy/aws/update.sh my-collection --image ghcr.io/hinxcode/digital-collections-explorer:latest
+deploy/aws/update.sh my-collection --image ghcr.io/l4cch/digital-collections-explorer:latest
 deploy/aws/mcp.sh my-collection --on                                # answer AI assistants at /mcp
 ```
 

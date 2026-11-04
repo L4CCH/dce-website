@@ -1,6 +1,6 @@
 # digital-collections-explorer.com
 
-The website for [Digital Collections Explorer](https://github.com/hinxcode/digital-collections-explorer):
+The website for [Digital Collections Explorer](https://github.com/L4CCH/digital-collections-explorer):
 what it is, who it is for, how it works, the three interface templates, three ways to start,
 the wishlist, and how to cite it. Developer documentation lives under `/docs/`. It also serves
 the domain's `robots.txt`, `llms.txt` and sitemap.
