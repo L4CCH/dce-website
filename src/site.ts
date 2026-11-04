@@ -38,7 +38,8 @@ export const site = {
     institution: 'University of Washington Information School',
     institutionUrl: 'https://ischool.uw.edu/',
   },
-  license: { name: 'Apache 2.0', spdx: 'Apache-2.0', url: 'https://www.apache.org/licenses/LICENSE-2.0' },
+  license: { name: 'MIT', spdx: 'MIT', url: 'https://opensource.org/license/mit' },
+  docsLicense: { name: 'CC BY 4.0', spdx: 'CC-BY-4.0', url: 'https://creativecommons.org/licenses/by/4.0/' },
 };
 
 export type Template = {

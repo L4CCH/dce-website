@@ -48,7 +48,7 @@ ${templates.map((t) => `- [${t.name}](${site.repoUrl}/tree/main/src/frontend/${t
 
 ## License
 
-Code: ${site.license.name}. Paper and figures: CC BY 4.0.
+Code: ${site.license.name}. Documentation, paper and figures: ${site.docsLicense.name}. Third-party data and media keep their own licenses.
 `;
   return new Response(text, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
 };
