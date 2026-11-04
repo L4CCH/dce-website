@@ -8,7 +8,8 @@ const steps = [
     text: 'A folder, an S3 bucket or a parquet manifest of images. A profile of the collection first shows what it holds, what is possible and what indexing will cost.',
     points: [
       'Reads images where they are and never copies the originals',
-      'Needs no metadata. An existing catalog groups images into objects and links each one to its record',
+      'Needs no metadata. An existing catalog groups images into objects, links each one to its record and makes the records searchable',
+      'Splits a large collection into groups, such as the museums of one institution, that visitors can filter by',
     ],
   },
   {
@@ -22,17 +23,18 @@ const steps = [
   },
   {
     title: 'Open the search site',
-    text: 'Visitors search in natural language or with an image, across photographs, maps and documents.',
+    text: 'Visitors search in natural language or with an image, across photographs, maps and documents. Where a catalog exists, search weighs what the images show against what the records say, and tells the visitor how it read the query.',
     points: [
-      'Runs on a laptop, your own server or AWS. Serving needs no GPU',
+      'Runs on a laptop, your own server or AWS, at a domain of its own or under a path of your website. Serving needs no GPU',
       'Upload and rate limits protect a public site, and every refusal is explained',
-      'Describes itself to search engines and AI assistants',
+      'Describes itself to search engines, and answers AI assistants through its own MCP server',
     ],
   },
 ];
 
 const papers = {
   siglip: 'https://arxiv.org/abs/2303.15343',
+  siglip2: 'https://arxiv.org/abs/2502.14786',
   clip: 'https://arxiv.org/abs/2103.00020',
 };
 ---
@@ -49,7 +51,7 @@ const papers = {
     ))}
   </ol>
   <p class="models">
-    Embeddings come from open models that run on your own machine or cloud account: <a href={papers.siglip} rel="noopener">SigLIP</a> by default, or <a href={papers.clip} rel="noopener">CLIP</a>.
+    Embeddings come from open models that run on your own machine or cloud account: <a href={papers.siglip} rel="noopener">SigLIP</a> by default, <a href={papers.siglip2} rel="noopener">SigLIP 2</a> or <a href={papers.clip} rel="noopener">CLIP</a>. An index can hold vectors from several, and the site searches with the one you choose.
   </p>
   <p class="ask">Want another model? <a href={site.ideasUrl} rel="noopener">Ask for it on the wishlist.</a></p>
 </Section>

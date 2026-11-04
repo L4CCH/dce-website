@@ -1,0 +1,56 @@
+---
+import Section from './Section.astro';
+import Copy from './Copy.astro';
+
+const tools = [
+  ['Describe the collection', 'its groups, their sizes, its license and suggested searches'],
+  ['Search it', 'by what the images show and what the records say, with why each result was found'],
+  ['Find similar objects', 'to one the assistant has already found'],
+  ['Search with an image', 'from the collection, a part of one such as the face on a stamp, or its own'],
+  ['List catalog values', 'such as kinds of object, places and dates, to keep only the objects that have them'],
+  ['Open an object', 'with its catalog record, its images and where else it appears'],
+];
+const turnOn = `DCE_MCP=1 DCE_DATA_DIR=data/collections/my-collection python -m src.backend.main`;
+const turnOnAws = `deploy/aws/mcp.sh my-collection --on`;
+const connect = `claude mcp add --transport http my-collection https://collection.example.org/mcp`;
+---
+
+<Section
+  id="assistants"
+  eyebrow="AI assistants"
+  title="Searchable from an AI assistant"
+  lead="Turn on the built-in MCP server, and Claude, ChatGPT or an editor's agent can search the collection itself and link every answer back to the object's page on your site."
+>
+  <div class="assistants">
+    <div>
+      <ul class="tools">
+        {tools.map(([name, text]) => (
+          <li><strong>{name}</strong>, {text}</li>
+        ))}
+      </ul>
+      <p class="muted">
+        Assistants that show interactive results draw the answers as an image wall, each picture beside its own title.
+        The server needs no account, only reads, and counts against the same limits as visitors' searches.
+      </p>
+    </div>
+    <div class="card">
+      <p class="step">Turn it on locally</p>
+      <Copy text={turnOn} wrap />
+      <p class="step">Or on a site deployed to AWS</p>
+      <Copy text={turnOnAws} />
+      <p class="step">Connect an assistant to the site's address</p>
+      <Copy text={connect} wrap />
+      <p class="faint">More in the <a href="/docs/mcp-server/">MCP server documentation</a>.</p>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .assistants { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: start; }
+  @media (min-width: 960px) {
+    .assistants { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px; }
+  }
+  .tools { margin: 0 0 1em; padding-left: 1.1em; }
+  .tools li { margin-bottom: 0.45em; }
+  .step { font-size: 0.9rem; font-weight: 700; color: var(--ink-soft); margin-bottom: 8px; }
+</style>

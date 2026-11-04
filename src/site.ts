@@ -5,7 +5,7 @@ export const site = {
   name: 'Digital Collections Explorer',
   tagline: 'Search digital collections, even with little or no metadata.',
   description:
-    'Open-source, self-hosted exploratory search for digital collections with visual features. Natural language queries and reverse image search, even for collections with little or no descriptive metadata. Made for galleries, libraries, archives and museums.',
+    'Open-source, self-hosted exploratory search for digital collections with visual features. Natural language queries and reverse image search, even for collections with little or no descriptive metadata, and catalog search where records exist. Made for galleries, libraries, archives and museums.',
   url: 'https://digital-collections-explorer.com',
   repo,
   repoUrl,
@@ -57,10 +57,11 @@ export const templates: Template[] = [
     lead: 'A wall of images to wander through, for photo collections and image archives.',
     features: [
       'Opens on a shuffled wall of images, so there is something to see before anyone types',
-      'Suggested searches set by the institution',
+      'Searches what the images show and, where a catalog exists, what the records say, and tells visitors how it read their words',
+      'Filters by group, such as the museums of one institution, and can keep only images that have a catalog record',
       'Shows each object once, however many photographs it has',
-      'Every image has its own page, with similar images and a link back to the original record',
-      'Search by text or by uploading a picture',
+      'Every object has its own page, with its catalog record, similar images, where else it appears and a link back to the original record',
+      'Search by text or by uploading a picture, or start from suggested searches set by the institution',
     ],
     demo: '/photographs/',
     live: false,
