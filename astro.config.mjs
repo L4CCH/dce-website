@@ -28,6 +28,7 @@ export default defineConfig({
       sidebar: [
         { label: 'Overview', slug: 'docs' },
         { label: 'Deploying', items: [{ autogenerate: { directory: 'docs/deploy' } }] },
+        { label: 'MCP server', slug: 'docs/mcp-server' },
       ],
     }),
     sitemap(),
