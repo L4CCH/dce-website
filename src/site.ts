@@ -78,7 +78,7 @@ export const templates: Template[] = [
       'Links each map back to the holding institution',
     ],
     demo: '/maps/',
-    live: false,
+    live: true,
   },
   {
     id: 'documents',
