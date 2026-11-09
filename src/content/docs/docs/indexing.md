@@ -32,11 +32,11 @@ Indexing reads every image once, for the model, and never stores the original. W
 
 | `--images` | The site keeps | Browsers load |
 | --- | --- | --- |
-| `copy` (default) | a thumbnail and a copy up to 1,920 pixels | everything from the site |
+| `copy` (default) | a thumbnail and a copy up to 1,920 pixels | everything from the site, except deep zoom from an IIIF server |
 | `thumbnails` | a thumbnail | thumbnails from the site; larger views and deep zoom from the source |
-| `link` | nothing | everything from the source |
+| `link` | nothing, unless the source has neither an IIIF service nor its own thumbnails, which keeps a thumbnail | everything else from the source |
 
-`thumbnails` and `link` apply to rows whose source can show the image: an IIIF image service, which is asked for each size, or web addresses of images browsers can show, such as JPEG and PNG, and of thumbnails. Every other image is copied whatever the setting. An image with an IIIF service is asked for at the size indexing needs instead of being downloaded whole, which is much faster for large scans.
+`thumbnails` and `link` apply to rows whose source can show the image: an IIIF image service, which is asked for each size, or web addresses of images browsers can show, such as JPEG and PNG, and of thumbnails. Every other image is copied whatever the setting. The deploy scripts index with `copy`; for another setting, index on your own machine and start the site from that folder with `--from`. An image with an IIIF service is asked for at the size indexing needs instead of being downloaded whole, which is much faster for large scans.
 
 Linking needs little disk, but the site then depends on the source: it must stay up and fast, keep its addresses, and let other sites show its images. An IIIF server that makes each size on request can take half a second the first time an image is shown. `thumbnails` keeps the search page quick for a few tens of kilobytes an image.
 
