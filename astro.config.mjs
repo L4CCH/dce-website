@@ -28,8 +28,20 @@ export default defineConfig({
       ],
       sidebar: [
         { label: 'Overview', slug: 'docs' },
+        {
+          label: 'Setting up a collection',
+          items: [
+            { slug: 'docs/indexing' },
+            { slug: 'docs/kinds-of-material' },
+            { slug: 'docs/describing-a-collection' },
+            { slug: 'docs/groups' },
+            { slug: 'docs/search' },
+            { slug: 'docs/models' },
+            { slug: 'docs/limits' },
+          ],
+        },
         { label: 'Deploying', items: [{ autogenerate: { directory: 'docs/deploy' } }] },
-        { label: 'MCP server', slug: 'docs/mcp-server' },
+        { label: 'Extending', items: [{ slug: 'docs/making-a-frontend' }, { slug: 'docs/mcp-server' }] },
       ],
     }),
     sitemap(),
