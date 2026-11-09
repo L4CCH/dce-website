@@ -1,6 +1,6 @@
 ---
 import Section from './Section.astro';
-import { site } from '../site';
+import { path, site } from '../site';
 
 const steps = [
   {
@@ -51,6 +51,23 @@ const papers = {
       </li>
     ))}
   </ol>
+  <div class="search">
+    <h3>How search works</h3>
+    <p class="search-lead">
+      Search reads what the pictures show and, where a catalog exists, what the records say. For each query it decides which to trust more, and every result says why it was found.
+    </p>
+    <div class="search-cases">
+      <figure>
+        <img src={path('/screens/search-name.jpg')} alt="A search for amelia earhart, read as a name: envelopes from her round-the-world flight and medals with her portrait" loading="lazy" />
+        <figcaption><strong>A name</strong> is looked up in the records, so “amelia earhart” finds what is cataloged under her name.</figcaption>
+      </figure>
+      <figure>
+        <img src={path('/screens/search-description.jpg')} alt="A search for a woman at a typewriter: no record mentions both words, so the site shows photographs and drawings that look like one" loading="lazy" />
+        <figcaption><strong>A description</strong> is matched against the pictures. No record mentions “a woman at a typewriter”, yet the site finds her.</figcaption>
+      </figure>
+    </div>
+    <p class="search-more"><a href={path('/docs/search/')}>How the two are weighed</a></p>
+  </div>
   <p class="models">
     Embeddings come from open models that run on your own machine or cloud account: <a href={papers.siglip} rel="noopener">SigLIP</a> by default, <a href={papers.siglip2} rel="noopener">SigLIP 2</a> or <a href={papers.clip} rel="noopener">CLIP</a>. An index can hold vectors from several, and the site searches with the one you choose.
   </p>
@@ -79,6 +96,17 @@ const papers = {
   .steps p { margin-bottom: 0.75em; }
   .steps ul { margin: 0; padding-left: 1.1em; list-style: disc; color: var(--ink-soft); font-size: 0.95rem; }
   .steps ul li { margin-bottom: 0.3em; }
+  .search { margin: 48px 0 0; padding-top: 24px; border-top: 1px solid var(--line); }
+  .search h3 { font-size: 1.15rem; margin-bottom: 0.4em; }
+  .search-lead { color: var(--ink-soft); max-width: var(--measure); }
+  .search-cases { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 20px; }
+  .search-cases figure { margin: 0; }
+  .search-cases img { display: block; width: 100%; height: auto; border-radius: calc(var(--radius) - 4px); border: 1px solid var(--line); }
+  .search-cases figcaption { margin-top: 10px; color: var(--ink-soft); font-size: 0.95rem; }
+  .search-more { margin: 16px 0 0; }
+  @media (min-width: 960px) {
+    .search-cases { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+  }
   .models { margin: 40px 0 0; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-soft); }
   .ask { margin: 12px 0 0; color: var(--ink-soft); }
 </style>
