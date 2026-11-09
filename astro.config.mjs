@@ -4,7 +4,8 @@ import sitemap from '@astrojs/sitemap';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
-  site: 'https://digital-collections-explorer.com',
+  site: 'https://l4cch.github.io',
+  base: '/dce-website',
   integrations: [
     starlight({
       title: 'Digital Collections Explorer',

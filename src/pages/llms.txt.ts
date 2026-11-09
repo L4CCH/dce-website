@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { site, templates } from '../site';
+import { media, showcases, site } from '../site';
 
 export const GET: APIRoute = () => {
   const text = `# ${site.name}
@@ -29,16 +29,22 @@ script on a Linux server or the AWS script, which shows its cost before creating
 ## Software
 
 - [Source code and README](${site.repoUrl}): install, configure, deploy
-- [Documentation](${site.url}/docs/): deploying to AWS, serving under a path on an existing website, the MCP server for AI assistants
+- [Documentation](${site.url}/docs/): indexing, describing a collection, groups, search, models, limits, the kinds of material a site shows, making a frontend, deploying, and the MCP server for AI assistants
 - [Contributing guide](${site.contributingUrl})
 - [Agent Skill for setting up a collection](${site.skillUrl}): for Claude Code, Codex, Gemini CLI, Cursor
 - [Releases](${site.repoUrl}/releases)
 - [Ideas wishlist](${site.ideasUrl}): what people want next; vote or post
 - [Discussions](${site.discussionsUrl})
 
-## Interfaces
+## What a site shows
 
-${templates.map((t) => `- [${t.name}](${site.repoUrl}/tree/main/src/frontend/${t.id}): ${t.lead}${t.live ? ` Live demo: ${site.url}${t.demo}` : ''}`).join('\n')}
+Images are always shown. The other kinds of material are options chosen at setup, with \`npm run setup -- --with=3d,pdf,zoom\`, and only their packages are installed.
+
+${media.map((m) => `- ${m.name}${m.option ? ` (\`--with=${m.option}\`)` : ''}: ${m.lead}`).join('\n')}
+
+## Showcases
+
+${showcases.map((s) => `- [${s.name}](${s.url}): ${s.source}; ${s.facts.join(', ')}.`).join('\n')}
 
 ## Research
 

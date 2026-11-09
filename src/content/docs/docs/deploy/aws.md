@@ -47,7 +47,7 @@ deploy/aws/deploy.sh my-collection --https --domain collection.example.org --cer
 
 ## Under a path of your website
 
-`--base-path /maps` serves the site at `/maps/`, for a website of your own whose proxy forwards that path to it. It is set when the machine is first created. See [Under a path on an existing website](/docs/deploy/under-a-path/) for the proxy.
+`--base-path /maps` serves the site at `/maps/`, for a website of your own whose proxy forwards that path to it. It is set when the machine is first created. See [Under a path on an existing website](../under-a-path/) for the proxy.
 
 ## Describe it, limit it, update it
 
@@ -58,7 +58,7 @@ deploy/aws/update.sh my-collection --image ghcr.io/l4cch/digital-collections-exp
 deploy/aws/mcp.sh my-collection --on                                # answer AI assistants at /mcp
 ```
 
-`update.sh` moves the site to another version without indexing again. `mcp.sh` turns on the [MCP server](/docs/mcp-server/) with links to the site's own address, including its domain and path, and waits until it answers.
+`update.sh` moves the site to another version without indexing again. `mcp.sh` turns on the [MCP server](../../mcp-server/) with links to the site's own address, including its domain and path, and waits until it answers.
 
 ## A collection prepared elsewhere
 

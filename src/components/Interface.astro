@@ -1,0 +1,114 @@
+---
+import Section from './Section.astro';
+import Copy from './Copy.astro';
+import { media, path, showcases, site } from '../site';
+
+const showcaseOf = (id?: string) => showcases.find((s) => s.id === id);
+---
+
+<Section
+  id="interface"
+  eyebrow="Interface"
+  title="One interface, with what your collection holds"
+  lead="Images are always shown. 3D models, PDFs and deep zoom are options chosen at setup, and only the packages they need are installed."
+>
+  <div class="tabs" data-tabs>
+    <div role="tablist" aria-label="What a site can show">
+      {media.map((m, i) => (
+        <button role="tab" id={`tab-${m.id}`} aria-controls={`panel-${m.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} type="button">
+          {m.name}
+        </button>
+      ))}
+    </div>
+    {media.map((m, i) => {
+      const showcase = showcaseOf(m.showcase);
+      return (
+        <div role="tabpanel" id={`panel-${m.id}`} aria-labelledby={`tab-${m.id}`} hidden={i !== 0} class="panel">
+          <div class="panel-text">
+            <h3>{m.name}</h3>
+            <p>{m.lead}</p>
+            <ul>{m.features.map((f) => <li>{f}</li>)}</ul>
+          </div>
+          <div class="card panel-side">
+            {m.option ? (
+              <>
+                <p class="step">Turn it on at setup</p>
+                <Copy text={`npm run setup -- --with=${m.option}`} />
+              </>
+            ) : (
+              <p class="step">On every site</p>
+            )}
+            {showcase && (
+              <p class="seen">
+                See it in <a href={showcase.url} rel="noopener">{showcase.name}</a>, {showcase.source.charAt(0).toLowerCase() + showcase.source.slice(1)}.
+              </p>
+            )}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+  <p class="muted after">
+    The interface is a small React app in <a href={`${site.repoUrl}/tree/main/src/frontend/default`} rel="noopener"><code>src/frontend/default</code></a> that you can restyle.
+    A different one can take its place: <a href={path('/docs/making-a-frontend/')}>making a frontend</a> explains what it needs.
+  </p>
+</Section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-tabs]');
+  if (root) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+    const show = (index: number) => {
+      tabs.forEach((tab, i) => {
+        tab.setAttribute('aria-selected', String(i === index));
+        tab.tabIndex = i === index ? 0 : -1;
+      });
+      panels.forEach((panel, i) => {
+        panel.hidden = i !== index;
+      });
+      tabs[index].focus();
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => show(i));
+      tab.addEventListener('keydown', (event) => {
+        const step = { ArrowRight: 1, ArrowLeft: -1, Home: -i, End: tabs.length - 1 - i }[event.key];
+        if (step !== undefined) {
+          event.preventDefault();
+          show((i + step + tabs.length) % tabs.length);
+        }
+      });
+    });
+  }
+</script>
+
+<style>
+
+  [role='tablist'] { display: flex; gap: 6px; border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+  [role='tab'] {
+    font: inherit;
+    font-family: var(--font-display);
+    font-weight: 700;
+    background: none;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    color: var(--ink-soft);
+    padding: 10px 14px;
+    margin-bottom: -1px;
+    cursor: pointer;
+  }
+  [role='tab'][aria-selected='true'] { color: var(--ink); border-bottom-color: var(--accent); }
+  .panel { display: grid; grid-template-columns: minmax(0, 3fr) minmax(280px, 2fr); gap: 32px; align-items: start; }
+  .panel[hidden] { display: none; }
+  .panel-text ul { padding-left: 1.1em; color: var(--ink-soft); }
+  .panel-side { position: sticky; top: 76px; }
+  .step { font-family: var(--font-display); font-weight: 700; margin-bottom: 10px; }
+  .seen { margin: 16px 0 0; color: var(--ink-soft); }
+  .after { margin-top: 32px; }
+  @media (max-width: 959px) {
+    .panel { grid-template-columns: 1fr; gap: 20px; }
+    .panel-side { position: static; }
+    [role='tablist'] { overflow-x: auto; scrollbar-width: none; }
+    [role='tab'] { white-space: nowrap; }
+  }
+</style>

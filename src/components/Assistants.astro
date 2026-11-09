@@ -1,6 +1,7 @@
 ---
 import Section from './Section.astro';
 import Copy from './Copy.astro';
+import { path } from '../site';
 
 const tools = [
   ['Describe the collection', 'its groups, their sizes, its license and suggested searches'],
@@ -40,7 +41,7 @@ const connect = `claude mcp add --transport http my-collection https://collectio
       <Copy text={turnOnAws} />
       <p class="step">Connect an assistant to the site's address</p>
       <Copy text={connect} wrap />
-      <p class="faint">More in the <a href="/docs/mcp-server/">MCP server documentation</a>.</p>
+      <p class="faint">More in the <a href={path('/docs/mcp-server/')}>MCP server documentation</a>.</p>
     </div>
   </div>
 </Section>

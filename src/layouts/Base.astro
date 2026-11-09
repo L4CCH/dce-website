@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { site } from '../site';
+import { path, site } from '../site';
 
 interface Props {
   title?: string;
@@ -62,11 +62,11 @@ const jsonLd = {
 const nav = [
   ['#who', 'Who it is for'],
   ['#how', 'How it works'],
-  ['#templates', 'Templates'],
+  ['#showcases', 'Showcases'],
   ['#assistants', 'AI assistants'],
   ['#start', 'Get started'],
   ['#community', 'Community'],
-  ['/docs/', 'Docs'],
+  [path('/docs/'), 'Docs'],
 ];
 ---
 
@@ -78,14 +78,14 @@ const nav = [
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" href={path('/favicon.svg')} type="image/svg+xml" />
+    <link rel="sitemap" href={path('/sitemap-index.xml')} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+    <meta property="og:image" content={new URL(path('/og.png'), Astro.site)} />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -99,7 +99,7 @@ const nav = [
     <a class="skip" href="#main">Skip to content</a>
     <header class="header">
       <div class="wrap header-inner">
-        <a class="brand" href="/" aria-label={`${site.name} home`}>
+        <a class="brand" href={path('/')} aria-label={`${site.name} home`}>
           <span class="brand-mark" aria-hidden="true"></span>
           <span>{site.name}</span>
         </a>

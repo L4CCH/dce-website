@@ -1,0 +1,52 @@
+---
+import Section from './Section.astro';
+import { path, showcases, site } from '../site';
+---
+
+<Section
+  id="showcases"
+  eyebrow="Showcases"
+  title="Collections searched with it"
+  lead="Each is a site of its own. Open one and search it."
+>
+  <ul class="showcases">
+    {showcases.map((s) => (
+      <li class="card showcase">
+        <a class="shot" href={s.url} rel="noopener">
+          <img src={path(s.image)} alt={s.alt} width="1600" height="1000" loading="lazy" />
+        </a>
+        <div>
+          <h3><a href={s.url} rel="noopener">{s.name}</a></h3>
+          <p class="muted">{s.source}</p>
+          <ul class="facts">{s.facts.map((fact) => <li>{fact}</li>)}</ul>
+          <a class="btn" href={s.url} rel="noopener">Open the site</a>
+        </div>
+      </li>
+    ))}
+    <li class="card showcase yours">
+      <div>
+        <h3>Yours here</h3>
+        <p class="muted">Running Digital Collections Explorer for a collection? Tell us in <a href={site.discussionsUrl} rel="noopener">Discussions</a> and we will add it.</p>
+      </div>
+    </li>
+  </ul>
+</Section>
+
+<style>
+  .showcases { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+  .showcases > li { margin: 0; }
+  .showcase { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: center; }
+  .shot { display: block; border-radius: calc(var(--radius) - 4px); overflow: hidden; border: 1px solid var(--line); background: #121212; }
+  .shot img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+  .showcase h3 { margin-bottom: 0.2em; }
+  .showcase h3 a { color: var(--ink); text-decoration: none; }
+  .showcase h3 a:hover { text-decoration: underline; }
+  .facts { list-style: none; margin: 12px 0 20px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .facts li { margin: 0; font-size: 0.85rem; padding: 4px 10px; border-radius: 999px; background: var(--bg-sunken); color: var(--ink-soft); }
+  .yours { display: block; border-style: dashed; background: var(--bg-sunken); box-shadow: none; padding-top: 16px; padding-bottom: 16px; }
+  .yours h3 { display: inline; font-size: 1rem; margin-right: 8px; }
+  .yours p { display: inline; }
+  @media (min-width: 960px) {
+    .showcase { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 32px; }
+  }
+</style>
