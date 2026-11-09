@@ -44,12 +44,11 @@ ${media.map((m) => `- ${m.name}${m.option ? ` (\`--with=${m.option}\`)` : ''}: $
 
 ## Showcases
 
-${showcases.map((s) => `- [${s.name}](${s.url}): ${s.source}; ${s.facts.join(', ')}.`).join('\n')}
+${showcases.map((s) => `- [${s.name}](${s.url}): ${s.summary}`).join('\n')}
 
 ## Research
 
 - [Paper in ${site.paper.journal}, vol. ${site.paper.volume}, ${site.paper.article} (${site.paper.year})](${site.paper.url}): ${site.paper.title}
-- [Software DOI on Zenodo](${site.zenodoUrl})
 - [${site.lab.name}](${site.lab.url})
 
 ## License

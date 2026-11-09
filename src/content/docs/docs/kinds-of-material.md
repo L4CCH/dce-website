@@ -11,7 +11,7 @@ npm run setup -- --with=pdf,3d     # or says so
 npm run setup -- --with=none       # images only
 ```
 
-Setup writes the choice to `config.json` as `"media"`, installs the packages of the options chosen, builds the interface and prints the Python packages to install. Run it again to change the choice.
+Options combine: list as many as the collection holds, separated by commas. Setup writes the choice to `config.json` as `"media"`, installs the packages of the options chosen, builds the interface and prints the Python packages to install. Run it again to change the choice.
 
 | Option | For | Python packages |
 | --- | --- | --- |

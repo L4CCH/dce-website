@@ -28,7 +28,7 @@ const jsonLd = {
       keywords: 'digital collections, digital libraries, cultural heritage, GLAM, multimodal search, hybrid search, CLIP, SigLIP, SigLIP 2, reverse image search, MCP',
       author: { '@id': `${site.url}/#lab` },
       citation: { '@id': `${site.url}/#paper` },
-      sameAs: [site.repoUrl, site.zenodoUrl],
+      sameAs: [site.repoUrl],
     },
     {
       '@type': 'Organization',
@@ -45,7 +45,6 @@ const jsonLd = {
       url: site.paper.url,
       identifier: `doi:${site.paper.doi}`,
       isPartOf: { '@type': 'Periodical', name: site.paper.journal },
-      sameAs: site.paper.arxivUrl,
       datePublished: String(site.paper.year),
       author: site.paper.authors.map((name) => ({ '@type': 'Person', name })),
     },
@@ -100,7 +99,6 @@ const nav = [
     <header class="header">
       <div class="wrap header-inner">
         <a class="brand" href={path('/')} aria-label={`${site.name} home`}>
-          <span class="brand-mark" aria-hidden="true"></span>
           <span>{site.name}</span>
         </a>
         <div class="header-end">
@@ -147,7 +145,6 @@ const nav = [
         </div>
         <ul class="footer-links">
           <li><a href={site.paper.url} rel="noopener">Paper</a></li>
-          <li><a href={site.zenodoUrl} rel="noopener">Zenodo DOI</a></li>
           <li><a href={site.discussionsUrl} rel="noopener">Discussions</a></li>
         </ul>
       </div>
@@ -180,10 +177,6 @@ const nav = [
   .github { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 999px; color: var(--ink-soft); }
   .github:hover { color: var(--ink); background: var(--bg-sunken); }
   .brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; color: var(--ink); text-decoration: none; white-space: nowrap; }
-  .brand-mark { position: relative; width: 20px; height: 20px; flex: none; }
-  .brand-mark::before, .brand-mark::after { content: ''; position: absolute; width: 10px; height: 10px; border-radius: 2px; background: var(--accent); }
-  .brand-mark::before { top: 7px; left: 7px; opacity: 0.55; }
-  .brand-mark::after { top: 2px; left: 2px; }
   nav ul { list-style: none; margin: 0; padding: 0; }
   .nav-links { display: flex; align-items: center; gap: 18px; }
   .nav-links li { margin: 0; }

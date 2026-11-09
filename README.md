@@ -2,7 +2,7 @@
 
 The website for [Digital Collections Explorer](https://github.com/L4CCH/digital-collections-explorer),
 at https://l4cch.github.io/dce-website/: what it is, who it is for, how it works, the collections
-searched with it, what a site can show, three ways to start, the wishlist, and how to cite it.
+searched with it, three ways to start, the wishlist, and how to cite it.
 Developer documentation lives under `/docs/`. It also serves `llms.txt` and a sitemap.
 
 Built with [Astro](https://astro.build) and [Starlight](https://starlight.astro.build) for the

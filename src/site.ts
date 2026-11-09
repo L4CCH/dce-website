@@ -20,7 +20,6 @@ export const site = {
   goodFirstIssuesUrl: `${repoUrl}/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22`,
   skillUrl: `${repoUrl}/tree/main/skills/dce-setup`,
   containerImage: 'ghcr.io/l4cch/digital-collections-explorer',
-  zenodoUrl: 'https://doi.org/10.5281/zenodo.15744570',
   paper: {
     title:
       'Digital Collections Explorer: An Open-Source, Multimodal Viewer for Searching Digital Collections',
@@ -29,7 +28,6 @@ export const site = {
     article: 'e14',
     doi: '10.1017/chr.2025.10017',
     url: 'https://doi.org/10.1017/chr.2025.10017',
-    arxivUrl: 'https://arxiv.org/abs/2507.00961',
     year: 2025,
     authors: ['Ying-Hsiang Huang', 'Benjamin Charles Germain Lee'],
   },
@@ -50,7 +48,6 @@ export type Medium = {
   option?: string;
   lead: string;
   features: string[];
-  showcase?: string;
 };
 
 export const media: Medium[] = [
@@ -66,7 +63,6 @@ export const media: Medium[] = [
       'Every object has its own page, with its catalog record, similar images, where else it appears and a link back to the original record',
       'Search by text or by uploading a picture, or start from suggested searches set by the institution',
     ],
-    showcase: 'loc-maps',
   },
   {
     id: '3d',
@@ -101,28 +97,30 @@ export const media: Medium[] = [
       'Loads only the part of the image in view, so a large sheet opens quickly',
       'Shows the plain image if the server does not answer',
     ],
-    showcase: 'loc-maps',
   },
 ];
 
 export type Showcase = {
   id: string;
   name: string;
-  source: string;
+  summary: string;
   url: string;
   image: string;
   alt: string;
-  facts: string[];
+  tries: string[];
 };
 
 export const showcases: Showcase[] = [
   {
     id: 'loc-maps',
-    name: 'Historical Maps',
-    source: 'Maps from the Library of Congress',
+    name: 'Library of Congress Maps',
+    summary: '562,842 maps from the Geography and Map Division, searched by what is drawn on them.',
     url: 'https://digital-collections-explorer.com/',
     image: '/showcases/loc-maps.jpg',
-    alt: 'Search results for a harbor with a breakwater: charts and views of harbors',
-    facts: ['562,842 map images', 'Deep zoom'],
+    alt: "Search results for a bird's-eye view of a city: panoramic views of American cities",
+    tries: ["a bird's-eye view of a city", 'a battlefield map', 'a globe'],
   },
 ];
+
+export const searchUrl = (showcase: Showcase, query: string) =>
+  `${showcase.url}#/search?q=${encodeURIComponent(query).replace(/%20/g, '+')}`;

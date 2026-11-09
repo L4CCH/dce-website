@@ -1,14 +1,9 @@
 ---
 import Section from './Section.astro';
-import { path, showcases, site } from '../site';
+import { path, searchUrl, showcases } from '../site';
 ---
 
-<Section
-  id="showcases"
-  eyebrow="Showcases"
-  title="Collections searched with it"
-  lead="Each is a site of its own. Open one and search it."
->
+<Section id="showcases" eyebrow="Showcase" title="Try it on a real collection">
   <ul class="showcases">
     {showcases.map((s) => (
       <li class="card showcase">
@@ -17,18 +12,17 @@ import { path, showcases, site } from '../site';
         </a>
         <div>
           <h3><a href={s.url} rel="noopener">{s.name}</a></h3>
-          <p class="muted">{s.source}</p>
-          <ul class="facts">{s.facts.map((fact) => <li>{fact}</li>)}</ul>
+          <p class="muted">{s.summary}</p>
+          <p class="try-label">Try</p>
+          <ul class="tries">
+            {s.tries.map((query) => (
+              <li><a href={searchUrl(s, query)} rel="noopener">“{query}”</a></li>
+            ))}
+          </ul>
           <a class="btn" href={s.url} rel="noopener">Open the site</a>
         </div>
       </li>
     ))}
-    <li class="card showcase yours">
-      <div>
-        <h3>Yours here</h3>
-        <p class="muted">Running Digital Collections Explorer for a collection? Tell us in <a href={site.discussionsUrl} rel="noopener">Discussions</a> and we will add it.</p>
-      </div>
-    </li>
   </ul>
 </Section>
 
@@ -38,14 +32,14 @@ import { path, showcases, site } from '../site';
   .showcase { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: center; }
   .shot { display: block; border-radius: calc(var(--radius) - 4px); overflow: hidden; border: 1px solid var(--line); background: #121212; }
   .shot img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
-  .showcase h3 { margin-bottom: 0.2em; }
+  .showcase h3 { margin-bottom: 0.3em; }
   .showcase h3 a { color: var(--ink); text-decoration: none; }
   .showcase h3 a:hover { text-decoration: underline; }
-  .facts { list-style: none; margin: 12px 0 20px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-  .facts li { margin: 0; font-size: 0.85rem; padding: 4px 10px; border-radius: 999px; background: var(--bg-sunken); color: var(--ink-soft); }
-  .yours { display: block; border-style: dashed; background: var(--bg-sunken); box-shadow: none; padding-top: 16px; padding-bottom: 16px; }
-  .yours h3 { display: inline; font-size: 1rem; margin-right: 8px; }
-  .yours p { display: inline; }
+  .try-label { margin: 18px 0 8px; font-size: 0.85rem; font-weight: 700; color: var(--ink-soft); }
+  .tries { list-style: none; margin: 0 0 22px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .tries li { margin: 0; }
+  .tries a { display: inline-block; font-style: italic; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-raised); color: var(--ink); text-decoration: none; }
+  .tries a:hover { border-color: var(--accent); background: var(--accent-soft); }
   @media (min-width: 960px) {
     .showcase { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 32px; }
   }
