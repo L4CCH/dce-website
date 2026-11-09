@@ -44,7 +44,7 @@ An install without the PDF reader indexes the images and leaves the PDFs out, sa
 
 An image whose catalog record names an IIIF image service, in a column such as `iiif`, `iiif_url` or `iiif_service`, opens in a deep zoom viewer that loads only the part of the image in view. The column may hold the service's address, its `info.json` or any image request to it. If the server does not answer, the plain image is shown instead.
 
-Images kept on an IIIF server need not be copied to the site at all: an index may name them by web address, and the site loads them from there.
+Images kept on an IIIF server need not be copied to the site at all. Visitors' browsers load them straight from the server, and an index that names only the service lets the site ask it for each size. [What the site keeps of each image](../indexing/#what-the-site-keeps-of-each-image) is chosen when indexing.
 
 ## In a container
 

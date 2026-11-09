@@ -24,7 +24,21 @@ The profile also says which [kinds of material](../kinds-of-material/) the colle
 
 - **A folder** on this machine, searched through all its subfolders.
 - **An S3 prefix.** Add `--anonymous` for a public bucket.
-- **A parquet or CSV manifest** with one row per image: its address in a column such as `image_url`, and any catalog fields beside it. Paths in a manifest are read relative to the manifest. `--fetch-via s3://bucket` reads the images from a bucket instead of their web addresses.
+- **A parquet manifest** with one row per image: its address in a column such as `image_url`, or only its IIIF image service in a column such as `iiif`, and any catalog fields beside it. A column such as `thumbnail_url` names a thumbnail the source already makes. Paths in a manifest are read relative to the manifest. `--fetch-via s3://bucket` reads the images from a bucket instead of their web addresses.
+
+## What the site keeps of each image
+
+Indexing reads every image once, for the model, and never stores the original. What it keeps for visitors to see is chosen with `--images`:
+
+| `--images` | The site keeps | Browsers load |
+| --- | --- | --- |
+| `copy` (default) | a thumbnail and a copy up to 1,920 pixels | everything from the site |
+| `thumbnails` | a thumbnail | thumbnails from the site; larger views and deep zoom from the source |
+| `link` | nothing | everything from the source |
+
+`thumbnails` and `link` apply to rows whose source can show the image: an IIIF image service, which is asked for each size, or web addresses of images browsers can show, such as JPEG and PNG, and of thumbnails. Every other image is copied whatever the setting. An image with an IIIF service is asked for at the size indexing needs instead of being downloaded whole, which is much faster for large scans.
+
+Linking needs little disk, but the site then depends on the source: it must stay up and fast, keep its addresses, and let other sites show its images. An IIIF server that makes each size on request can take half a second the first time an image is shown. `thumbnails` keeps the search page quick for a few tens of kilobytes an image.
 
 ## Stopping and resuming
 
@@ -32,7 +46,7 @@ Indexing records each image as it finishes, so it can be stopped at any time and
 
 ## With an AI coding agent
 
-With an agent that supports [Agent Skills](https://agentskills.io), such as Claude Code, Codex, Gemini CLI or Cursor, the `dce-setup` skill in `skills/` walks through these steps. Ask it to make your collection searchable.
+With an agent that supports [Agent Skills](https://agentskills.io), such as Claude Code, Codex, Gemini CLI or Cursor, the `dce-setup` skill walks through these steps and asks only what a person must decide. Agents started in the repository find it on their own: Claude Code in `.claude/skills/`, the others in `.agents/skills/`. Ask it to make your collection searchable.
 
 ## With Docker
 

@@ -38,7 +38,7 @@ The three search tools take `catalog`, which keeps only objects whose record hol
 
 ## What assistants see
 
-Every result links to its page on the site and to its image, and says why it was found, how alike it is to the query, and which catalog fields matched. Hosts that support [MCP Apps](https://modelcontextprotocol.io/seps/1865-mcp-apps-interactive-user-interfaces-for-mcp) show the results as an image wall: each picture beside its own title, opening the object's page when clicked, with "More like this" to follow similar images. The wall loads pictures only from `DCE_PUBLIC_URL`, so set it for the pictures to appear.
+Every result links to its page on the site and to its image, and says why it was found, how alike it is to the query, and which catalog fields matched. Hosts that support [MCP Apps](https://modelcontextprotocol.io/seps/1865-mcp-apps-interactive-user-interfaces-for-mcp) show the results as an image wall: each picture beside its own title, opening the object's page when clicked, with "More like this" to follow similar images. The wall loads pictures only from `DCE_PUBLIC_URL` and from the servers that keep the collection's images, such as an IIIF server, so set it for the pictures to appear.
 
 ## Limits
 
