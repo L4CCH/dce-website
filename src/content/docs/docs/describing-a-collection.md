@@ -8,6 +8,7 @@ A site opens on a wall of images to wander through, suggests searches, shows eac
 Put a `collection.json` next to the index, in the folder passed to `--data-dir`, to set the title, the introduction, the suggested searches, the license and the footer links. [`collection.example.json`](https://github.com/L4CCH/digital-collections-explorer/blob/main/collection.example.json) shows every field, and all of them are optional.
 
 - A suggested search is either the query itself or `{"query": "...", "label": "..."}`, whose label is shown beside it, for example to say how Auto reads it.
+- `object_label` names what one object is, such as `map sheet`, in the count under the title. The count leaves out the number of images when each object has one, and the source when the title already names it.
 - The site reads the file on every visit, so a change shows up without a restart.
 - The same file fills the page title and description that search engines show, and the site's `llms.txt`.
 
