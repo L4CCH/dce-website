@@ -1,14 +1,8 @@
 # dce-website
 
 The website for [Digital Collections Explorer](https://github.com/L4CCH/digital-collections-explorer),
-at https://l4cch.github.io/dce-website/: what it is, who it is for, how it works, the collections
-searched with it, three ways to start, the wishlist, and how to cite it.
-Developer documentation lives under `/docs/`. It also serves `llms.txt` and a sitemap.
+at https://l4cch.github.io/dce-website/.
 
-Built with [Astro](https://astro.build) and [Starlight](https://starlight.astro.build) for the
-documentation. Everything the landing page says about the project lives in `src/site.ts` and the
-components; documentation pages live in `src/content/docs/docs/`. The star count, wishlist and
-good-first issues are read from GitHub when the site is built, so a daily rebuild keeps them current.
 
 ## Working on it
 
@@ -40,8 +34,7 @@ Settings, under Pages, the source must be GitHub Actions. Links inside the site 
 
 ## Showcases
 
-Each showcase is a Digital Collections Explorer site of its own, listed in `showcases` in
-`src/site.ts` with a 16:10 screenshot in `public/showcases/`, such as 1600 by 1000 pixels. The paper's live
+The paper's live
 demo, the Library of Congress maps, stays at https://digital-collections-explorer.com/, the
 address the paper gives.
 
