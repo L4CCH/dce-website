@@ -1,13 +1,13 @@
 :root {
   --sl-font: 'Lato', system-ui, sans-serif;
-  --sl-color-accent-low: #e4edf9;
-  --sl-color-accent: #1f59a5;
-  --sl-color-accent-high: #123a6e;
+  --sl-color-accent-low: #f0e6cf;
+  --sl-color-accent: #7f6027;
+  --sl-color-accent-high: #4a3814;
 }
 :root[data-theme='dark'] {
-  --sl-color-accent-low: #182638;
-  --sl-color-accent: #8db5ea;
-  --sl-color-accent-high: #d3e3f8;
+  --sl-color-accent-low: #30281c;
+  --sl-color-accent: #c6a15e;
+  --sl-color-accent-high: #ecdcb8;
 }
 .sl-markdown-content h1,
 .sl-markdown-content h2,
