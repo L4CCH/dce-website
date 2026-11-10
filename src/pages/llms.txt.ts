@@ -14,7 +14,8 @@ with a picture, browse it, and follow every image back to the institution's own 
 Search uses an open multimodal embedding model, SigLIP by default, SigLIP 2 or CLIP, run on
 the institution's own hardware, so no catalog, tags or OCR are needed. Where a catalog
 exists, search also reads the records and weighs them against what the images show. A
-collection can be split into groups, such as the museums of one institution. It indexes
+site can hold the collections of several institutions, each with its own name and license,
+and visitors can search them all or some. It indexes
 hundreds of thousands of images on ordinary hardware and serves them from one small machine
 without a GPU.
 
