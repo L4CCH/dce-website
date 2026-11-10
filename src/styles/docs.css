@@ -15,3 +15,24 @@
 .site-title {
   font-family: 'Kumbh Sans', system-ui, sans-serif;
 }
+:root {
+  --dce-toc-width: 15rem;
+}
+.content-panel .sl-container {
+  max-width: none;
+}
+@media (min-width: 72rem) {
+  .right-sidebar-container {
+    width: var(--dce-toc-width);
+  }
+  [data-has-sidebar][data-has-toc] .main-pane {
+    width: calc(100% - var(--dce-toc-width));
+  }
+  .right-sidebar {
+    width: var(--dce-toc-width);
+  }
+  .right-sidebar-panel .sl-container {
+    width: auto;
+    max-width: none;
+  }
+}
