@@ -40,6 +40,10 @@ Indexing reads every image once, for the model, and never stores the original. W
 
 Linking needs little disk, but the site then depends on the source: it must stay up and fast, keep its addresses, and let other sites show its images. An IIIF server that makes each size on request can take half a second the first time an image is shown. `thumbnails` keeps the search page quick for a few tens of kilobytes an image.
 
+## Catalog search
+
+When a manifest's catalog columns hold text, such as titles, names, dates, places or descriptions, indexing also builds a full-text index of them, and text search then reads the records as well as the pictures. The summary says how many objects it covers. See [Searching by appearance and by catalog](../search/).
+
 ## Stopping and resuming
 
 Indexing records each image as it finishes, so it can be stopped at any time and run again with the same `--data-dir`. `--retry-failed` tries the images that failed once more, `--status` shows how far it has come, and `--report` prints how long the run took, how fast it went and the files that failed, also for a run that finished long ago.

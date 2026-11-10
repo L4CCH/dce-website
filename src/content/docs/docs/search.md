@@ -3,9 +3,11 @@ title: Searching by appearance and by catalog
 description: How text search fuses search by appearance with BM25 over the catalog, how Auto reads a query, and what each result explains.
 ---
 
-Every collection can be searched by appearance: a multimodal model compares the visitor's words, or picture, with every image. When a [collection split into groups](../groups/) also holds catalog records in a full-text index, text search runs two channels and fuses them.
+Every collection can be searched by appearance: a multimodal model compares the visitor's words, or picture, with every image. When the catalog holds text, text search also reads the records: it runs two channels and fuses them, which is hybrid search.
 
-The `metadata.sqlite` of such a collection holds `records_fts`, an FTS5 table with one row per record (`record_id` and text columns such as `title`, `names`, `dates`, `places`, `topics`, `object_types`, `notes`, `physical` and `identifiers`), and `entity_vocab(term, field, record_count)`, the collection's names, places, topics and object types.
+Indexing builds the catalog's full-text index, `catalog.sqlite`, from the [catalog columns](../describing-a-collection/#catalog-columns-that-search-reads) of a manifest, and leaves it out when no column holds text. For a collection indexed another way, `python -m src.ingest.catalog_index data/collections/my-collection` builds it from the collection's `metadata.json`. A [collection split into groups](../groups/) brings its own index, in its `metadata.sqlite`.
+
+Both hold `records_fts`, an FTS5 table with one row per object (`record_id` and the text columns `title`, `names`, `dates`, `places`, `topics`, `object_types`, `notes`, `physical` and `identifiers`), and `entity_vocab(term, field, record_count)`, the collection's names, places, topics and object types.
 
 - **Visual:** the model compares the query with every image.
 - **Keyword:** SQLite full-text search ranked by BM25, with titles, names and catalog numbers weighing most. Every meaningful word must match, small words such as "a" or "of" are not required, and a word also matches its plural or singular when the catalog uses that form.

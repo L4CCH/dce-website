@@ -24,3 +24,21 @@ deploy/aws/describe.sh my-collection --file collection.json
 The link back to the original record is taken from the catalog: a column named `source_url`, `guid`, `record_url`, `landing_page` or `permalink` that holds a web address. Images are grouped into objects by a column named `object_id`, `record_id`, `item_id` or `group_id`.
 
 Collections without a catalog still work. Every image is then its own object, shown as having no catalog record, and is found by what it shows.
+
+## Catalog columns that search reads
+
+Where a manifest's columns hold text, [search](../search/) reads it as well as the pictures. Columns are read by name:
+
+| Read as | Columns |
+| --- | --- |
+| Title | `title`, `label` |
+| Names | `creator`, `author`, `artist`, `maker`, `photographer`, `contributor`, `publisher`, `people`, `sitter` |
+| Dates | `date`, `year`, `date_created`, `created`, `period` |
+| Places | `place`, `location`, `geography`, `spatial`, `coverage`, `country`, `region`, `state`, `county`, `city` |
+| Subjects | `subject`, `topic`, `keywords`, `tags`, `theme` |
+| Kinds of object | `object_type`, `genre`, `classification`, `kind`, `work_type` |
+| Materials | `medium`, `material`, `technique`, `dimensions`, `extent` |
+| Notes | `description`, `notes`, `summary`, `abstract`, `caption`, `inscription`, `transcription`, and any other column of text |
+| Catalog numbers | `identifier`, `accession_number`, `object_number`, `call_number`, `catalog_number`, `inventory_number` |
+
+Plural forms of these names are read too. Several values in one cell may be separated by `;` or `|`. Web addresses, file names and columns of numbers are left out. Names, places, subjects and kinds of object also teach Auto search which words in a query to look up in the catalog.
