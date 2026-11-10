@@ -1,38 +1,25 @@
 ---
 import Section from './Section.astro';
-import { site } from '../site';
+import { path, site } from '../site';
 
 const steps = [
   {
     title: 'Point it at a collection',
-    text: 'A folder, an S3 bucket or a parquet manifest of images. A profile of the collection first shows what it holds, what is possible and what indexing will cost.',
-    points: [
-      'Reads images where they are and never copies the originals',
-      'Needs no metadata. An existing catalog groups images into objects and links each one to its record',
-    ],
+    text: 'A folder, an S3 bucket, or a parquet manifest of images and their catalog. A profile of the collection first shows what it holds, what the site will do with it and what indexing will cost.',
   },
   {
     title: 'Build the index',
     text: 'An open multimodal model embeds every image on a machine you control. No image is sent to an external API.',
-    points: [
-      'Scales to hundreds of thousands of images',
-      'Resumes where it left off after an interruption',
-      'Index on a large machine, then serve from a small one',
-    ],
   },
   {
     title: 'Open the search site',
-    text: 'Visitors search in natural language or with an image, across photographs, maps and documents.',
-    points: [
-      'Runs on a laptop, your own server or AWS. Serving needs no GPU',
-      'Upload and rate limits protect a public site, and every refusal is explained',
-      'Describes itself to search engines and AI assistants',
-    ],
+    text: 'Visitors search in natural language or with an image, across photographs, maps, documents and 3D models. Where a catalog exists, search weighs what the images show against what the records say, and tells the visitor how it read the query.',
   },
 ];
 
 const papers = {
   siglip: 'https://arxiv.org/abs/2303.15343',
+  siglip2: 'https://arxiv.org/abs/2502.14786',
   clip: 'https://arxiv.org/abs/2103.00020',
 };
 ---
@@ -44,12 +31,28 @@ const papers = {
         <span class="num" aria-hidden="true">{i + 1}</span>
         <h3>{step.title}</h3>
         <p>{step.text}</p>
-        <ul>{step.points.map((point) => <li>{point}</li>)}</ul>
       </li>
     ))}
   </ol>
+  <div class="search">
+    <h3>How search works</h3>
+    <p class="search-lead">
+      Search reads what the pictures show and, where a catalog exists, what the records say. For each query it decides which to trust more, and every result says why it was found.
+    </p>
+    <div class="search-cases">
+      <figure>
+        <img src={path('/screens/search-name.jpg')} alt="The search box with the query amelia earhart, above filters for museum, catalog records only, and searching by Auto, Appearance or Catalog" loading="lazy" />
+        <figcaption><strong>A name</strong> is looked up in the records, so “amelia earhart” finds what is cataloged under her name.</figcaption>
+      </figure>
+      <figure>
+        <img src={path('/screens/search-description.jpg')} alt="The search box with the query a woman at a typewriter, above the same filters" loading="lazy" />
+        <figcaption><strong>A description</strong> is matched against the pictures. No record mentions “a woman at a typewriter”, yet the site finds her.</figcaption>
+      </figure>
+    </div>
+    <p class="search-more"><a href={path('/docs/search/')}>How the two are weighed</a></p>
+  </div>
   <p class="models">
-    Embeddings come from open models that run on your own machine or cloud account: <a href={papers.siglip} rel="noopener">SigLIP</a> by default, or <a href={papers.clip} rel="noopener">CLIP</a>.
+    Embeddings come from open models that run on your own machine or cloud account: <a href={papers.siglip} rel="noopener">SigLIP</a> by default, <a href={papers.siglip2} rel="noopener">SigLIP 2</a> or <a href={papers.clip} rel="noopener">CLIP</a>. An index can hold vectors from several, and the site searches with the one you choose.
   </p>
   <p class="ask">Want another model? <a href={site.ideasUrl} rel="noopener">Ask for it on the wishlist.</a></p>
 </Section>
@@ -73,9 +76,15 @@ const papers = {
     margin-bottom: 14px;
   }
   .steps h3 { font-size: 1.15rem; margin-bottom: 0.4em; }
-  .steps p { margin-bottom: 0.75em; }
-  .steps ul { margin: 0; padding-left: 1.1em; list-style: disc; color: var(--ink-soft); font-size: 0.95rem; }
-  .steps ul li { margin-bottom: 0.3em; }
+  .steps p { margin-bottom: 0; }
+  .search { margin: 48px 0 0; padding-top: 24px; border-top: 1px solid var(--line); }
+  .search h3 { font-size: 1.15rem; margin-bottom: 0.4em; }
+  .search-lead { color: var(--ink-soft); max-width: var(--measure); }
+  .search-cases { display: grid; gap: 28px; margin-top: 24px; max-width: 780px; }
+  .search-cases figure { margin: 0; }
+  .search-cases img { display: block; width: 100%; height: auto; border-radius: calc(var(--radius) - 4px); border: 1px solid var(--line); }
+  .search-cases figcaption { margin-top: 10px; color: var(--ink-soft); }
+  .search-more { margin: 16px 0 0; }
   .models { margin: 40px 0 0; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-soft); }
   .ask { margin: 12px 0 0; color: var(--ink-soft); }
 </style>

@@ -1,17 +1,38 @@
 :root {
   --sl-font: 'Lato', system-ui, sans-serif;
-  --sl-color-accent-low: #f4e6d5;
-  --sl-color-accent: #9a5b1a;
-  --sl-color-accent-high: #5e3608;
+  --sl-color-accent-low: #f0e6cf;
+  --sl-color-accent: #7f6027;
+  --sl-color-accent-high: #4a3814;
 }
 :root[data-theme='dark'] {
-  --sl-color-accent-low: #2b2218;
-  --sl-color-accent: #d9a05b;
-  --sl-color-accent-high: #f1cf9c;
+  --sl-color-accent-low: #30281c;
+  --sl-color-accent: #c6a15e;
+  --sl-color-accent-high: #ecdcb8;
 }
 .sl-markdown-content h1,
 .sl-markdown-content h2,
 .sl-markdown-content h3,
 .site-title {
   font-family: 'Kumbh Sans', system-ui, sans-serif;
+}
+:root {
+  --dce-toc-width: 15rem;
+}
+.content-panel .sl-container {
+  max-width: none;
+}
+@media (min-width: 72rem) {
+  .right-sidebar-container {
+    width: var(--dce-toc-width);
+  }
+  [data-has-sidebar][data-has-toc] .main-pane {
+    width: calc(100% - var(--dce-toc-width));
+  }
+  .right-sidebar {
+    width: var(--dce-toc-width);
+  }
+  .right-sidebar-panel .sl-container {
+    width: auto;
+    max-width: none;
+  }
 }

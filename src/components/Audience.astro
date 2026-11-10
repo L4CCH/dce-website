@@ -1,25 +1,31 @@
 ---
 import Section from './Section.astro';
-import ExampleSearch from './ExampleSearch.astro';
+import { path } from '../site';
 
 const cases = [
   {
     title: 'Photographs nobody has cataloged',
     text: 'Thousands of scans named IMG_2041.jpg. Point it at the folder and visitors can search them the same afternoon.',
-    query: 'a wedding party on a porch',
-    kind: 'photo',
+    image: '/screens/photos.jpg',
+    alt: 'A search for children playing in the snow, answered with a greeting card, a snowy Hiroshige print and a skating scene',
   },
   {
     title: 'Maps, plans and drawings',
-    text: 'Search by what is drawn rather than what the title says.',
-    query: 'a harbor with a breakwater',
-    kind: 'map',
+    text: 'Search by what is drawn rather than what the title says, and open a large sheet in deep zoom.',
+    image: '/screens/maps.jpg',
+    alt: "A search for a bird's-eye view of a city, answered with panoramic views of St. Louis and Boston",
   },
   {
     title: 'Born-digital and scanned documents',
-    text: 'PDFs are indexed page by page and searched by what each page looks like, so handwriting, diagrams, forms and posters are found without OCR.',
-    query: 'a redacted document',
-    kind: 'doc',
+    text: 'PDFs are indexed page by page and searched by what each page looks like, so handwriting, diagrams and forms are found without OCR.',
+    image: '/screens/documents.jpg',
+    alt: 'A search for a handwritten letter, answered first with handwritten pages from the Smithsonian Institution Archives',
+  },
+  {
+    title: 'Objects scanned in 3D',
+    text: "Visitors turn the model on the object's page. Views drawn from it are searched with the photographs, and similar shapes are a click away.",
+    image: '/screens/3d.jpg',
+    alt: "The 3D model of Charlie Parker's alto saxophone on its page, above the object's photographs",
   },
 ];
 ---
@@ -28,7 +34,7 @@ const cases = [
   id="who"
   eyebrow="Who it is for"
   title="Collections that are hard to search"
-  lead="Manual cataloging does not scale to millions of items, so many digitized and born-digital collections lack basic descriptive metadata. Search here compares a visitor's words with what the images show, so it works even when there is no metadata at all."
+  lead="Manual cataloging does not scale to millions of items, so many digitized and born-digital collections lack basic descriptive metadata, or have it for some items and not others. Search here compares a visitor's words with what the images show, and reads the catalog wherever there is one."
   split
 >
   <ul class="cases">
@@ -36,7 +42,7 @@ const cases = [
       <li>
         <h3>{c.title}</h3>
         <p>{c.text}</p>
-        <ExampleSearch query={c.query} kind={c.kind} />
+        <img src={path(c.image)} alt={c.alt} loading="lazy" />
       </li>
     ))}
   </ul>
@@ -49,4 +55,5 @@ const cases = [
   .cases li:last-child { padding-bottom: 0; }
   .cases h3 { font-size: 1.2rem; margin-bottom: 0.4em; }
   .cases p { color: var(--ink-soft); margin-bottom: 14px; }
+  .cases img { display: block; width: 100%; height: auto; border-radius: calc(var(--radius) - 4px); border: 1px solid var(--line); }
 </style>

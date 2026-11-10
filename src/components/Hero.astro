@@ -1,10 +1,6 @@
 ---
 import { site } from '../site';
 import HeroArt from './HeroArt.astro';
-import type { RepoStats } from '../lib/github';
-
-interface Props { stats: RepoStats }
-const { stats } = Astro.props;
 ---
 
 <section class="hero" aria-labelledby="hero-title">
@@ -14,17 +10,11 @@ const { stats } = Astro.props;
       <h1 id="hero-title">{site.tagline}</h1>
       <p class="lead">
         Digital Collections Explorer is an open-source platform for exploratory search over digital collections
-        with visual features: photographs, maps and documents. Visitors search in natural language or with an
-        image, so a collection can be discovered even when it has little or no descriptive metadata. It runs on
-        a laptop, a server or the cloud, and the collection never leaves your hands.
+        with visual features: photographs, maps, documents and 3D models. Visitors search in natural language or with an
+        image. Search reads what the images show and, where a catalog exists, what the records say, so a collection
+        can be discovered even when it has little or no descriptive metadata. It runs on a laptop, a server or the
+        cloud, and the collection never leaves your hands.
       </p>
-      <div class="btn-row">
-        <a class="btn btn-primary" href="#templates">See it working</a>
-        <a class="btn" href="#start">Get started</a>
-        <a class="btn" href={site.repoUrl} rel="noopener">
-          GitHub{stats.stars !== null && <span class="stars" aria-label={`${stats.stars} stars`}>★ {stats.stars}</span>}
-        </a>
-      </div>
     </div>
     <div class="hero-art"><HeroArt /></div>
   </div>
@@ -39,8 +29,7 @@ const { stats } = Astro.props;
     .hero-art { max-width: 480px; }
   }
   .hero h1 { max-width: 20ch; }
-  .hero .lead { max-width: 56ch; font-size: 1.25rem; }
-  .stars { font-weight: 400; color: var(--ink-soft); }
+  .hero .lead { max-width: 56ch; font-size: 1.25rem; margin-bottom: 0; }
   @media (max-width: 639px) {
     .hero-art { display: none; }
     .hero { padding-top: 48px; }

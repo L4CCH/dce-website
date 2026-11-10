@@ -1,12 +1,14 @@
-const repo = 'hinxcode/digital-collections-explorer';
+const repo = 'L4CCH/digital-collections-explorer';
 const repoUrl = `https://github.com/${repo}`;
+
+export const path = (to: string) => `${import.meta.env.BASE_URL.replace(/\/$/, '')}${to}`;
 
 export const site = {
   name: 'Digital Collections Explorer',
-  tagline: 'Search digital collections, even with little or no metadata.',
+  tagline: 'Search digital collections, with or without a catalog.',
   description:
-    'Open-source, self-hosted exploratory search for digital collections with visual features. Natural language queries and reverse image search, even for collections with little or no descriptive metadata. Made for galleries, libraries, archives and museums.',
-  url: 'https://digital-collections-explorer.com',
+    'Open-source, self-hosted exploratory search for digital collections with visual features. Natural language queries and reverse image search, even for collections with little or no descriptive metadata, and catalog search where records exist. Made for galleries, libraries, archives and museums.',
+  url: 'https://l4cch.github.io/dce-website',
   repo,
   repoUrl,
   readmeUrl: `${repoUrl}#readme`,
@@ -17,8 +19,7 @@ export const site = {
   issuesUrl: `${repoUrl}/issues`,
   goodFirstIssuesUrl: `${repoUrl}/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22`,
   skillUrl: `${repoUrl}/tree/main/skills/dce-setup`,
-  containerImage: 'ghcr.io/hinxcode/digital-collections-explorer',
-  zenodoUrl: 'https://doi.org/10.5281/zenodo.15744570',
+  containerImage: 'ghcr.io/l4cch/digital-collections-explorer',
   paper: {
     title:
       'Digital Collections Explorer: An Open-Source, Multimodal Viewer for Searching Digital Collections',
@@ -27,7 +28,6 @@ export const site = {
     article: 'e14',
     doi: '10.1017/chr.2025.10017',
     url: 'https://doi.org/10.1017/chr.2025.10017',
-    arxivUrl: 'https://arxiv.org/abs/2507.00961',
     year: 2025,
     authors: ['Ying-Hsiang Huang', 'Benjamin Charles Germain Lee'],
   },
@@ -38,57 +38,89 @@ export const site = {
     institution: 'University of Washington Information School',
     institutionUrl: 'https://ischool.uw.edu/',
   },
-  license: { name: 'Apache 2.0', spdx: 'Apache-2.0', url: 'https://www.apache.org/licenses/LICENSE-2.0' },
+  license: { name: 'MIT', spdx: 'MIT', url: 'https://opensource.org/license/mit' },
+  docsLicense: { name: 'CC BY 4.0', spdx: 'CC-BY-4.0', url: 'https://creativecommons.org/licenses/by/4.0/' },
 };
 
-export type Template = {
-  id: 'photographs' | 'maps' | 'documents';
+export type Medium = {
+  id: 'images' | '3d' | 'pdf' | 'zoom';
   name: string;
+  option?: string;
   lead: string;
   features: string[];
-  demo: string;
-  live: boolean;
 };
 
-export const templates: Template[] = [
+export const media: Medium[] = [
   {
-    id: 'photographs',
-    name: 'Photographs',
-    lead: 'A wall of images to wander through, for photo collections and image archives.',
+    id: 'images',
+    name: 'Images',
+    lead: 'Photographs, scans and other images, on every site.',
     features: [
       'Opens on a shuffled wall of images, so there is something to see before anyone types',
-      'Suggested searches set by the institution',
+      'Searches what the images show and, where a catalog exists, what the records say, and tells visitors how it read their words',
+      'Filters by group, such as the museums of one institution, and can keep only images that have a catalog record',
       'Shows each object once, however many photographs it has',
-      'Every image has its own page, with similar images and a link back to the original record',
-      'Search by text or by uploading a picture',
+      'Every object has its own page, with its catalog record, similar images, where else it appears and a link back to the original record',
+      'Search by text or by uploading a picture, or start from suggested searches set by the institution',
     ],
-    demo: '/photographs/',
-    live: false,
   },
   {
-    id: 'maps',
-    name: 'Maps',
-    lead: 'Deep-zoom viewing for maps, plans and other large sheets.',
+    id: '3d',
+    name: '3D models',
+    option: '3d',
+    lead: 'Objects scanned or modeled in 3D, as .glb files.',
     features: [
-      'Search by what is drawn: "a harbor," "a railroad junction," "a coat of arms"',
-      'Lightbox with deep zoom for large sheets',
-      'Reverse image search from an uploaded picture',
-      'Links each map back to the holding institution',
+      "An object's page opens its model, which visitors can turn and zoom",
+      'Views drawn from each model are searched with the photographs, so a model is found by what it looks like',
+      'Finds other objects of a similar shape',
+      'The viewer loads only on the page of an object that has a model',
     ],
-    demo: '/maps/',
-    live: false,
   },
   {
-    id: 'documents',
-    name: 'Documents',
-    lead: 'Page-level search for born-digital and scanned documents.',
+    id: 'pdf',
+    name: 'PDFs',
+    option: 'pdf',
+    lead: 'Born-digital and scanned documents, searched page by page.',
     features: [
-      'Indexes PDFs page by page and searches them by what the page looks like',
-      'Preview cards with the matching page, then the whole document in a viewer',
-      'Download of the original file',
+      'Indexes PDFs page by page and searches them by what each page looks like',
       'Works without OCR, so it also finds handwriting, diagrams and forms',
+      'Shows the matching page, with the whole document one click away',
     ],
-    demo: '/documents/',
-    live: false,
+  },
+  {
+    id: 'zoom',
+    name: 'Deep zoom',
+    option: 'zoom',
+    lead: 'Maps, plans and other large images served by IIIF image servers.',
+    features: [
+      "Opens an image in deep zoom from the institution's own IIIF server",
+      'Loads only the part of the image in view, so a large sheet opens quickly',
+      'Shows the plain image if the server does not answer',
+    ],
   },
 ];
+
+export type Showcase = {
+  id: string;
+  name: string;
+  summary: string;
+  url: string;
+  image: string;
+  alt: string;
+  tries: string[];
+};
+
+export const showcases: Showcase[] = [
+  {
+    id: 'loc-maps',
+    name: 'Historical Maps from the Library of Congress',
+    summary: '562,842 map sheets, from fire insurance maps to city views and charts, searched by what is drawn on them.',
+    url: 'https://digital-collections-explorer.com/',
+    image: '/showcases/loc-maps.jpg',
+    alt: "Search results for a bird's-eye view of a city: panoramic views of American cities",
+    tries: ["a bird's-eye view of a city", 'a battlefield map', 'a globe'],
+  },
+];
+
+export const searchUrl = (showcase: Showcase, query: string) =>
+  `${showcase.url}#/search?q=${encodeURIComponent(query).replace(/%20/g, '+')}`;
