@@ -22,13 +22,6 @@ async function getJson<T>(url: string, init: RequestInit = {}): Promise<T | null
   }
 }
 
-export type RepoStats = { stars: number | null };
-
-export async function repoStats(): Promise<RepoStats> {
-  const repo = await getJson<{ stargazers_count: number }>(`https://api.github.com/repos/${site.repo}`);
-  return { stars: repo?.stargazers_count ?? null };
-}
-
 export type Idea = { title: string; url: string; upvotes: number; comments: number; author: string };
 
 export async function topIdeas(limit = 6): Promise<Idea[]> {

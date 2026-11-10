@@ -8,13 +8,13 @@ import Showcases from '../components/Showcases.astro';
 import Assistants from '../components/Assistants.astro';
 import Community from '../components/Community.astro';
 import Cite from '../components/Cite.astro';
-import { repoStats, topIdeas, goodFirstIssues } from '../lib/github';
+import { topIdeas, goodFirstIssues } from '../lib/github';
 
-const [stats, ideas, issues] = await Promise.all([repoStats(), topIdeas(), goodFirstIssues()]);
+const [ideas, issues] = await Promise.all([topIdeas(), goodFirstIssues()]);
 ---
 
 <Base>
-  <Hero stats={stats} />
+  <Hero />
   <Audience />
   <HowItWorks />
   <Showcases />

@@ -1,9 +1,6 @@
 ---
-import { path, site } from '../site';
-import type { RepoStats } from '../lib/github';
-
-interface Props { stats: RepoStats }
-const { stats } = Astro.props;
+import { site } from '../site';
+import HeroArt from './HeroArt.astro';
 ---
 
 <section class="hero" aria-labelledby="hero-title">
@@ -18,33 +15,23 @@ const { stats } = Astro.props;
         catalog exists, search reads the records too. It runs on a laptop, a server or the cloud, and the
         collection never leaves your hands.
       </p>
-      <div class="btn-row">
-        <a class="btn btn-primary" href="#showcases">See it working</a>
-        <a class="btn" href="#start">Get started</a>
-        <a class="btn" href={site.repoUrl} rel="noopener">
-          GitHub{stats.stars !== null && <span class="stars" aria-label={`${stats.stars} stars`}>★ {stats.stars}</span>}
-        </a>
-      </div>
     </div>
-    <figure class="hero-art">
-      <img src={path('/screens/hero.jpg')} alt="A Digital Collections Explorer site for Smithsonian Open Access: a search box, suggested searches, and a wall of images to browse" width="1600" height="1000" />
-    </figure>
+    <div class="hero-art"><HeroArt /></div>
   </div>
 </section>
 
 <style>
   .hero { padding: clamp(64px, 12vw, 140px) 0 clamp(48px, 8vw, 96px); }
   .hero-grid { display: grid; grid-template-columns: minmax(0, 11fr) minmax(0, 9fr); gap: 48px; align-items: center; }
-  .hero-art { margin: 0; }
-  .hero-art img { display: block; width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .hero-art { max-width: 560px; }
   @media (max-width: 959px) {
     .hero-grid { grid-template-columns: 1fr; gap: 40px; }
-    .hero-art { max-width: 560px; }
+    .hero-art { max-width: 480px; }
   }
   .hero h1 { max-width: 20ch; }
-  .hero .lead { max-width: 56ch; font-size: 1.25rem; }
-  .stars { font-weight: 400; color: var(--ink-soft); }
+  .hero .lead { max-width: 56ch; font-size: 1.25rem; margin-bottom: 0; }
   @media (max-width: 639px) {
+    .hero-art { display: none; }
     .hero { padding-top: 48px; }
     .hero .lead { font-size: 1.1rem; }
   }
