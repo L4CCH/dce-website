@@ -63,7 +63,7 @@ Any of the models above can take a `model_revision`: the commit of the model on 
 }
 ```
 
-A [collection split into groups](../groups/) records the models it holds and their revisions in `index_info.json`, so it needs none of this.
+A collection written by a pipeline of its own records the models it holds and their revisions in `index_info.json`, so it needs none of this. See [Collection format](../collection-format/#index_infojson).
 
 ## Changing the model
 

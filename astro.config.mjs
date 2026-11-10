@@ -6,6 +6,7 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
   site: 'https://l4cch.github.io',
   base: '/dce-website',
+  redirects: { '/docs/groups': '/dce-website/docs/collection-format/' },
   integrations: [
     starlight({
       title: 'Digital Collections Explorer',
@@ -32,9 +33,10 @@ export default defineConfig({
           label: 'Setting up a collection',
           items: [
             { slug: 'docs/indexing' },
+            { slug: 'docs/mapping-your-data' },
+            { slug: 'docs/collection-format' },
             { slug: 'docs/kinds-of-material' },
             { slug: 'docs/describing-a-collection' },
-            { slug: 'docs/groups' },
             { slug: 'docs/search' },
             { slug: 'docs/models' },
             { slug: 'docs/limits' },

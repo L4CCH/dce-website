@@ -27,7 +27,7 @@ See [Describing a collection to visitors](../../describing-a-collection/) for wh
 
 ## A collection prepared elsewhere
 
-A collection indexed on another machine, or [split into groups](../../groups/) by your own pipeline, needs no indexing here. `--from` starts a site from a folder, and `import` with the same options replaces the data of a site that is running. The site keeps serving its current data until the copy is complete, and keeps the old data in a folder next to the new one until you delete it.
+A collection indexed on another machine, or written by [a pipeline of its own](../../mapping-your-data/#a-pipeline-of-its-own-smithsonian-edan), needs no indexing here. `--from` starts a site from a folder, and `import` with the same options replaces the data of a site that is running. The site keeps serving its current data until the copy is complete, and keeps the old data in a folder next to the new one until you delete it.
 
 ```bash
 sudo deploy/bootstrap.sh install --name my-collection --from /path/to/my-collection

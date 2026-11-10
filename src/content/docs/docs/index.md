@@ -8,9 +8,10 @@ These pages are for the people who run Digital Collections Explorer: the person 
 ## Setting up a collection
 
 - [Indexing large or remote collections](indexing/): profile a collection first, then index it from a folder, an S3 bucket or a manifest, with Python or Docker.
+- [Mapping your data](mapping-your-data/): bring a catalog into a collection, from a spreadsheet to a museum's collection system, and what each part of the site needs.
+- [Collection format](collection-format/): the folder a site serves and every table in it, and sites that hold the collections of several institutions.
 - [Kinds of material](kinds-of-material/): images are always shown; 3D models, PDFs and deep zoom are options.
 - [Describing a collection to visitors](describing-a-collection/): the title, suggested searches, license and links, and the link back to each record.
-- [Collections split into groups](groups/): serve a collection prepared by your own pipeline, with records, filters and related sources.
 - [Searching by appearance and by catalog](search/): how the two channels are weighed and what each result explains.
 - [Models](models/): SigLIP, SigLIP 2 or CLIP, and pinning a version.
 - [Limits that protect a public site](limits/): uploads, searches per visitor and searches at once.

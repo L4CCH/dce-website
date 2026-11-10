@@ -5,9 +5,9 @@ description: How text search fuses search by appearance with BM25 over the catal
 
 Every collection can be searched by appearance: a multimodal model compares the visitor's words, or picture, with every image. When the catalog holds text, text search also reads the records: it runs two channels and fuses them, which is hybrid search.
 
-Indexing builds the catalog's full-text index, `catalog.sqlite`, from the [catalog columns](../describing-a-collection/#catalog-columns-that-search-reads) of a manifest, and leaves it out when no column holds text. For a collection indexed another way, `python -m src.ingest.catalog_index data/collections/my-collection` builds it from the collection's `metadata.json`. A [collection split into groups](../groups/) brings its own index, in its `metadata.sqlite`.
+Indexing builds the catalog's full-text index in `metadata.sqlite` from the [catalog columns](../mapping-your-data/#how-columns-are-read) of a manifest, and leaves it out when no column holds text. A pipeline of its own can give the words of each field itself, in the `text` table of its [manifest](../mapping-your-data/#a-pipeline-of-its-own-smithsonian-edan).
 
-Both hold `records_fts`, an FTS5 table with one row per object (`record_id` and the text columns `title`, `names`, `dates`, `places`, `topics`, `object_types`, `notes`, `physical` and `identifiers`), and `entity_vocab(term, field, record_count)`, the collection's names, places, topics and object types.
+It holds `records_fts`, an FTS5 table with one row per object (`record_id` and the text columns `title`, `names`, `dates`, `places`, `topics`, `object_types`, `notes`, `physical` and `identifiers`), and `entity_vocab(term, field, record_count)`, the collection's names, places, topics and object types.
 
 - **Visual:** the model compares the query with every image.
 - **Keyword:** SQLite full-text search ranked by BM25, with titles, names and catalog numbers weighing most. Every meaningful word must match, small words such as "a" or "of" are not required, and a word also matches its plural or singular when the catalog uses that form.

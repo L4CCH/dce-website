@@ -1,9 +1,9 @@
 ---
 title: Indexing large or remote collections
-description: Profile a collection first, then index it from a folder, an S3 bucket or a parquet manifest, with no metadata needed.
+description: Profile a collection first, then index it from a folder, an S3 bucket or a parquet manifest, with or without a catalog.
 ---
 
-A collection can be too large for one disk, live in an S3 bucket, or never have been organized. The tools below handle all three. They need no metadata and never store the original images.
+A collection can be too large for one disk, live in an S3 bucket, or never have been organized. The tools below handle all three. They read a catalog when there is one, work without one, and never store the original images.
 
 ```bash
 # 1. See what the collection holds, what is possible and what indexing will cost
@@ -24,7 +24,7 @@ The profile also says which [kinds of material](../kinds-of-material/) the colle
 
 - **A folder** on this machine, searched through all its subfolders.
 - **An S3 prefix.** Add `--anonymous` for a public bucket.
-- **A parquet manifest** with one row per image: its address in a column such as `image_url`, or only its IIIF image service in a column such as `iiif`, and any catalog fields beside it. A column such as `thumbnail_url` names a thumbnail the source already makes. Paths in a manifest are read relative to the manifest. `--fetch-via s3://bucket` reads the images from a bucket instead of their web addresses.
+- **A parquet manifest** with one row per file: its address in a column such as `image_url`, or only its IIIF image service in a column such as `iiif`, the object it shows in `object_id`, its group in `group`, and the catalog beside them. [Mapping your data](../mapping-your-data/) lists the columns and how each is read. Paths in a manifest are read relative to the manifest. `--fetch-via s3://bucket` reads the files from a bucket instead of their web addresses.
 
 ## What the site keeps of each image
 
@@ -40,9 +40,11 @@ Indexing reads every image once, for the model, and never stores the original. W
 
 Linking needs little disk, but the site then depends on the source: it must stay up and fast, keep its addresses, and let other sites show its images. An IIIF server that makes each size on request can take half a second the first time an image is shown. `thumbnails` keeps the search page quick for a few tens of kilobytes an image.
 
-## Catalog search
+## What indexing writes
 
-When a manifest's catalog columns hold text, such as titles, names, dates, places or descriptions, indexing also builds a full-text index of them, and text search then reads the records as well as the pictures. The summary says how many objects it covers. See [Searching by appearance and by catalog](../search/).
+Indexing writes the collection in the [collection format](../collection-format/). Where the manifest has a catalog, each object's page shows its fields, search reads the records as well as the pictures, and visitors can filter by date, place, kind of object, culture, subject and name; a `group` column adds a filter by group. The summary says how many records search covers and which filters there are.
+
+A collection indexed by v2.0.0-beta.2 or earlier is written in the new format by running the same command again. Every file is already indexed, so nothing is embedded twice.
 
 ## Stopping and resuming
 

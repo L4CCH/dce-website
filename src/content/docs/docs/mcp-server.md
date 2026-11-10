@@ -27,12 +27,12 @@ In Claude or ChatGPT, add a custom connector with the same address. Assistants t
 
 | Tool | What it does |
 | --- | --- |
-| `describe_collection` | The collection's title, groups and their sizes, license, and suggested searches |
+| `describe_collection` | The collection's title, groups with their sizes, institutions and licenses, its license, and suggested searches |
 | `search_collection` | The site's search, in Auto, Appearance or Catalog mode, for some groups or catalog values; up to 20 objects, each with why it was found |
 | `find_similar` | Objects whose images look most like one object |
 | `search_by_image` | Objects that look like a collection image, a crop of one, or an image the assistant sends |
 | `list_catalog_values` | The values the catalog uses for kinds of object, places, cultures, topics, names and dates |
-| `get_object` | One object's record, its images, the link to the institution's record, and where else it appears |
+| `get_object` | One object's record, its images, its institution and license, the link to the institution's record, and where else it appears |
 
 The three search tools take `catalog`, which keeps only objects whose record holds the given values: a year range, kinds of object, places, cultures, topics or names, spelled as `list_catalog_values` gives them. A term such as `date:1860s` or `place:china` in the query instead searches the catalog text alone. Both need a collection whose catalog has been prepared with these categories.
 
