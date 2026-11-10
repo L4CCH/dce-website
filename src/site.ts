@@ -113,8 +113,8 @@ export type Showcase = {
 export const showcases: Showcase[] = [
   {
     id: 'loc-maps',
-    name: 'Library of Congress Maps',
-    summary: '562,842 maps from the Geography and Map Division, searched by what is drawn on them.',
+    name: 'Historical Maps from the Library of Congress',
+    summary: '562,842 map sheets, from fire insurance maps to city views and charts, searched by what is drawn on them.',
     url: 'https://digital-collections-explorer.com/',
     image: '/showcases/loc-maps.jpg',
     alt: "Search results for a bird's-eye view of a city: panoramic views of American cities",
