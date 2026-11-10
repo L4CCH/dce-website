@@ -7,8 +7,13 @@ import { path } from '../site';
   id="assistants"
   eyebrow="Agentic search"
   title="Searchable by AI agents"
-  lead="Every site comes with its own MCP server. Connect Claude, ChatGPT or any other agent that speaks the Model Context Protocol, and it can search the collection on its own: run searches, follow similar objects, and link each answer to the object's page on your site."
 >
+  <Fragment slot="lead">
+    Every site comes with its own MCP server. Connect Claude, ChatGPT or any other agent that speaks the
+    <a href="https://modelcontextprotocol.io/docs/getting-started/intro" rel="noopener">Model Context Protocol</a>,
+    and it can search the collection on its own: run searches, follow similar objects, and link each answer to the
+    object's page on your site.
+  </Fragment>
   <p class="muted note">
     In apps that show interactive results, such as Claude, ChatGPT and VS Code, the answers appear as an image wall in the conversation. The server only reads and needs no account.
   </p>
