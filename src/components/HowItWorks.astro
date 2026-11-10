@@ -22,6 +22,33 @@ const papers = {
   siglip2: 'https://arxiv.org/abs/2502.14786',
   clip: 'https://arxiv.org/abs/2103.00020',
 };
+
+const examples = [
+  {
+    kind: 'A name',
+    text: 'is looked up in the records, so “amelia earhart” finds what is cataloged under her name.',
+    query: 'amelia earhart',
+    why: 'Matches the title and name',
+    results: [
+      { file: 'name-1.jpg', width: 400, height: 247, alt: "Amelia Earhart 'Round The World Flight' envelope signed by Amelia Earhart, National Postal Museum" },
+      { file: 'name-2.jpg', width: 398, height: 400, alt: "Token commemorating Amelia Earhart's first transatlantic flight, National Postal Museum" },
+      { file: 'name-3.jpg', width: 361, height: 365, alt: 'Medal presented to Amelia Earhart, National Postal Museum' },
+      { file: 'name-4.jpg', width: 400, height: 247, alt: "Amelia Earhart 'Round The World Flight' envelope, National Postal Museum" },
+    ],
+  },
+  {
+    kind: 'A description',
+    text: 'is matched against the pictures. None of these records mentions a handshake.',
+    query: 'two men shaking hands',
+    why: 'Looks similar',
+    results: [
+      { file: 'description-1.jpg', width: 263, height: 400, alt: 'Samuel Clemens and John T. Raymond shaking hands, a photograph, National Portrait Gallery' },
+      { file: 'description-2.jpg', width: 295, height: 400, alt: 'Silhouettes of David Osgood and George Parker facing each other, National Portrait Gallery' },
+      { file: 'description-3.jpg', width: 310, height: 400, alt: 'Silhouettes of Nathan Crocker and William Goddard facing each other, National Portrait Gallery' },
+      { file: 'description-4.jpg', width: 309, height: 400, alt: 'Silhouettes of Theodore McCaleb and Isaac Johnson facing each other, National Portrait Gallery' },
+    ],
+  },
+];
 ---
 
 <Section id="how" eyebrow="How it works" title="From a collection to a search site in three steps">
@@ -40,15 +67,23 @@ const papers = {
       Search reads what the pictures show and, where a catalog exists, what the records say. For each query it decides which to trust more, and every result says why it was found.
     </p>
     <div class="search-cases">
-      <figure>
-        <img src={path('/screens/search-name.jpg')} alt="The search box with the query amelia earhart, above filters for museum, catalog records only, and searching by Auto, Appearance or Catalog" loading="lazy" />
-        <figcaption><strong>A name</strong> is looked up in the records, so “amelia earhart” finds what is cataloged under her name.</figcaption>
-      </figure>
-      <figure>
-        <img src={path('/screens/search-description.jpg')} alt="The search box with the query a woman at a typewriter, above the same filters" loading="lazy" />
-        <figcaption><strong>A description</strong> is matched against the pictures. No record mentions “a woman at a typewriter”, yet the site finds her.</figcaption>
-      </figure>
+      {examples.map((example) => (
+        <figure>
+          <p class="query">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>
+            {example.query}
+          </p>
+          <ul class="results">
+            {example.results.map((result) => (
+              <li><img src={path(`/results/${result.file}`)} alt={result.alt} width={result.width} height={result.height} loading="lazy" /></li>
+            ))}
+          </ul>
+          <p class="why">{example.why}</p>
+          <figcaption><strong>{example.kind}</strong> {example.text}</figcaption>
+        </figure>
+      ))}
     </div>
+    <p class="search-source">From searches of the Smithsonian’s Open Access images.</p>
     <p class="search-more"><a href={path('/docs/search/')}>How the two are weighed</a></p>
   </div>
   <p class="models">
@@ -80,11 +115,23 @@ const papers = {
   .search { margin: 48px 0 0; padding-top: 24px; border-top: 1px solid var(--line); }
   .search h3 { font-size: 1.15rem; margin-bottom: 0.4em; }
   .search-lead { color: var(--ink-soft); max-width: var(--measure); }
-  .search-cases { display: grid; gap: 28px; margin-top: 24px; max-width: 780px; }
-  .search-cases figure { margin: 0; }
-  .search-cases img { display: block; width: 100%; height: auto; border-radius: calc(var(--radius) - 4px); border: 1px solid var(--line); }
+  .search-cases { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; margin-top: 24px; }
+  @media (min-width: 960px) {
+    .search-cases { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  }
+  .search-cases figure { margin: 0; padding: 16px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius); }
+  .query { display: flex; align-items: center; gap: 10px; max-width: none; margin: 0; padding: 10px 16px; background: #fff; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); font-size: 1.05rem; }
+  .query svg { flex: none; width: 18px; height: 18px; fill: none; stroke: var(--ink-faint); stroke-width: 2; stroke-linecap: round; }
+  .results { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  @media (min-width: 560px) {
+    .results { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+  .results li { margin: 0; }
+  .results img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; padding: 6px; background: var(--bg-sunken); border-radius: 6px; }
+  .why { display: inline-block; margin: 12px 0 0; padding: 3px 12px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 0.875rem; font-weight: 700; }
   .search-cases figcaption { margin-top: 10px; color: var(--ink-soft); }
-  .search-more { margin: 16px 0 0; }
+  .search-source { margin: 14px 0 0; color: var(--ink-faint); font-size: 0.875rem; }
+  .search-more { margin: 8px 0 0; }
   .models { margin: 40px 0 0; padding-top: 20px; border-top: 1px solid var(--line); color: var(--ink-soft); }
   .ask { margin: 12px 0 0; color: var(--ink-soft); }
 </style>
