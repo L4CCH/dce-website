@@ -6,30 +6,14 @@ const steps = [
   {
     title: 'Point it at a collection',
     text: 'A folder, an S3 bucket or a parquet manifest of images. A profile of the collection first shows what it holds, what is possible and what indexing will cost.',
-    points: [
-      'Reads images where they are and never copies the originals',
-      'Needs no metadata. An existing catalog groups images into objects, links each one to its record and makes the records searchable',
-      'Splits a large collection into groups, such as the museums of one institution, that visitors can filter by',
-    ],
   },
   {
     title: 'Build the index',
     text: 'An open multimodal model embeds every image on a machine you control. No image is sent to an external API.',
-    points: [
-      'Scales to hundreds of thousands of images',
-      'Resumes where it left off after an interruption',
-      'Index on a large machine, then serve from a small one',
-    ],
   },
   {
     title: 'Open the search site',
     text: 'Visitors search in natural language or with an image, across photographs, maps, documents and 3D models. Where a catalog exists, search weighs what the images show against what the records say, and tells the visitor how it read the query.',
-    points: [
-      'Installs only what the collection holds: 3D models, PDFs and deep zoom are options',
-      'Runs on a laptop, your own server or AWS, at a domain of its own or under a path of your website. Serving needs no GPU',
-      'Upload and rate limits protect a public site, and every refusal is explained',
-      'Describes itself to search engines, and answers AI assistants through its own MCP server',
-    ],
   },
 ];
 
@@ -47,7 +31,6 @@ const papers = {
         <span class="num" aria-hidden="true">{i + 1}</span>
         <h3>{step.title}</h3>
         <p>{step.text}</p>
-        <ul>{step.points.map((point) => <li>{point}</li>)}</ul>
       </li>
     ))}
   </ol>
@@ -93,9 +76,7 @@ const papers = {
     margin-bottom: 14px;
   }
   .steps h3 { font-size: 1.15rem; margin-bottom: 0.4em; }
-  .steps p { margin-bottom: 0.75em; }
-  .steps ul { margin: 0; padding-left: 1.1em; list-style: disc; color: var(--ink-soft); font-size: 0.95rem; }
-  .steps ul li { margin-bottom: 0.3em; }
+  .steps p { margin-bottom: 0; }
   .search { margin: 48px 0 0; padding-top: 24px; border-top: 1px solid var(--line); }
   .search h3 { font-size: 1.15rem; margin-bottom: 0.4em; }
   .search-lead { color: var(--ink-soft); max-width: var(--measure); }
