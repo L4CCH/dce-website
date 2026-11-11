@@ -30,7 +30,7 @@ Then open http://localhost:8000. `npm run setup` asks what the collection holds 
 
 ## Setting up a collection
 
-- [Indexing large or remote collections](indexing/): profile a collection first, then index it from a folder, an S3 bucket or a manifest, with Python or Docker.
+- [Indexing a collection](indexing/): profile a collection first, then index it from a folder, an S3 bucket or a manifest, with Python or Docker.
 - [Mapping your data](mapping-your-data/): bring a catalog into a collection, from a spreadsheet to a museum's collection system, and what each part of the site needs.
 - [Collection format](collection-format/): the folder a site serves and every table in it, and sites that hold the collections of several institutions.
 - [Kinds of material](kinds-of-material/): images are always shown; 3D models, PDFs and deep zoom are options.

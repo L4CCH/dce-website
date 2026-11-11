@@ -1,5 +1,5 @@
 ---
-title: Indexing large or remote collections
+title: Indexing a collection
 description: Profile a collection first, then index it from a folder, an S3 bucket or a parquet manifest, with or without a catalog.
 ---
 
@@ -77,5 +77,5 @@ COLLECTION=my-collection docker compose up serve
 The published image runs on x86-64 and ARM machines and shows every kind of material. Build options for an image of your own:
 
 - `--build-arg MEDIA=pdf,zoom` builds the interface with only the [kinds of material](../kinds-of-material/) you list. Without it, an image of your own, such as the one Docker Compose builds, shows images only and cannot read PDFs.
-- `--build-arg TORCH_VARIANT=cu124` installs the CUDA build of PyTorch, for indexing on a GPU; run that image with `docker run --gpus all`. The default is the much smaller CPU build, which is all that serving needs.
+- `--build-arg TORCH_VARIANT=cu128` installs the CUDA build of PyTorch, for indexing on a GPU; run that image with `docker run --gpus all`. The default is the much smaller CPU build, which is all that serving needs.
 - `--build-arg PRELOAD_MODEL=false` leaves the model out of the image. It is then downloaded in every new container, unless `/app/.cache/huggingface` is kept in a volume, as the deploy scripts do.
