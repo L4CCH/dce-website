@@ -26,9 +26,6 @@ const bibtex = `@article{huang2025digitalcollectionsexplorer,
       Huang, Y.-H., &amp; Lee, B. C. G. ({site.paper.year}). Digital Collections Explorer: An open-source, multimodal viewer for searching digital collections. <cite>{site.paper.journal}</cite>, <i>{site.paper.volume}</i>, {site.paper.article}. <a href={site.paper.url} rel="noopener">{site.paper.url}</a>
     </p>
     <Copy text={bibtex} label="Copy BibTeX" />
-    <ul class="links">
-      <li><a href={site.paper.url} rel="noopener">Read the paper, open access</a></li>
-    </ul>
   </div>
 </Section>
 
@@ -43,6 +40,4 @@ const bibtex = `@article{huang2025digitalcollectionsexplorer,
   }
   .reference cite { font-style: italic; }
   .reference a { overflow-wrap: anywhere; }
-  .links { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 24px; }
-  .links li { margin: 0; }
 </style>
