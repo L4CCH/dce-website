@@ -74,7 +74,7 @@ deploy/aws/mcp.sh my-collection --on                                # answer AI 
 
 ## A collection prepared elsewhere
 
-A collection built by your own pipeline needs no indexing on the machine. Copy the folder to a bucket in the region where the machine will run, and start from it with `--from` in place of `--source`.
+A collection built by your own pipeline needs no indexing on the machine. Copy the folder to a bucket and start from it with `--from` in place of `--source`. A bucket in the machine's region is best: copying within a region is free and faster.
 
 ```bash
 aws s3 sync my-collection s3://my-bucket/my-collection
