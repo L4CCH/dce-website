@@ -3,7 +3,7 @@ title: "Models: SigLIP, SigLIP 2 and CLIP"
 description: Choose the open multimodal model that indexes and searches a collection, and pin its version.
 ---
 
-Embeddings come from open models that run on your own machine or cloud account. Choose one in `config.json`.
+Embeddings come from open models that run on your own machine or cloud account. Choose one in `config.json` before indexing; the site then searches with the model the collection records.
 
 ## SigLIP (default)
 
@@ -13,38 +13,35 @@ Embeddings come from open models that run on your own machine or cloud account. 
 {
   "model_config": {
     "model_type": "siglip",
-    "model_name": "google/siglip-base-patch16-224",
-    "device": "mps"
+    "model_name": "google/siglip-base-patch16-224"
   }
 }
 ```
 
-In our tests on a museum collection it found clearly better matches than CLIP for English queries, and it stays usable for queries in other languages, where CLIP mostly fails. Search works best in English. It indexes about three times slower than CLIP, and its index is about 1.5 times larger.
+In our tests on a museum collection it found clearly better matches than CLIP for English queries, and it stays usable for queries in other languages, where CLIP mostly fails. Search works best in English. It indexes three to four times slower than CLIP, and its index is about 1.5 times larger.
 
 ## SigLIP 2
 
-[SigLIP 2](https://arxiv.org/abs/2502.14786) is the second version of SigLIP. It needs `transformers` 4.50 or later. Queries are lowercased and padded to 64 tokens, the way the model was trained.
+[SigLIP 2](https://arxiv.org/abs/2502.14786) is the second version of SigLIP. Queries are lowercased and padded to 64 tokens, the way the model was trained.
 
 ```json
 {
   "model_config": {
     "model_type": "siglip2",
-    "model_name": "google/siglip2-base-patch16-224",
-    "device": "mps"
+    "model_name": "google/siglip2-base-patch16-224"
   }
 }
 ```
 
 ## CLIP
 
-[CLIP](https://proceedings.mlr.press/v139/radford21a.html) by OpenAI, which version 1 used by default.
+[CLIP](https://proceedings.mlr.press/v139/radford21a.html), by OpenAI, was the default model of version 1.
 
 ```json
 {
   "model_config": {
     "model_type": "clip",
-    "model_name": "openai/clip-vit-base-patch32",
-    "device": "mps"
+    "model_name": "openai/clip-vit-base-patch32"
   }
 }
 ```
@@ -63,10 +60,12 @@ Any of the models above can take a `model_revision`: the commit of the model on 
 }
 ```
 
-A collection written by a pipeline of its own records the models it holds and their revisions in `index_info.json`, so it needs none of this. See [Collection format](../collection-format/#index_infojson).
+`python -m src.ingest` records the model in `index_info.json` but not its revision, so keep the same `model_revision` in the `config.json` of every machine that serves the collection. A pipeline of its own can record the revision there, and the site then loads it. See [Collection format](../collection-format/#index_infojson).
 
 ## Changing the model
 
-An index can only be searched with the model that built it. The site checks this when it starts and explains what to do if they differ. An index built with CLIP in version 1 keeps working once `config.json` names CLIP again. After choosing another model, build a new index.
+An index can only be searched with the model that built it. `python -m src.ingest` will not add to a folder indexed with another model, so after choosing another model, index into a new folder with `--data-dir`. The site searches with the model the collection records, whatever `config.json` names, and `DCE_MODEL` picks another of its models by key or name. It refuses to start if the collection holds no vectors from the model it would use. An index built by version 1 is in a layout this version no longer reads: serve it with v2.0.0-beta.2, or index its images again.
 
-`device` is `mps` for an Apple Silicon GPU, `cuda` for an NVIDIA GPU or `cpu`. Serving needs no GPU.
+`device` in `model_config` sets where the site runs the model: `cuda` for an NVIDIA GPU, `mps` for an Apple Silicon GPU, or `cpu`. The default is `cuda`, and a device the machine lacks falls back to the CPU, so serving needs no GPU. Indexing uses the first of `cuda`, `mps`, and `cpu` that the machine has; `python -m src.ingest --device` overrides it.
+
+The published container image holds SigLIP and indexes with it. To index with another model in a container, build an image whose `config.json` names it. A container that serves a collection built with another model downloads that model when it starts.

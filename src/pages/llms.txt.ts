@@ -12,7 +12,7 @@ institutions. A gallery, library, archive, or museum points it at a folder, an S
 or a manifest of images. Visitors can then search the collection in plain language or
 with a picture, browse it, and follow every image back to the institution's own record.
 Search uses an open multimodal embedding model, SigLIP by default, SigLIP 2 or CLIP, run on
-the institution's own hardware, so no catalog, tags or OCR are needed. Where a catalog
+the institution's own hardware, so no catalog or tags are needed. Where a catalog
 exists, search also reads the records and weighs them against what the images show. A
 site can hold the collections of several institutions, each with its own name and license,
 and visitors can search them all or some. It indexes
@@ -29,8 +29,9 @@ script on a Linux server or the AWS script, which shows its cost before creating
 
 ## Software
 
-- [Source code and README](${site.repoUrl}): install, configure, deploy
-- [Documentation](${site.url}/docs/): indexing, describing a collection, groups, search, models, limits, the kinds of material a site shows, making a frontend, deploying, and the MCP server for AI assistants
+- [Source code](${site.repoUrl})
+- [Documentation](${site.url}/docs/): indexing, mapping a catalog, the collection format, the kinds of material a site shows, describing a collection, search, models, limits, deploying, making a frontend, and the MCP server for AI assistants
+- [The whole documentation in one file](${site.url}/llms-full.txt)
 - [Contributing guide](${site.contributingUrl})
 - [Agent Skill for setting up a collection](${site.skillUrl}): for Claude Code, Codex, Gemini CLI, Cursor
 - [Releases](${site.repoUrl}/releases)
@@ -49,7 +50,8 @@ ${showcases.map((s) => `- [${s.name}](${s.url}): ${s.summary}`).join('\n')}
 
 ## Research
 
-- [Paper in ${site.paper.journal}, vol. ${site.paper.volume}, ${site.paper.article} (${site.paper.year})](${site.paper.url}): ${site.paper.title}
+- [Paper in ${site.paper.journal}, vol. ${site.paper.volume}, ${site.paper.article} (${site.paper.year})](${site.paper.url}): ${site.paper.title}, by ${site.paper.authors.map((person) => person.name).join(' and ')}
+- [Software on Zenodo](${site.softwareDoi}): every release, each with its own DOI
 - [${site.lab.name}](${site.lab.url})
 
 ## License

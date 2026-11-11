@@ -5,9 +5,9 @@ export const path = (to: string) => `${import.meta.env.BASE_URL.replace(/\/$/, '
 
 export const site = {
   name: 'Digital Collections Explorer',
-  tagline: 'A search site for your digital collection, with or without a catalog.',
+  tagline: 'The multimodal viewer for searching digital collections.',
   description:
-    'Open-source, self-hosted exploratory search for digital collections with visual features. Natural language queries and reverse image search, even for collections with little or no descriptive metadata, and catalog search where records exist. Made for galleries, libraries, archives, and museums.',
+    'The open-source, self-hosted multimodal viewer for searching digital collections: natural language queries and reverse image search, even for collections with little or no descriptive metadata, and catalog search where records exist. Made for galleries, libraries, archives, and museums.',
   url: 'https://l4cch.github.io/dce-website',
   repo,
   repoUrl,
@@ -20,6 +20,7 @@ export const site = {
   goodFirstIssuesUrl: `${repoUrl}/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22`,
   skillUrl: `${repoUrl}/tree/main/skills/dce-setup`,
   containerImage: 'ghcr.io/l4cch/digital-collections-explorer',
+  softwareDoi: 'https://doi.org/10.5281/zenodo.15744570',
   paper: {
     title:
       'Digital Collections Explorer: An Open-Source, Multimodal Viewer for Searching Digital Collections',
@@ -29,7 +30,11 @@ export const site = {
     doi: '10.1017/chr.2025.10017',
     url: 'https://doi.org/10.1017/chr.2025.10017',
     year: 2025,
-    authors: ['Ying-Hsiang Huang', 'Benjamin Charles Germain Lee'],
+    arxiv: 'https://arxiv.org/abs/2507.00961',
+    authors: [
+      { name: 'Ying-Hsiang Huang', orcid: 'https://orcid.org/0009-0007-4570-7738' },
+      { name: 'Benjamin Charles Germain Lee', orcid: 'https://orcid.org/0000-0002-1677-6386' },
+    ],
   },
   lab: {
     name: 'Lab for Computing Cultural Heritage',
@@ -47,7 +52,6 @@ export type Medium = {
   name: string;
   option?: string;
   lead: string;
-  features: string[];
 };
 
 export const media: Medium[] = [
@@ -55,48 +59,24 @@ export const media: Medium[] = [
     id: 'images',
     name: 'Images',
     lead: 'Photographs, scans and other images, on every site.',
-    features: [
-      'Opens on a shuffled wall of images, so there is something to see before anyone types',
-      'Searches what the images show and, where a catalog exists, what the records say, and tells visitors how it read their words',
-      'Filters by group, such as the museums of one institution, and can keep only images that have a catalog record',
-      'Shows each object once, however many photographs it has',
-      'Every object has its own page, with its catalog record, similar images, where else it appears and a link back to the original record',
-      'Search by text or by uploading a picture, or start from suggested searches set by the institution',
-    ],
   },
   {
     id: '3d',
     name: '3D models',
     option: '3d',
     lead: 'Objects scanned or modeled in 3D, as .glb files.',
-    features: [
-      "An object's page opens its model, which visitors can turn and zoom",
-      'Views drawn from each model are searched with the photographs, so a model is found by what it looks like',
-      'Finds other objects of a similar shape',
-      'The viewer loads only on the page of an object that has a model',
-    ],
   },
   {
     id: 'pdf',
     name: 'PDFs',
     option: 'pdf',
     lead: 'Born-digital and scanned documents, searched page by page.',
-    features: [
-      'Indexes PDFs page by page and searches them by what each page looks like',
-      'Works without OCR, so it also finds handwriting, diagrams and forms',
-      'Shows the matching page, with the whole document one click away',
-    ],
   },
   {
     id: 'zoom',
     name: 'Deep zoom',
     option: 'zoom',
     lead: 'Maps, plans and other large images served by IIIF image servers.',
-    features: [
-      "Opens an image in deep zoom from the institution's own IIIF server",
-      'Loads only the part of the image in view, so a large sheet opens quickly',
-      'Shows the plain image if the server does not answer',
-    ],
   },
 ];
 

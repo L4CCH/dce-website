@@ -3,7 +3,30 @@ title: Documentation
 description: Technical documentation for running, deploying and extending Digital Collections Explorer.
 ---
 
-These pages are for the people who run Digital Collections Explorer: the person at a gallery, library, archive, or museum who sets up a site, and the developer who extends it. The [README](https://github.com/L4CCH/digital-collections-explorer#readme) covers installing it locally in a few steps.
+These pages are for the people who run Digital Collections Explorer: the person at a gallery, library, archive, or museum who sets up a site, and the developer who extends it.
+
+## Getting started
+
+There are three recommended ways to start:
+
+- [With an AI coding agent](indexing/#with-an-ai-coding-agent): ask Claude Code, Codex, Gemini CLI, or Cursor to make your collection searchable.
+- [With Docker](indexing/#with-docker): one command builds the index, another serves it.
+- [On a Linux server](deploy/server/) or [on AWS](deploy/aws/): one command keeps a site running. On AWS it shows the cost first.
+
+To install it by hand, you need Python 3.10 or later and Node.js 20.19 or later:
+
+```bash
+git clone https://github.com/L4CCH/digital-collections-explorer.git
+cd digital-collections-explorer
+python -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+npm install && npm run setup
+
+python -m src.ingest /path/to/images --data-dir data/collections/my-collection
+DCE_DATA_DIR=data/collections/my-collection python -m src.backend.main
+```
+
+Then open http://localhost:8000. `npm run setup` asks what the collection holds besides images; see [Kinds of material](kinds-of-material/).
 
 ## Setting up a collection
 

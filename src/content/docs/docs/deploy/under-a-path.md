@@ -9,10 +9,10 @@ A site does not need a domain of its own. It can live at a path such as `https:/
 
 ## Tell the site its path
 
-Set `DCE_BASE_PATH` when running the backend directly, `--base-path` with the bootstrap script, or `BASE_PATH` with Docker Compose. It does not matter whether the proxy strips the path or leaves it in place: the backend routes requests the same way either way, the API docs know where they live, and `robots.txt` and `llms.txt` point to the right places.
+Set `DCE_BASE_PATH` when running the backend directly, `--base-path` with the bootstrap script or `deploy/aws/deploy.sh`, or `BASE_PATH` with Docker Compose. The proxy may strip the path or leave it in place: the backend answers both, the API docs at `/maps/docs` know where they live, and `robots.txt` and `llms.txt` point to the right places.
 
 ```bash
-DCE_BASE_PATH=/maps DCE_DATA_DIR=data/collections/my-collection python -m src.backend.main
+DCE_BASE_PATH=/maps DCE_DATA_DIR=data/collections/maps python -m src.backend.main
 ```
 
 ```bash
@@ -23,7 +23,7 @@ sudo deploy/bootstrap.sh install --name maps --source /path/to/images --base-pat
 BASE_PATH=/maps COLLECTION=maps docker compose up serve
 ```
 
-The frontends are built with relative asset paths, so one build serves at `/` or under any path. A request for the bare path, `/maps`, is redirected to `/maps/`, since the relative assets need the trailing slash.
+The default frontend is built with relative asset paths, so one build serves at `/` or under any path. A request for the bare path, `/maps`, is redirected to `/maps/`, since the relative assets need the trailing slash.
 
 ## The proxy
 
@@ -35,15 +35,18 @@ location /maps/ {
     proxy_set_header Host $host;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
-    client_max_body_size 10m;
+    client_max_body_size 11m;
 }
 ```
 
-Two settings in the proxy matter. Keep the visitor's host name, as `proxy_set_header Host $host` does above, or set `DCE_PUBLIC_URL` to the full address including the path, such as `https://library.example.org/maps`, so links the site hands out, for instance to AI assistants, lead back through the proxy. And set `proxy_hops` to the number of proxies in front of the site that add the visitor's address to `X-Forwarded-For`, so that each visitor is limited separately; `client_max_body_size` lets image searches through up to the site's upload limit:
+`client_max_body_size`, a little above the site's upload limit, lets image searches through. Keep the visitor's host name, as `proxy_set_header Host $host` does above, or set `DCE_PUBLIC_URL` to the full address including the path, such as `https://library.example.org/maps`, so that the links the MCP server hands out lead back through the proxy. Set the site's `proxy_hops` to the number of proxies in front of it that add the visitor's address to `X-Forwarded-For`, so that each visitor is limited separately:
 
 ```bash
-DCE_DATA_DIR=data/collections/my-collection python -m src.backend.core.site_settings proxy_hops=1
+DCE_DATA_DIR=data/collections/maps python -m src.backend.core.site_settings proxy_hops=1
+sudo deploy/bootstrap.sh configure --name maps --set proxy_hops=1
 ```
+
+With `proxy_hops` above 0, let only the proxy reach the site's port. It is open on every interface by default, and a visitor who connects to it directly could pose as another.
 
 ## robots.txt at the root of the domain
 

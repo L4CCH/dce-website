@@ -3,17 +3,19 @@ title: Describing a collection to visitors
 description: Give a site its title, introduction, suggested searches, license and links with collection.json, and link every image back to its record.
 ---
 
-A site opens on a wall of images to wander through, suggests searches, shows each object once however many photographs it has, and gives every image its own page with similar images and a link back to the institution's own record.
+A site opens on a wall of images to wander through, suggests searches, shows each object once however many photographs it has, and gives every image its own page with similar images and, where the catalog has one, a link back to the institution's own record.
 
-Put a `collection.json` next to the index, in the folder passed to `--data-dir`, to set the title, the introduction, the suggested searches, the institution, the license and the footer links. [`collection.example.json`](https://github.com/L4CCH/digital-collections-explorer/blob/main/collection.example.json) shows the common fields, and all of them are optional.
+Put a `collection.json` in the collection folder, the one passed to `--data-dir`, to set the title, the introduction, the suggested searches, the institution, the license, and the footer links. A site started without `DCE_DATA_DIR` does not read it. [`collection.example.json`](https://github.com/L4CCH/digital-collections-explorer/blob/main/collection.example.json) shows the common fields, and all of them are optional.
 
-- A suggested search is either the query itself or `{"query": "...", "label": "..."}`, whose label is shown beside it, for example to say how Auto reads it.
+- A suggested search is either the query itself or `{"query": "...", "label": "..."}`, whose label is shown beside it, for example to say how Auto reads it. Only the first eight are shown.
 - `object_label` names what one object is, such as `map sheet`, in the count under the title. The count leaves out the number of images when each object has one, and the institution when the title already names it.
-- `institution` names who holds the collection, in the link to each record ("View the full record at the Smithsonian"); `source_name` is its old name and still works.
-- `groups` gives each group of a collection split into groups its own label, institution and license, and `group_label` says what a group is, such as `Museum`. See [Several institutions in one site](../collection-format/#several-institutions-in-one-site).
+- `institution` names who holds the collection, in the link to each record ("View the full record at the Smithsonian"); `source_name` is its old name and still works. Without it, the link names the host of the record's web address.
+- In a collection split into groups, `groups` gives each group its own label, institution, and license, and `group_label` names what a group is, such as `Museum`. See [Several institutions in one site](../collection-format/#several-institutions-in-one-site).
 - `field_labels` renames catalog columns on an object's page, such as `{"creation_date": "Date"}`.
-- The site reads the file on every visit, so a change shows up without a restart.
-- The same file fills the page title and description that search engines show, and the site's `llms.txt`.
+- `sources` gives each [related source](../collection-format/#related-sources) its label, such as `{"flickr": {"label": "Flickr Commons"}}`.
+- Without `links`, the footer links the paper and the source code.
+
+The site reads the file on every visit, so a change shows up without a restart. The same file fills the page title and description that search engines show, and the site's `llms.txt`.
 
 For a deployed site, pass the file when installing with `--collection-file`, or change it later while the site keeps running:
 
