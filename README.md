@@ -13,7 +13,7 @@ npm run build      # writes dist/
 ```
 
 Set `GITHUB_TOKEN` to a read-only token when building to fill the wishlist; without it the
-wishlist shows an invitation to post the first idea. Everything else works without a token.
+wishlist lists no ideas. Everything else works without a token.
 
 ## Social preview
 
