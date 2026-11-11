@@ -23,18 +23,11 @@ const papers = {
   clip: 'https://arxiv.org/abs/2103.00020',
 };
 
-const icons = {
-  records: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6v18h12V7z" /><path d="M14 3v4h4M9 12h6M9 16h6" /></svg>',
-  pictures: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>',
-};
-
 const examples = [
   {
     kind: 'A name',
     text: 'is looked up in the records, so “amelia earhart” finds what is cataloged under her name.',
     query: 'amelia earhart',
-    found: 'records',
-    why: 'Matches the title and name',
     results: [
       { file: 'name-1.jpg', width: 400, height: 247, alt: "Amelia Earhart 'Round The World Flight' envelope signed by Amelia Earhart, National Postal Museum" },
       { file: 'name-2.jpg', width: 398, height: 400, alt: "Token commemorating Amelia Earhart's first transatlantic flight, National Postal Museum" },
@@ -46,8 +39,6 @@ const examples = [
     kind: 'A description',
     text: `is matched against the pictures by an open model, such as <a href="${papers.siglip}" rel="noopener">SigLIP</a>, <a href="${papers.siglip2}" rel="noopener">SigLIP 2</a> or <a href="${papers.clip}" rel="noopener">CLIP</a>. None of these records mentions a handshake.`,
     query: 'two men shaking hands',
-    found: 'pictures',
-    why: 'Looks similar',
     results: [
       { file: 'description-1.jpg', width: 263, height: 400, alt: 'Samuel Clemens and John T. Raymond shaking hands, a photograph, National Portrait Gallery' },
       { file: 'description-2.jpg', width: 295, height: 400, alt: 'Silhouettes of David Osgood and George Parker facing each other, National Portrait Gallery' },
@@ -79,16 +70,10 @@ const examples = [
           </p>
           <ul class="results">
             {example.results.map((result) => (
-              <li>
-                <img src={path(`/results/${result.file}`)} alt={result.alt} width={result.width} height={result.height} loading="lazy" />
-                <span class="found" role="img" aria-label={example.why} title={example.why} set:html={icons[example.found]} />
-              </li>
+              <li><img src={path(`/results/${result.file}`)} alt={result.alt} width={result.width} height={result.height} loading="lazy" /></li>
             ))}
           </ul>
-          <figcaption>
-            <span class="found" aria-hidden="true" set:html={icons[example.found]} />
-            <span><strong>{example.kind}</strong> <Fragment set:html={example.text} /></span>
-          </figcaption>
+          <figcaption><strong>{example.kind}</strong> <Fragment set:html={example.text} /></figcaption>
         </figure>
       ))}
     </div>
@@ -128,10 +113,7 @@ const examples = [
   @media (min-width: 560px) {
     .results { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   }
-  .results li { position: relative; margin: 0; }
+  .results li { margin: 0; }
   .results img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; padding: 6px; background: var(--bg-sunken); border-radius: 6px; }
-  .found { display: grid; place-items: center; flex: none; width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 1px solid var(--line); color: var(--accent); }
-  .found :global(svg) { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .results .found { position: absolute; left: 6px; bottom: 6px; box-shadow: var(--shadow); }
-  .search-cases figcaption { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; color: var(--ink-soft); }
+  .search-cases figcaption { margin-top: 14px; color: var(--ink-soft); }
 </style>
