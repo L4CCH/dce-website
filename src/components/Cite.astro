@@ -3,12 +3,6 @@ import Section from './Section.astro';
 import { site } from '../site';
 ---
 
-<Section id="cite" eyebrow="Cite" title="Using it in research? Cite the paper">
-  <div class="btn-row">
-    <a class="btn btn-primary" href={site.paper.url} rel="noopener">Open the paper</a>
-  </div>
+<Section id="cite" eyebrow="Cite">
+  <Fragment slot="title">Using it in research? Cite <a href={site.paper.url} rel="noopener">the paper</a></Fragment>
 </Section>
-
-<style>
-  .btn-row { margin-top: 0; }
-</style>
