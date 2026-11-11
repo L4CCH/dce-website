@@ -2,66 +2,128 @@
 import { path } from '../site';
 
 const collection = [
-  { file: 'photo.jpg', x: 16, label: 'Photographs' },
-  { file: 'map.jpg', x: 108, label: 'Maps' },
-  { file: 'letter.jpg', x: 200, label: 'Documents' },
+  { file: 'photo.jpg', label: 'Photographs' },
+  { file: 'map.jpg', label: 'Maps' },
+  { file: 'letter.jpg', label: 'Documents' },
 ];
 
 const results = ['result-1.jpg', 'result-2.jpg', 'result-3.jpg', 'result-4.jpg'];
+const query = "a bird's-eye view of a harbor";
+const description = "Photographs, maps and documents from a collection, and a visitor's search for a bird's-eye view of a harbor, go through an open model, SigLIP or CLIP, which returns the most similar images first: bird's-eye views of Amsterdam, Ostend, Boston and New Orleans.";
+const image = (file: string) => path(`/hero/${file}`);
 ---
 
-<svg class="art" viewBox="0 0 560 424" role="img" aria-label="Photographs, maps and documents from a collection, and a visitor's search for a bird's-eye view of a harbor, go through an open model, SigLIP or CLIP, which returns the most similar images first: bird's-eye views of Amsterdam, Ostend, Boston and New Orleans." xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <marker id="hero-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" class="arrow-head" />
-    </marker>
-    <clipPath id="hero-square" clipPathUnits="objectBoundingBox">
-      <rect width="1" height="1" rx="0.1" ry="0.1" />
-    </clipPath>
-    <clipPath id="hero-wide" clipPathUnits="objectBoundingBox">
-      <rect width="1" height="1" rx="0.065" ry="0.087" />
-    </clipPath>
-  </defs>
+<div class="art">
+  <svg class="wide" viewBox="0 0 560 424" role="img" aria-label={description} xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="hero-wide-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" class="arrow-head" />
+      </marker>
+      <clipPath id="hero-wide-square" clipPathUnits="objectBoundingBox">
+        <rect width="1" height="1" rx="0.1" ry="0.1" />
+      </clipPath>
+      <clipPath id="hero-wide-result" clipPathUnits="objectBoundingBox">
+        <rect width="1" height="1" rx="0.065" ry="0.087" />
+      </clipPath>
+    </defs>
 
-  <rect x="0" y="0" width="296" height="160" rx="14" class="card" />
-  <text x="16" y="28" class="label strong">Your collection</text>
-  {collection.map((item) => (
-    <g>
-      <image href={path(`/hero/${item.file}`)} x={item.x} y="42" width="80" height="80" preserveAspectRatio="xMidYMid slice" clip-path="url(#hero-square)" />
-      <rect x={item.x} y="42" width="80" height="80" rx="8" class="frame" />
-      <text x={item.x + 40} y="142" text-anchor="middle" class="caption">{item.label}</text>
-    </g>
-  ))}
+    <rect x="0" y="0" width="296" height="160" rx="14" class="card" />
+    <text x="16" y="28" class="label strong">Your collection</text>
+    {collection.map((item, i) => (
+      <g>
+        <image href={image(item.file)} x={16 + i * 92} y="42" width="80" height="80" preserveAspectRatio="xMidYMid slice" clip-path="url(#hero-wide-square)" />
+        <rect x={16 + i * 92} y="42" width="80" height="80" rx="8" class="frame" />
+        <text x={56 + i * 92} y="142" text-anchor="middle" class="caption">{item.label}</text>
+      </g>
+    ))}
 
-  <text x="316" y="28" class="label strong">A visitor's search</text>
-  <rect x="316" y="42" width="244" height="40" rx="20" class="field" />
-  <circle cx="335" cy="61" r="6" class="glyph" />
-  <path d="M339.5 65.5 L 344 70" class="glyph" />
-  <text x="352" y="67" class="query">a bird's-eye view of a harbor</text>
+    <text x="316" y="28" class="label strong">A visitor's search</text>
+    <rect x="316" y="42" width="244" height="40" rx="20" class="field" />
+    <circle cx="335" cy="61" r="6" class="glyph" />
+    <path d="M339.5 65.5 L 344 70" class="glyph" />
+    <text x="352" y="67" class="query">{query}</text>
 
-  <path d="M148 162 C 148 186, 232 178, 232 200" class="flow" marker-end="url(#hero-arrow)" />
-  <text x="138" y="186" text-anchor="end" class="caption">indexed once</text>
-  <path d="M438 84 C 438 150, 328 160, 328 200" class="flow" marker-end="url(#hero-arrow)" />
-  <text x="448" y="124" class="caption">each search</text>
+    <path d="M148 162 C 148 186, 232 178, 232 200" class="flow" marker-end="url(#hero-wide-arrow)" />
+    <text x="138" y="186" text-anchor="end" class="caption">indexed once</text>
+    <path d="M438 84 C 438 150, 328 160, 328 200" class="flow" marker-end="url(#hero-wide-arrow)" />
+    <text x="448" y="124" class="caption">each search</text>
 
-  <rect x="188" y="204" width="184" height="56" rx="14" class="card" />
-  <text x="280" y="228" text-anchor="middle" class="label strong">Open model</text>
-  <text x="280" y="247" text-anchor="middle" class="caption">SigLIP or CLIP, locally</text>
+    <rect x="188" y="204" width="184" height="56" rx="14" class="card" />
+    <text x="280" y="228" text-anchor="middle" class="label strong">Open model</text>
+    <text x="280" y="247" text-anchor="middle" class="caption">SigLIP or CLIP, locally</text>
 
-  <path d="M280 262 L 280 294" class="flow" marker-end="url(#hero-arrow)" />
-  <text x="292" y="284" class="caption">most similar first</text>
+    <path d="M280 262 L 280 294" class="flow" marker-end="url(#hero-wide-arrow)" />
+    <text x="292" y="284" class="caption">most similar first</text>
 
-  <rect x="0" y="300" width="560" height="124" rx="14" class="card" />
-  {results.map((file, i) => (
-    <g>
-      <image href={path(`/hero/${file}`)} x={16 + i * 135} y="316" width="123" height="92" preserveAspectRatio="xMidYMid slice" clip-path="url(#hero-wide)" />
-      <rect x={16 + i * 135} y="316" width="123" height="92" rx="8" class="frame" />
-    </g>
-  ))}
-</svg>
+    <rect x="0" y="300" width="560" height="124" rx="14" class="card" />
+    {results.map((file, i) => (
+      <g>
+        <image href={image(file)} x={16 + i * 135} y="316" width="123" height="92" preserveAspectRatio="xMidYMid slice" clip-path="url(#hero-wide-result)" />
+        <rect x={16 + i * 135} y="316" width="123" height="92" rx="8" class="frame" />
+      </g>
+    ))}
+  </svg>
+
+  <svg class="narrow" viewBox="0 0 360 466" role="img" aria-label={description} xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="hero-narrow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" class="arrow-head" />
+      </marker>
+      <clipPath id="hero-narrow-square" clipPathUnits="objectBoundingBox">
+        <rect width="1" height="1" rx="0.095" ry="0.095" />
+      </clipPath>
+      <clipPath id="hero-narrow-result" clipPathUnits="objectBoundingBox">
+        <rect width="1" height="1" rx="0.08" ry="0.104" />
+      </clipPath>
+    </defs>
+
+    <rect x="0" y="0" width="300" height="158" rx="14" class="card" />
+    <text x="16" y="28" class="label strong">Your collection</text>
+    <text x="284" y="28" text-anchor="end" class="caption">indexed once</text>
+    {collection.map((item, i) => (
+      <g>
+        <image href={image(item.file)} x={16 + i * 92} y="42" width="84" height="84" preserveAspectRatio="xMidYMid slice" clip-path="url(#hero-narrow-square)" />
+        <rect x={16 + i * 92} y="42" width="84" height="84" rx="8" class="frame" />
+        <text x={58 + i * 92} y="146" text-anchor="middle" class="caption">{item.label}</text>
+      </g>
+    ))}
+
+    <text x="0" y="194" class="label strong">A visitor's search</text>
+    <text x="300" y="194" text-anchor="end" class="caption">each search</text>
+    <rect x="0" y="206" width="300" height="40" rx="20" class="field" />
+    <circle cx="19" cy="225" r="6" class="glyph" />
+    <path d="M23.5 229.5 L 28 234" class="glyph" />
+    <text x="36" y="231" class="query">{query}</text>
+
+    <path d="M300 79 H330 V311 H304" class="flow" marker-end="url(#hero-narrow-arrow)" />
+    <path d="M300 226 H330" class="flow" />
+
+    <rect x="0" y="284" width="300" height="54" rx="14" class="card" />
+    <text x="150" y="307" text-anchor="middle" class="label strong">Open model</text>
+    <text x="150" y="326" text-anchor="middle" class="caption">SigLIP or CLIP, locally</text>
+
+    <path d="M150 340 L 150 368" class="flow" marker-end="url(#hero-narrow-arrow)" />
+    <text x="162" y="360" class="caption">most similar first</text>
+
+    <rect x="0" y="374" width="360" height="90" rx="14" class="card" />
+    {results.map((file, i) => (
+      <g>
+        <image href={image(file)} x={16 + i * 84} y="390" width="76" height="58" preserveAspectRatio="xMidYMid slice" clip-path="url(#hero-narrow-result)" />
+        <rect x={16 + i * 84} y="390" width="76" height="58" rx="6" class="frame" />
+      </g>
+    ))}
+  </svg>
+</div>
 
 <style>
-  .art { width: 100%; height: auto; display: block; font-family: var(--font-body); -webkit-user-select: none; user-select: none; }
+  .art { container-type: inline-size; }
+  .art svg { width: 100%; height: auto; font-family: var(--font-body); -webkit-user-select: none; user-select: none; }
+  .wide { display: block; }
+  .narrow { display: none; }
+  @container (max-width: 439px) {
+    .wide { display: none; }
+    .narrow { display: block; }
+  }
   .card { fill: var(--bg-raised); stroke: var(--line); stroke-width: 1.5; }
   .frame { fill: none; stroke: var(--line); stroke-width: 1; }
   .label { font-size: 15px; fill: var(--ink-soft); }

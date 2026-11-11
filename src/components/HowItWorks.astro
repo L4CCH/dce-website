@@ -70,7 +70,7 @@ const examples = [
           </p>
           <ul class="results">
             {example.results.map((result) => (
-              <li><img src={path(`/results/${result.file}`)} alt={result.alt} width={result.width} height={result.height} loading="lazy" /></li>
+              <li><img src={path(`/results/${result.file}`)} alt={result.alt} width={result.width} height={result.height} loading="lazy" decoding="async" /></li>
             ))}
           </ul>
           <figcaption><strong>{example.kind}</strong> <Fragment set:html={example.text} /></figcaption>
@@ -106,11 +106,11 @@ const examples = [
   @media (min-width: 960px) {
     .search-cases { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
   }
-  .search-cases figure { margin: 0; padding: 16px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius); }
+  .search-cases figure { container-type: inline-size; margin: 0; padding: 16px; background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius); }
   .query { display: flex; align-items: center; gap: 10px; max-width: none; margin: 0; padding: 10px 16px; background: #fff; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); font-size: 1.05rem; }
   .query svg { flex: none; width: 18px; height: 18px; fill: none; stroke: var(--ink-faint); stroke-width: 2; stroke-linecap: round; }
   .results { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  @media (min-width: 560px) {
+  @container (min-width: 26rem) {
     .results { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   }
   .results li { margin: 0; }
