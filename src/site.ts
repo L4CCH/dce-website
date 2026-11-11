@@ -5,7 +5,7 @@ export const path = (to: string) => `${import.meta.env.BASE_URL.replace(/\/$/, '
 
 export const site = {
   name: 'Digital Collections Explorer',
-  tagline: 'Search digital collections, with or without a catalog.',
+  tagline: 'A search site for your digital collection, with or without a catalog.',
   description:
     'Open-source, self-hosted exploratory search for digital collections with visual features. Natural language queries and reverse image search, even for collections with little or no descriptive metadata, and catalog search where records exist. Made for galleries, libraries, archives and museums.',
   url: 'https://l4cch.github.io/dce-website',
