@@ -142,11 +142,11 @@ const nav = [
       <slot />
     </main>
     <footer class="footer">
-      <div class="wrap">
-        <p>
-          <strong>{site.name}</strong> started at the <a class="nowrap" href={site.lab.url} rel="noopener">{site.lab.name}</a>, <span class="nowrap">{site.lab.institution}</span>, <span class="nowrap">and is developed in the open.</span> <a class="nowrap" href={site.contributingUrl} rel="noopener">Contributions are welcome</a>.
-        </p>
-      </div>
+      <p class="wrap credit">
+        <span>Started at the <a href={site.lab.url} rel="noopener">{site.lab.name}</a></span>
+        <span>Developed in the open</span>
+        <span><a href={site.contributingUrl} rel="noopener">Contributions welcome</a></span>
+      </p>
     </footer>
   </body>
 </html>
@@ -210,11 +210,11 @@ const nav = [
   }
   .menu ul a { display: block; padding: 10px 0; font-size: 1.05rem; color: var(--ink); }
   .footer { border-top: 1px solid var(--line); padding: 28px 0 36px; background: var(--bg-sunken); }
-  .footer p { max-width: none; margin: 0; font-size: 0.9rem; color: var(--ink-soft); text-wrap: balance; }
-  .footer strong { color: var(--ink); }
-  .nowrap { white-space: nowrap; }
-  @media (max-width: 359px) {
-    .nowrap { white-space: normal; }
+  .credit { display: flex; flex-wrap: wrap; justify-content: center; max-width: none; margin-block: 0; font-size: 0.9rem; color: var(--ink-soft); text-align: center; }
+  .credit span + span::before { content: '·'; content: '·' / ''; margin: 0 10px; color: var(--ink-faint); }
+  @media (max-width: 639px) {
+    .credit { flex-direction: column; align-items: center; gap: 4px; }
+    .credit span + span::before { content: none; }
   }
   @media (max-width: 959px) {
     .nav-links { display: none; }
