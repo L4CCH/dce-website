@@ -29,7 +29,7 @@ See [Describing a collection to visitors](../../describing-a-collection/) for wh
 
 ## A collection prepared elsewhere
 
-A collection indexed on another machine, or written by [a pipeline of its own](../../mapping-your-data/#a-pipeline-of-its-own-smithsonian-edan), needs no indexing here. `--from` starts a site from a folder or an `s3://` address, and `import` with the same options replaces the data of a site that is running. The site keeps serving its current data until the copy is complete, then restarts on the new data. It keeps its limits but takes its description from the imported folder. The old data stays in `/opt/dce/collections/.my-collection.previous-<date>` until you delete it.
+A collection indexed on another machine, or built from the package of a [plugin](../../plugins/), needs no indexing here. `--from` starts a site from a folder or an `s3://` address, and `import` with the same options replaces the data of a site that is running. The site keeps serving its current data until the copy is complete, then restarts on the new data. It keeps its limits but takes its description from the imported folder. The old data stays in `/opt/dce/collections/.my-collection.previous-<date>` until you delete it.
 
 ```bash
 sudo deploy/bootstrap.sh install --name my-collection --from /path/to/my-collection

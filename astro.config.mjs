@@ -42,7 +42,14 @@ export default defineConfig({
           ],
         },
         { label: 'Deploying', items: [{ autogenerate: { directory: 'docs/deploy' } }] },
-        { label: 'Extending', items: [{ slug: 'docs/making-a-frontend' }, { slug: 'docs/mcp-server' }] },
+        {
+          label: 'Extending',
+          items: [
+            { slug: 'docs/making-a-frontend' },
+            { slug: 'docs/plugins' },
+            { slug: 'docs/mcp-server' },
+          ],
+        },
       ],
     }),
     sitemap(),
