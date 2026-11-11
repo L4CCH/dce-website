@@ -141,15 +141,15 @@ for address in ["https://iiif.example.org/object/1/manifest.json"]:
         **{first(m["label"]): first(m["value"]) for m in manifest.get("metadata", [])},
     }
     for canvas in manifest["items"]:
-        body = canvas["items"][0]["items"][0]["body"]
-        rows.append({**record, "iiif": body["service"][0]["id"]})
+        service = canvas["items"][0]["items"][0]["body"]["service"][0]
+        rows.append({**record, "iiif": service.get("id") or service.get("@id")})
 
 with open("rows.jsonl", "w") as handle:
     handle.writelines(json.dumps(row) + "\n" for row in rows)
 duckdb.sql("COPY (SELECT * FROM read_json('rows.jsonl')) TO 'manifest.parquet' (FORMAT parquet)")
 ```
 
-This reads version 3 of the Presentation API; in version 2 the service is at `sequences[0].canvases[].images[0].resource.service["@id"]`. Metadata labels such as `Creator` or `Date` become columns read by name. Since every row names an IIIF service, index with `--images thumbnails` to keep only small previews and let the server send the larger views. See [What the site keeps of each image](../indexing/#what-the-site-keeps-of-each-image).
+This reads version 3 of the Presentation API. Its image services may still follow version 2 of the Image API, which names the address `@id` rather than `id`, so the code reads either. In version 2 of the Presentation API, the service is at `sequences[0].canvases[].images[0].resource.service["@id"]`. Metadata labels such as `Creator` or `Date` become columns read by name. Since every row names an IIIF service, index with `--images thumbnails` to keep only small previews and let the server send the larger views. See [What the site keeps of each image](../indexing/#what-the-site-keeps-of-each-image).
 
 ## An export from a collection management system
 
