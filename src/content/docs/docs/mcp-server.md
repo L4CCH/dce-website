@@ -7,7 +7,7 @@ Every site can also answer the [Model Context Protocol](https://modelcontextprot
 
 ## Turn it on
 
-Set `DCE_MCP=1`. Links the server hands out are built from the address the assistant used. Also set `DCE_PUBLIC_URL` to the address visitors use, with the path if the site lives under one, behind a proxy or CDN that rewrites the address, and whenever the site serves its own images, so that [assistants can show them](#what-assistants-see).
+Set `DCE_MCP=1`. Links the server hands out are built from the address the assistant used, or, behind a proxy that [`proxy_hops`](../limits/) declares, from the scheme and host the proxy forwards in `X-Forwarded-Proto` and `X-Forwarded-Host`. Also set `DCE_PUBLIC_URL` to the address visitors use, with the path if the site lives under one, behind a proxy or CDN that rewrites the address, and whenever the site serves its own images, so that [assistants can show them](#what-assistants-see). `DCE_PUBLIC_URL` takes precedence over what a proxy forwards.
 
 ```bash
 DCE_MCP=1 DCE_DATA_DIR=data/collections/my-collection python -m src.backend.main

@@ -39,7 +39,7 @@ location /maps/ {
 }
 ```
 
-`client_max_body_size`, a little above the site's upload limit, lets image searches through. Keep the visitor's host name, as `proxy_set_header Host $host` does above, or set `DCE_PUBLIC_URL` to the full address including the path, such as `https://library.example.org/maps`, so that the links the MCP server hands out lead back through the proxy. Behind an `https://` proxy, set `DCE_PUBLIC_URL`, or `--public-url` with `bootstrap.sh`: a site in a container cannot tell that the proxy uses HTTPS. Set the site's `proxy_hops` to the number of proxies in front of it that add the visitor's address to `X-Forwarded-For`, so that each visitor is limited separately:
+`client_max_body_size`, a little above the site's upload limit, lets image searches through. Keep the visitor's host name, as `proxy_set_header Host $host` does above, or set `DCE_PUBLIC_URL` to the full address including the path, such as `https://library.example.org/maps`, so that the links the MCP server hands out lead back through the proxy. Behind an `https://` proxy, a site whose `proxy_hops` is set, as below, reads the scheme from the proxy's `X-Forwarded-Proto`, so its links use `https://` too. `DCE_PUBLIC_URL`, or `--public-url` with `bootstrap.sh` or on AWS, still works and takes precedence. Set the site's `proxy_hops` to the number of proxies in front of it that add the visitor's address to `X-Forwarded-For`, so that each visitor is limited separately:
 
 ```bash
 DCE_DATA_DIR=data/collections/maps python -m src.backend.core.site_settings proxy_hops=1
