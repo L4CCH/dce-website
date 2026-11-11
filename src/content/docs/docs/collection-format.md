@@ -3,7 +3,7 @@ title: Collection format
 description: The folder a site serves, index_info.json, every table of metadata.sqlite with what each powers, and sites that hold the collections of several institutions.
 ---
 
-Every collection a site serves is one folder in the same format, whether `python -m src.ingest` indexed it or your own pipeline prepared it with `python -m src.collection build`. [Mapping your data](../mapping-your-data/) shows how a catalog gets there.
+Every collection a site serves is one folder in the same format, whether `python -m src.ingest` indexed it or `python -m src.collection build` wrote it from the package of a [plugin](../plugins/). [Mapping your data](../mapping-your-data/) shows how a catalog gets there.
 
 ```
 my-collection/
@@ -21,9 +21,9 @@ my-collection/
 ## index_info.json
 
 - `format` is 3. The site also reads format 2, which lacks the `iiif`, `page`, `document`, and `pages` columns, so collections prepared for earlier versions keep working.
-- `models` lists each model the vectors come from: its `key`, the folder under `vectors/`; its `type`, `clip`, `siglip`, or `siglip2`; its `name`, `revision`, and `dimensions`; and anything else a pipeline records, such as how its images were prepared. The site searches with `default_model`, loading the recorded revision, so queries and stored vectors come from the same weights. `python -m src.ingest` records no revision. Set `DCE_MODEL` to the key or name of another of its models to search with that one. The site refuses to start if the collection holds no vectors from the model it would use.
+- `models` lists each model the vectors come from: its `key`, the folder under `vectors/`; its `type`, `clip`, `siglip`, or `siglip2`; and its `name`, `revision`, and `dimensions`. The site searches with `default_model`, loading the recorded revision, so queries and stored vectors come from the same weights. `python -m src.ingest` records the `model_revision` of `config.json`, if it has one. Set `DCE_MODEL` to the key or name of another of its models to search with that one. The site refuses to start if the collection holds no vectors from the model it would use.
 - `groups` lists each group with its `id`, `label`, and `images`, the number of its images, PDF pages, and views of 3D models. A collection that is not split has one group, and the site then shows no group filter.
-- `built_at` says when it was written. `source`, which only a pipeline gives, says from what.
+- `built_at` says when it was written. A collection built from a package also has `producer`, the plugin that wrote the package and its version, and, when the package gives it, `provenance`, what the plugin read.
 
 ## metadata.sqlite
 
@@ -45,7 +45,7 @@ my-collection/
 
 ## Several institutions in one site
 
-A site for several institutions is one collection split into groups, such as museums or libraries: one index, one ranking, and a filter by group. The groups come from a `group` column of the [manifest](../mapping-your-data/), or from a pipeline that hands over its vectors group by group. With `python -m src.ingest`, a group's id is its value in lowercase, with anything but letters and digits turned into hyphens, so `Cleveland Museum of Art` becomes `cleveland-museum-of-art`, and files without a group are in the group `collection`. `python -m src.collection build` uses each value as its id unchanged.
+A site for several institutions is one collection split into groups, such as museums or libraries: one index, one ranking, and a filter by group. The groups come from a `group` column of the [manifest](../mapping-your-data/), or of the `files` table of a [plugin's package](../plugins/#tables). With `python -m src.ingest`, a group's id is its value in lowercase, with anything but letters and digits turned into hyphens, so `Cleveland Museum of Art` becomes `cleveland-museum-of-art`, and files without a group are in the group `collection`. A package gives each group's id in that form already, and `python -m src.collection check` refuses any other.
 
 `collection.json` can give each group its own name, institution, and license, named by its id or by its value, in the order the filter should list them:
 

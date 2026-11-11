@@ -60,7 +60,7 @@ Any of the models above can take a `model_revision`: the commit of the model on 
 }
 ```
 
-`python -m src.ingest` records the model in `index_info.json` but not its revision, so keep the same `model_revision` in the `config.json` of every machine that serves the collection. A pipeline of its own can record the revision there, and the site then loads it. See [Collection format](../collection-format/#index_infojson).
+`python -m src.ingest` records the model in `index_info.json` with the `model_revision` of `config.json`, if it has one, and the site then loads that revision, whatever the `config.json` of the machine that serves it says. A [plugin](../plugins/) records the revision of each of its models in the same way. See [Collection format](../collection-format/#index_infojson).
 
 ## Changing the model
 
