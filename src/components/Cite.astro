@@ -1,43 +1,14 @@
 ---
 import Section from './Section.astro';
-import Copy from './Copy.astro';
 import { site } from '../site';
-
-const bibtex = `@article{huang2025digitalcollectionsexplorer,
-  title   = {${site.paper.title}},
-  author  = {Huang, Ying-Hsiang and Lee, Benjamin Charles Germain},
-  journal = {${site.paper.journal}},
-  volume  = {${site.paper.volume}},
-  pages   = {${site.paper.article}},
-  year    = {${site.paper.year}},
-  doi     = {${site.paper.doi}}
-}`;
 ---
 
-<Section
-  id="cite"
-  eyebrow="Cite"
-  title="Using it in research? Cite the paper"
-  lead="Please cite the paper that describes Digital Collections Explorer."
-  split
->
-  <div class="cite">
-    <p class="reference">
-      Huang, Y.-H., &amp; Lee, B. C. G. ({site.paper.year}). Digital Collections Explorer: An open-source, multimodal viewer for searching digital collections. <cite>{site.paper.journal}</cite>, <i>{site.paper.volume}</i>, {site.paper.article}. <a href={site.paper.url} rel="noopener">{site.paper.url}</a>
-    </p>
-    <Copy text={bibtex} label="Copy BibTeX" />
+<Section id="cite" eyebrow="Cite" title="Using it in research? Cite the paper">
+  <div class="btn-row">
+    <a class="btn btn-primary" href={site.paper.url} rel="noopener">Open the paper</a>
   </div>
 </Section>
 
 <style>
-  .reference {
-    margin: 0 0 20px;
-    padding: 20px 24px;
-    border-left: 3px solid var(--accent);
-    background: var(--bg-raised);
-    border-radius: 0 var(--radius) var(--radius) 0;
-    max-width: none;
-  }
-  .reference cite { font-style: italic; }
-  .reference a { overflow-wrap: anywhere; }
+  .btn-row { margin-top: 0; }
 </style>
