@@ -144,11 +144,7 @@ const nav = [
     <footer class="footer">
       <div class="wrap">
         <p>
-          <strong>{site.name}</strong> started at the <a href={site.lab.url} rel="noopener">{site.lab.name}</a>, {site.lab.institution},
-          and is developed in the open. <a href={site.contributingUrl} rel="noopener">Contributions are welcome</a>.
-        </p>
-        <p class="faint">
-          Code under <a href={site.license.url} rel="license noopener">{site.license.name}</a>. Documentation, paper, and figures under <a href={site.docsLicense.url} rel="license noopener">{site.docsLicense.name}</a>.
+          <strong>{site.name}</strong> started at the <a class="nowrap" href={site.lab.url} rel="noopener">{site.lab.name}</a>, <span class="nowrap">{site.lab.institution}</span>, <span class="nowrap">and is developed in the open.</span> <a class="nowrap" href={site.contributingUrl} rel="noopener">Contributions are welcome</a>.
         </p>
       </div>
     </footer>
@@ -213,9 +209,13 @@ const nav = [
     box-shadow: var(--shadow);
   }
   .menu ul a { display: block; padding: 10px 0; font-size: 1.05rem; color: var(--ink); }
-  .footer { border-top: 1px solid var(--line); padding: 40px 0 56px; background: var(--bg-sunken); }
-  .footer p { max-width: 72ch; }
-  .footer p:last-child { margin-bottom: 0; }
+  .footer { border-top: 1px solid var(--line); padding: 28px 0 36px; background: var(--bg-sunken); }
+  .footer p { max-width: none; margin: 0; font-size: 0.9rem; color: var(--ink-soft); text-wrap: balance; }
+  .footer strong { color: var(--ink); }
+  .nowrap { white-space: nowrap; }
+  @media (max-width: 359px) {
+    .nowrap { white-space: normal; }
+  }
   @media (max-width: 959px) {
     .nav-links { display: none; }
     .menu { display: block; }
