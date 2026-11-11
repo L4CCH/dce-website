@@ -142,11 +142,7 @@ const nav = [
       <slot />
     </main>
     <footer class="footer">
-      <p class="wrap credit">
-        <span>Started at the <a href={site.lab.url} rel="noopener">{site.lab.name}</a></span>
-        <span>Developed in the open</span>
-        <span><a href={site.contributingUrl} rel="noopener">Contributions welcome</a></span>
-      </p>
+      <p class="wrap credit">{site.name} started at the <a href={site.lab.url} rel="noopener">{site.lab.name}</a>.</p>
     </footer>
   </body>
 </html>
@@ -210,12 +206,7 @@ const nav = [
   }
   .menu ul a { display: block; padding: 10px 0; font-size: 1.05rem; color: var(--ink); }
   .footer { border-top: 1px solid var(--line); padding: 28px 0 36px; background: var(--bg-sunken); }
-  .credit { display: flex; flex-wrap: wrap; justify-content: center; max-width: none; margin-block: 0; font-size: 0.9rem; color: var(--ink-soft); text-align: center; }
-  .credit span + span::before { content: '·'; content: '·' / ''; margin: 0 10px; color: var(--ink-faint); }
-  @media (max-width: 639px) {
-    .credit { flex-direction: column; align-items: center; gap: 4px; }
-    .credit span + span::before { content: none; }
-  }
+  .credit { max-width: none; margin-block: 0; font-size: 0.9rem; color: var(--ink-soft); text-align: center; text-wrap: balance; }
   @media (max-width: 959px) {
     .nav-links { display: none; }
     .menu { display: block; }
