@@ -13,7 +13,7 @@ Set `DCE_MCP=1`. Links the server hands out are built from the address the assis
 DCE_MCP=1 DCE_DATA_DIR=data/collections/my-collection python -m src.backend.main
 ```
 
-The deploy scripts set them from options. On any Linux machine, add `--mcp` and `--public-url` to `deploy/bootstrap.sh install`, or later run `sudo deploy/bootstrap.sh mcp --name my-collection --on`. On AWS, add `--mcp` to `deploy/aws/deploy.sh`, or later run `deploy/aws/mcp.sh my-collection --on`. With Docker Compose, set `MCP=1` and `PUBLIC_URL`. Turning it on or off restarts the site, which takes about a minute.
+The deploy scripts set them from options. On any Linux machine, add `--mcp` and `--public-url` to `deploy/bootstrap.sh install`, or later run `sudo deploy/bootstrap.sh mcp --name my-collection --on`. On AWS, add `--mcp` to `deploy/aws/deploy.sh`, or later run `deploy/aws/mcp.sh my-collection --on`; both take `--public-url` and keep it for later runs. With Docker Compose, set `MCP=1` and `PUBLIC_URL`. Turning it on or off restarts the site, which takes about a minute.
 
 ## Connect an assistant
 
