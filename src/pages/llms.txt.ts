@@ -8,7 +8,7 @@ export const GET: APIRoute = () => {
 
 ${site.name} is open-source software that started at the ${site.lab.name} (${site.lab.short}),
 ${site.lab.institution}, and is developed in the open with contributors from other
-institutions. A gallery, library, archive or museum points it at a folder, an S3 bucket
+institutions. A gallery, library, archive, or museum points it at a folder, an S3 bucket
 or a manifest of images. Visitors can then search the collection in plain language or
 with a picture, browse it, and follow every image back to the institution's own record.
 Search uses an open multimodal embedding model, SigLIP by default, SigLIP 2 or CLIP, run on

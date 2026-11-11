@@ -23,7 +23,7 @@ const helpWithoutCode = [
     <div>
       <h3>Wishlist</h3>
       <p class="muted">Ideas live in the project's Discussions. Anyone with a GitHub account can post one or vote for one. The most wanted ideas are what gets built next.</p>
-      {ideas.length > 0 ? (
+      {ideas.length > 0 && (
         <ol class="ideas">
           {ideas.map((idea) => (
             <li>
@@ -32,8 +32,6 @@ const helpWithoutCode = [
             </li>
           ))}
         </ol>
-      ) : (
-        <p class="muted">Nothing has been posted yet. Yours would be the first.</p>
       )}
     </div>
     <div class="wishlist-actions">
@@ -41,7 +39,6 @@ const helpWithoutCode = [
         <a class="btn btn-primary" href={site.newIdeaUrl} rel="noopener">Post an idea</a>
         <a class="btn" href={site.ideasUrl} rel="noopener">See all and vote</a>
       </div>
-      <p class="faint tip">You do not need to know how it would be built. Say what your collection is, what you wish visitors could do, and what stops you today.</p>
     </div>
   </article>
   <div class="grid grid-2 help">
@@ -81,7 +78,6 @@ const helpWithoutCode = [
   .wishlist-actions .btn-row { margin-top: 8px; }
   .help { margin-top: 20px; }
   .ideas { padding-left: 1.2em; }
-  .tip { margin-top: 16px; }
   @media (min-width: 960px) {
     .wishlist { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: center; }
     .wishlist-actions .btn-row { margin-top: 0; }

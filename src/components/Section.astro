@@ -2,7 +2,7 @@
 interface Props {
   id: string;
   eyebrow?: string;
-  title: string;
+  title?: string;
   lead?: string;
   class?: string;
   split?: boolean;
@@ -14,7 +14,7 @@ const { id, eyebrow, title, lead, class: extra = '', split = false } = Astro.pro
   <div class:list={['wrap', { split }]}>
     <div class="section-head">
       {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-      <h2 id={`${id}-title`}>{title}</h2>
+      <h2 id={`${id}-title`}>{Astro.slots.has('title') ? <slot name="title" /> : title}</h2>
       {lead && <p class="lead">{lead}</p>}
       {Astro.slots.has('lead') && <p class="lead"><slot name="lead" /></p>}
     </div>

@@ -7,7 +7,7 @@ Embeddings come from open models that run on your own machine or cloud account. 
 
 ## SigLIP (default)
 
-[SigLIP](https://arxiv.org/abs/2303.15343) is an open multimodal embedding model created by Google DeepMind.
+[SigLIP](https://openaccess.thecvf.com/content/ICCV2023/html/Zhai_Sigmoid_Loss_for_Language_Image_Pre-Training_ICCV_2023_paper.html) is an open multimodal embedding model created by Google DeepMind.
 
 ```json
 {
@@ -37,7 +37,7 @@ In our tests on a museum collection it found clearly better matches than CLIP fo
 
 ## CLIP
 
-[CLIP](https://arxiv.org/abs/2103.00020) by OpenAI, which version 1 used by default.
+[CLIP](https://proceedings.mlr.press/v139/radford21a.html) by OpenAI, which version 1 used by default.
 
 ```json
 {
