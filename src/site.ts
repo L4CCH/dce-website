@@ -20,6 +20,7 @@ export const site = {
   goodFirstIssuesUrl: `${repoUrl}/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22`,
   skillUrl: `${repoUrl}/tree/main/skills/dce-setup`,
   containerImage: 'ghcr.io/l4cch/digital-collections-explorer',
+  softwareDoi: 'https://doi.org/10.5281/zenodo.15744570',
   paper: {
     title:
       'Digital Collections Explorer: An Open-Source, Multimodal Viewer for Searching Digital Collections',
@@ -29,7 +30,11 @@ export const site = {
     doi: '10.1017/chr.2025.10017',
     url: 'https://doi.org/10.1017/chr.2025.10017',
     year: 2025,
-    authors: ['Ying-Hsiang Huang', 'Benjamin Charles Germain Lee'],
+    arxiv: 'https://arxiv.org/abs/2507.00961',
+    authors: [
+      { name: 'Ying-Hsiang Huang', orcid: 'https://orcid.org/0009-0007-4570-7738' },
+      { name: 'Benjamin Charles Germain Lee', orcid: 'https://orcid.org/0000-0002-1677-6386' },
+    ],
   },
   lab: {
     name: 'Lab for Computing Cultural Heritage',
