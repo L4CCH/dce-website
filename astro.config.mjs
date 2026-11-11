@@ -10,7 +10,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Digital Collections Explorer',
-      description: 'Technical documentation for running, deploying and extending Digital Collections Explorer.',
+      description: 'Technical documentation for running, deploying, and extending Digital Collections Explorer.',
       customCss: ['./src/styles/docs.css'],
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/L4CCH/digital-collections-explorer' }],
       editLink: { baseUrl: 'https://github.com/L4CCH/dce-website/edit/main/' },

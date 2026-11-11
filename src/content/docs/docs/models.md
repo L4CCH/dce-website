@@ -1,5 +1,5 @@
 ---
-title: "Models: SigLIP, SigLIP 2 and CLIP"
+title: "Models: SigLIP, SigLIP 2, and CLIP"
 description: Choose the open multimodal model that indexes and searches a collection, and pin its version.
 ---
 

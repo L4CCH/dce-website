@@ -1,6 +1,6 @@
 ---
 title: Limits that protect a public site
-description: Upload, rate and concurrency limits for searches, how to change them, and what visitors are told.
+description: Upload, rate, and concurrency limits for searches, how to change them, and what visitors are told.
 ---
 
 Searching is the only expensive thing the site does, so only searches are limited, not browsing or viewing images. The defaults suit a small machine:

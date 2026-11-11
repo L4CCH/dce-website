@@ -3,7 +3,7 @@ title: MCP server
 description: Let AI assistants such as Claude and ChatGPT search a Digital Collections Explorer site through the Model Context Protocol.
 ---
 
-Every site can also answer the [Model Context Protocol](https://modelcontextprotocol.io) at `/mcp`, so an AI assistant such as Claude, ChatGPT or an editor's agent can search the collection itself. The endpoint is stateless, needs no account and only reads.
+Every site can also answer the [Model Context Protocol](https://modelcontextprotocol.io) at `/mcp`, so an AI assistant such as Claude, ChatGPT, or an editor's agent can search the collection itself. The endpoint is stateless, needs no account, and only reads.
 
 ## Turn it on
 
@@ -27,14 +27,14 @@ In Claude or ChatGPT, add a custom connector with the same address. Assistants t
 
 | Tool | What it does |
 | --- | --- |
-| `describe_collection` | The collection's title, groups with their sizes, institutions and licenses, its license, and suggested searches |
-| `search_collection` | The site's search, with `mode` `auto`, `appearance` or `catalog`, for some groups or catalog values; up to 20 objects, each with why it was found |
+| `describe_collection` | The collection's title, license, and suggested searches; each group's size, institution, and license |
+| `search_collection` | The site's search, with `mode` `auto`, `appearance`, or `catalog`, for some groups or catalog values; up to 20 objects, each with why it was found |
 | `find_similar` | Objects whose images look most like one object |
 | `search_by_image` | Objects that look like a collection image, a crop of one, or an image the assistant sends |
-| `list_catalog_values` | The values the catalog uses for kinds of object, places, cultures, topics, names and dates |
+| `list_catalog_values` | The values the catalog uses for kinds of object, places, cultures, topics, names, and dates |
 | `get_object` | One object's record, its images, its institution and license, the link to the institution's record, and where else it appears |
 
-The three search tools take `catalog`, which keeps only objects whose record holds the given values: a year range, kinds of object, places, cultures, topics or names, spelled as `list_catalog_values` gives them. A term such as `date:1860s` or `place:china` in the query instead searches the catalog text alone. The filter needs a catalog with facets, and a field term a catalog with full-text search; `describe_collection` says which the collection has, as `catalog_filters` and `catalog_search`.
+The three search tools take `catalog`, which keeps only objects whose record holds the given values: a year range, kinds of object, places, cultures, topics, or names, spelled as `list_catalog_values` gives them. A term such as `date:1860s` or `place:china` in the query instead searches the catalog text alone. The filter needs a catalog with facets, and a field term a catalog with full-text search; `describe_collection` says which the collection has, as `catalog_filters` and `catalog_search`.
 
 ## What assistants see
 

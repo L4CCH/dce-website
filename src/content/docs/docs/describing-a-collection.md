@@ -1,6 +1,6 @@
 ---
 title: Describing a collection to visitors
-description: Give a site its title, introduction, suggested searches, license and links with collection.json, and link every image back to its record.
+description: Give a site its title, introduction, suggested searches, license, and links with collection.json, and link every image back to its record.
 ---
 
 A site opens on a wall of images to wander through, suggests searches, shows each object once however many photographs it has, and gives every image its own page with similar images and, where the catalog has one, a link back to the institution's own record.
@@ -26,6 +26,6 @@ deploy/aws/describe.sh my-collection --file collection.json
 
 ## Objects and links back
 
-The link back to the original record is taken from the catalog: a column named `source_url`, `guid`, `record_url`, `landing_page` or `permalink` that holds a web address. Images are grouped into objects by a column named `object_id`, `record_id` or `item_id`.
+The link back to the original record is taken from the catalog: a column named `source_url`, `guid`, `record_url`, `landing_page`, or `permalink` that holds a web address. Images are grouped into objects by a column named `object_id`, `record_id`, or `item_id`.
 
-Collections without a catalog work too. Every image is then its own object, shown as having no catalog record, and is found by what it shows. [Mapping your data](../mapping-your-data/) says how each catalog column is shown, searched and filtered.
+Collections without a catalog work too. Every image is then its own object, shown as having no catalog record, and is found by what it shows. [Mapping your data](../mapping-your-data/) says how each catalog column is shown, searched, and filtered.

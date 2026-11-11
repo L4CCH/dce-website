@@ -58,7 +58,7 @@ export const media: Medium[] = [
   {
     id: 'images',
     name: 'Images',
-    lead: 'Photographs, scans and other images, on every site.',
+    lead: 'Photographs, scans, and other images, on every site.',
   },
   {
     id: '3d',
@@ -76,7 +76,7 @@ export const media: Medium[] = [
     id: 'zoom',
     name: 'Deep zoom',
     option: 'zoom',
-    lead: 'Maps, plans and other large images served by IIIF image servers.',
+    lead: 'Maps, plans, and other large images served by IIIF image servers.',
   },
 ];
 

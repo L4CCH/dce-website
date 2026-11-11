@@ -12,7 +12,7 @@ A manifest is a parquet table with one row per file, an image or a PDF, and the 
 | Column | Holds | Needed for |
 | --- | --- | --- |
 | `image_url`, or `url`, `path`, `file`, `uri` | the file's address: a web address, or a path relative to the manifest | the file itself, unless `iiif` names its image |
-| `iiif`, or `iiif_url`, `iiif_image`, `iiif_service`, `iiif_info` | its IIIF image service, as the service's address, its `info.json` or any image request to it | deep zoom, and sizes asked of the service |
+| `iiif`, or `iiif_url`, `iiif_image`, `iiif_service`, `iiif_info` | its IIIF image service, as the service's address, its `info.json`, or any image request to it | deep zoom, and sizes asked of the service |
 | `thumbnail_url`, or `thumbnail`, `preview_url`, `preview` | the web address of a thumbnail the source already makes | with `--images link`, showing it instead of a copy |
 | `size_bytes`, or `size`, `bytes`, `filesize` | the file's size in bytes | skipping files over `--max-file-mb` before downloading them |
 | `object_id`, or `record_id`, `item_id` | the object the file shows | showing an object's files together |
@@ -45,13 +45,13 @@ Columns are read by name, whatever their case, with a space read as an underscor
 - Web addresses, file names, media types, and columns of numbers whose names the site does not know are not catalog text. `type` and `format` are read as notes rather than as kinds of object or materials, since they often name a file's type; rename them, for example to `object_type` or `extent`, when they describe the object.
 - Filters list values as the catalog spells them, without enclosing square brackets and the trailing commas, semicolons, colons, and slashes of cataloging rules, so `[Japan],` is filed as `Japan`. Dates are read as years, spans, or decades; a date without a year or decade, such as `19th century`, is shown and searched but not filed.
 - A page shows each field under its column name, as `Date created` for `date_created`, unless `field_labels` in `collection.json` gives it another: `"field_labels": {"date_created": "Date"}`.
-- Names, places, subjects and kinds of object also teach Auto search which words of a query to look up in the catalog.
+- Names, places, subjects, and kinds of object also teach Auto search which words of a query to look up in the catalog.
 
 ## What each part of the site needs
 
 | The site can | when the data has |
 | --- | --- |
-| search by description and by image | images, PDFs or 3D models |
+| search by description and by image | images, PDFs, or 3D models |
 | show titles and link back | `title`, a link column |
 | search the catalog as well | any catalog text |
 | filter by date, place, kind of object, culture, subject, or name, in the API and the MCP server | the columns read as those |
@@ -102,7 +102,7 @@ Paths such as `images/a.jpg` are read relative to the manifest. The query rename
 
 ## A Dublin Core export
 
-An export from CONTENTdm, Omeka or an OAI-PMH feed in Dublin Core maps onto the manifest mostly as it is:
+An export from CONTENTdm, Omeka, or an OAI-PMH feed in Dublin Core maps onto the manifest mostly as it is:
 
 | Dublin Core | Column |
 | --- | --- |
@@ -153,7 +153,7 @@ This reads version 3 of the Presentation API; in version 2 the service is at `se
 
 ## An export from a collection management system
 
-Systems such as TMS, CollectiveAccess or PastPerfect export objects and their media apart. Join them on the object number, one row per image, and rename the object's columns:
+Systems such as TMS, CollectiveAccess, or PastPerfect export objects and their media apart. Join them on the object number, one row per image, and rename the object's columns:
 
 ```python
 import duckdb
@@ -183,7 +183,7 @@ COPY (
 ) TO 'manifest.parquet' (FORMAT parquet)
 ```
 
-Each keeps its own column names. Relative paths are then read relative to the new manifest, so keep it in the same folder as the old ones or make the paths absolute. Then give each group its label, institution and license in `collection.json`, as in [Several institutions in one site](../collection-format/#several-institutions-in-one-site).
+Each keeps its own column names. Relative paths are then read relative to the new manifest, so keep it in the same folder as the old ones or make the paths absolute. Then give each group its label, institution, and license in `collection.json`, as in [Several institutions in one site](../collection-format/#several-institutions-in-one-site).
 
 ## A pipeline of its own: Smithsonian EDAN
 
@@ -192,7 +192,7 @@ A source with more structure than a table can carry is read by a pipeline of its
 - **files**: each image, its museum as its group, its record, and the thumbnails the pipeline made;
 - **records**: each record's title and its permanent link;
 - **fields**: EDAN's `freetext` fields, under EDAN's own labels and in its order;
-- **facets**: EDAN's `indexedStructured` dates, names, places, subjects, kinds of object and cultures;
+- **facets**: EDAN's `indexedStructured` dates, names, places, subjects, kinds of object, and cultures;
 - **text**: the words each searched field matches, such as names from both `indexedStructured` and `freetext`, and the record id among the catalog numbers;
 - **related sources**: the photos of Flickr Commons matched to each record, with their tags and counts;
 - **vectors**: from SigLIP 2 and CLIP, one shard per museum.
@@ -210,7 +210,7 @@ This manifest, unlike the single table that `python -m src.ingest` reads, is a f
 | `records.parquet` | `object_id`, `title`, `source_url`, `model_url`, `document`, `pages`, then the catalog | without it, the catalog columns of `files.parquet` are read |
 | `fields.parquet` | `object_id`, `position`, `field`, `label`, `value` | the page's fields and their order |
 | `facets.parquet` | `object_id`, `facet`, `value` | the filters: `facet` is `date`, `name`, `place`, `culture`, `topic`, or `object_type`, and year filters read only dates written as a year, a span, or a decade |
-| `text.parquet` | `object_id`, `field`, `value` | what search matches in `title`, `names`, `dates`, `places`, `topics`, `object_types`, `notes`, `physical` or `identifiers` |
+| `text.parquet` | `object_id`, `field`, `value` | what search matches in `title`, `names`, `dates`, `places`, `topics`, `object_types`, `notes`, `physical`, or `identifiers` |
 | `related_sources.parquet`, `related_tags.parquet` | as in the [collection format](../collection-format/#related-sources), with `object_id` for `record_id` | |
 | `groups.parquet` | `group`, `label` | the groups, in the order the filter lists them |
 | `source.json` | anything | kept as `source` in `index_info.json` |
