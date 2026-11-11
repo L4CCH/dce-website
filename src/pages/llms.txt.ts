@@ -12,7 +12,7 @@ institutions. A gallery, library, archive, or museum points it at a folder, an S
 or a manifest of images. Visitors can then search the collection in plain language or
 with a picture, browse it, and follow every image back to the institution's own record.
 Search uses an open multimodal embedding model, SigLIP by default, SigLIP 2 or CLIP, run on
-the institution's own hardware, so no catalog, tags or OCR are needed. Where a catalog
+the institution's own hardware, so no catalog or tags are needed. Where a catalog
 exists, search also reads the records and weighs them against what the images show. A
 site can hold the collections of several institutions, each with its own name and license,
 and visitors can search them all or some. It indexes

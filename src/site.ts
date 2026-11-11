@@ -47,7 +47,6 @@ export type Medium = {
   name: string;
   option?: string;
   lead: string;
-  features: string[];
 };
 
 export const media: Medium[] = [
@@ -55,48 +54,24 @@ export const media: Medium[] = [
     id: 'images',
     name: 'Images',
     lead: 'Photographs, scans and other images, on every site.',
-    features: [
-      'Opens on a shuffled wall of images, so there is something to see before anyone types',
-      'Searches what the images show and, where a catalog exists, what the records say, and tells visitors how it read their words',
-      'Filters by group, such as the museums of one institution, and can keep only images that have a catalog record',
-      'Shows each object once, however many photographs it has',
-      'Every object has its own page, with its catalog record, similar images, where else it appears and a link back to the original record',
-      'Search by text or by uploading a picture, or start from suggested searches set by the institution',
-    ],
   },
   {
     id: '3d',
     name: '3D models',
     option: '3d',
     lead: 'Objects scanned or modeled in 3D, as .glb files.',
-    features: [
-      "An object's page opens its model, which visitors can turn and zoom",
-      'Views drawn from each model are searched with the photographs, so a model is found by what it looks like',
-      'Finds other objects of a similar shape',
-      'The viewer loads only on the page of an object that has a model',
-    ],
   },
   {
     id: 'pdf',
     name: 'PDFs',
     option: 'pdf',
     lead: 'Born-digital and scanned documents, searched page by page.',
-    features: [
-      'Indexes PDFs page by page and searches them by what each page looks like',
-      'Works without OCR, so it also finds handwriting, diagrams and forms',
-      'Shows the matching page, with the whole document one click away',
-    ],
   },
   {
     id: 'zoom',
     name: 'Deep zoom',
     option: 'zoom',
     lead: 'Maps, plans and other large images served by IIIF image servers.',
-    features: [
-      "Opens an image in deep zoom from the institution's own IIIF server",
-      'Loads only the part of the image in view, so a large sheet opens quickly',
-      'Shows the plain image if the server does not answer',
-    ],
   },
 ];
 
