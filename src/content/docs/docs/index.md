@@ -3,7 +3,7 @@ title: Documentation
 description: Technical documentation for running, deploying and extending Digital Collections Explorer.
 ---
 
-These pages are for the people who run Digital Collections Explorer: the person at a gallery, library, archive or museum who sets up a site, and the developer who extends it. The [README](https://github.com/L4CCH/digital-collections-explorer#readme) covers installing it locally in a few steps.
+These pages are for the people who run Digital Collections Explorer: the person at a gallery, library, archive, or museum who sets up a site, and the developer who extends it. The [README](https://github.com/L4CCH/digital-collections-explorer#readme) covers installing it locally in a few steps.
 
 ## Setting up a collection
 
