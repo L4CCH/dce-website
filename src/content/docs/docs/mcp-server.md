@@ -9,6 +9,8 @@ Every site can also answer the [Model Context Protocol](https://modelcontextprot
 
 Set `DCE_MCP=1`. Links the server hands out are built from the address the assistant used, or, behind a proxy that [`proxy_hops`](../limits/) declares, from the scheme and host the proxy forwards in `X-Forwarded-Proto` and `X-Forwarded-Host`. Also set `DCE_PUBLIC_URL` to the address visitors use, with the path if the site lives under one, behind a proxy or CDN that rewrites the address, and whenever the site serves its own images, so that [assistants can show them](#what-assistants-see). `DCE_PUBLIC_URL` takes precedence over what a proxy forwards.
 
+To guard against DNS rebinding, the server answers a request for a domain name only if the name is the one in `DCE_PUBLIC_URL`, and turns others away with 421. A site reached by a domain name therefore needs `DCE_PUBLIC_URL`, unless a proxy that `proxy_hops` declares stands in front of it and decides which names reach it. An IP address or `localhost` always works.
+
 ```bash
 DCE_MCP=1 DCE_DATA_DIR=data/collections/my-collection python -m src.backend.main
 ```
@@ -42,4 +44,4 @@ Every result links to its page on the site and to its image, and says why it was
 
 ## Limits
 
-Searches, `find_similar` among them, count against the same limits as visitors' searches, and an image sent as base64 against the upload limit. A request may not exceed 4 MB, so an image sent as base64 can be at most about 3 MB. The endpoint never fetches a web address it is given. The server tells the assistant that text from catalog records is data, not instructions.
+Searches, `find_similar` among them, count against the same limits as visitors' searches, and an image sent as base64 against the upload limit. A request may not exceed 4 MB, so an image sent as base64 can be at most about 3 MB. The endpoint never fetches a web address it is given. A web page may call it only from the site itself or from `localhost`; any other page gets 403. Assistants send no `Origin` header, so this does not affect them. The server tells the assistant that text from catalog records is data, not instructions.
