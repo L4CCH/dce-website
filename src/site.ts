@@ -99,7 +99,7 @@ export const showcases: Showcase[] = [
     summary: '562,842 map sheets, from fire insurance maps to city views and charts, searched by what is drawn on them.',
     url: 'https://digital-collections-explorer.com/',
     image: '/showcases/loc-maps.jpg',
-    alt: "Search results for a bird's-eye view of a city: panoramic views of American cities",
+    alt: "Screenshot of search results for a bird's-eye view of a city: panoramic views of American cities.",
     tries: ["a bird's-eye view of a city", 'a battlefield map', 'a globe'],
   },
 ];
