@@ -1,6 +1,6 @@
 ---
 title: Collection format
-description: The folder a site serves, index_info.json, every table of metadata.sqlite with what each powers, and sites that hold the collections of several institutions.
+description: The folder every collection is served from, the SQLite tables behind each part of the site, and sites that hold the collections of several institutions.
 ---
 
 Every collection a site serves is one folder in the same format, whether `python -m src.ingest` indexed it or `python -m src.collection build` wrote it from the package of a [plugin](../plugins/). [Mapping your data](../mapping-your-data/) shows how a catalog gets there.

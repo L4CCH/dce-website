@@ -1,6 +1,6 @@
 ---
 title: Mapping your data
-description: "Bring a catalog into a collection, from a spreadsheet to a museum's collection system: the manifest, how each column is read, what each part of the site needs, and when a source needs a plugin of its own."
+description: Bring a catalog into a collection from a spreadsheet, a Dublin Core export, IIIF manifests, or a collection management system.
 ---
 
 A site searches what the images show and, where a catalog exists, what the records say. A folder of images needs nothing else. A catalog reaches the site through a manifest, and this page says how to map yours onto it. [Collection format](../collection-format/) describes what indexing then writes.

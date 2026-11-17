@@ -1,6 +1,6 @@
 ---
 title: How search works
-description: How text search fuses search by appearance with BM25 over the catalog, how Auto reads a query, and what each result explains.
+description: How a search compares words or a picture with every image, reads the catalog with BM25 where there is one, weighs the two, and says why each result was found.
 ---
 
 Every collection can be searched by appearance: a multimodal model compares the visitor's words, or picture, with every image. When the catalog holds text, text search also reads the records: it runs two channels and fuses them, which is hybrid search.

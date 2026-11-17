@@ -1,6 +1,6 @@
 ---
 title: Writing a source plugin
-description: "Write a collection package from a source that DCE does not read itself, such as a museum's API, then check it and build the collection from it with python -m src.collection."
+description: "Bring a museum's API, or any source Digital Collections Explorer does not read itself, into a site by writing a collection package that it checks and builds."
 sidebar:
   label: Plugins
 ---
