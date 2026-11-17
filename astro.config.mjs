@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import starlight from '@astrojs/starlight';
+import { site } from './src/site.ts';
 
 export default defineConfig({
   site: 'https://l4cch.github.io',
@@ -16,6 +17,8 @@ export default defineConfig({
       editLink: { baseUrl: 'https://github.com/L4CCH/dce-website/edit/main/' },
       lastUpdated: true,
       head: [
+        { tag: 'meta', attrs: { property: 'og:image', content: `${site.url}/og.png` } },
+        { tag: 'meta', attrs: { property: 'og:image:alt', content: site.ogImageAlt } },
         { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },
         { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: true } },
         {

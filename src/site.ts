@@ -10,6 +10,8 @@ export const site = {
     'The open-source, self-hosted multimodal viewer for searching digital collections: natural language queries and reverse image search, even for collections with little or no descriptive metadata, and catalog search where records exist. Made for galleries, libraries, archives, and museums.',
   metaDescription:
     'The open-source, self-hosted multimodal viewer for searching digital collections: natural language queries and reverse image search, with or without a catalog.',
+  ogImageAlt:
+    'Digital Collections Explorer: the multimodal viewer for searching digital collections, made for galleries, libraries, archives, and museums.',
   url: 'https://l4cch.github.io/dce-website',
   repo,
   repoUrl,
