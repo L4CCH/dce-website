@@ -1,5 +1,5 @@
 ---
-title: Searching by appearance and by catalog
+title: How search works
 description: How text search fuses search by appearance with BM25 over the catalog, how Auto reads a query, and what each result explains.
 ---
 

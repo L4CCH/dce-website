@@ -1,7 +1,8 @@
 ---
-title: On a Linux server
+title: Deploying on a Linux server
 description: Turn a Linux machine into a collection site with one command, and keep it running across reboots.
 sidebar:
+  label: On a Linux server
   order: -1
 ---
 

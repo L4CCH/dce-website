@@ -1,6 +1,8 @@
 ---
-title: Plugins
+title: Writing a source plugin
 description: "Write a collection package from a source that DCE does not read itself, such as a museum's API, then check it and build the collection from it with python -m src.collection."
+sidebar:
+  label: Plugins
 ---
 
 A source plugin is a program, in any language, that writes a collection package from a source that DCE does not read itself, such as a museum's API, a collection management system, or an aggregator of several institutions. It runs on its own schedule and on its own machine, and hands DCE a folder of tables and vectors. `python -m src.collection check` says whether the package can be built, and `python -m src.collection build` writes the collection from it, with the same writer as `python -m src.ingest`. A plugin is best kept in a repository of its own.

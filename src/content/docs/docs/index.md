@@ -35,7 +35,7 @@ Then open http://localhost:8000. `npm run setup` asks what the collection holds 
 - [Collection format](collection-format/): the folder a site serves and every table in it, and sites that hold the collections of several institutions.
 - [Kinds of material](kinds-of-material/): images are always shown; 3D models, PDFs, and deep zoom are options.
 - [Describing a collection to visitors](describing-a-collection/): the title, suggested searches, license, links, and the link back to each record.
-- [Searching by appearance and by catalog](search/): how the two channels are weighed and what each result explains.
+- [How search works](search/): search by appearance and by catalog, how the two are weighed, and what each result explains.
 - [Models](models/): SigLIP, SigLIP 2, or CLIP, and pinning a version.
 - [Limits that protect a public site](limits/): uploads, searches per visitor, and searches at once.
 

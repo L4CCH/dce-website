@@ -1,6 +1,8 @@
 ---
-title: Kinds of material
+title: 3D models, PDFs, and deep zoom
 description: Images are always shown; 3D models, PDFs, and deep zoom are options, and only what a collection holds is installed.
+sidebar:
+  label: Kinds of material
 ---
 
 Every site shows photographs, scans, and other images. Three other kinds of material are options, chosen when the site is set up, so that a collection installs only the packages it needs:

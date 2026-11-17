@@ -1,7 +1,8 @@
 ---
-title: Under a path on an existing website
+title: Deploying under a path on an existing website
 description: Serve a Digital Collections Explorer site at a path such as /maps/ behind an institution's own web server.
 sidebar:
+  label: Under a path on an existing website
   order: 1
 ---
 

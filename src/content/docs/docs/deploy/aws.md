@@ -1,7 +1,8 @@
 ---
-title: On AWS
+title: Deploying on AWS
 description: Deploy a Digital Collections Explorer site to AWS with one command, see its cost first, and open it to the public over HTTPS.
 sidebar:
+  label: On AWS
   order: 0
 ---
 
