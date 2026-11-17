@@ -45,7 +45,7 @@ my-collection/
 
 ## Several institutions in one site
 
-A site for several institutions is one collection split into groups, such as museums or libraries: one index, one ranking, and a filter by group. The groups come from a `group` column of the [manifest](../mapping-your-data/), or of the `files` table of a [plugin's package](../plugins/#tables). With `python -m src.ingest`, a group's id is its value in lowercase, with anything but letters and digits turned into hyphens, so `Cleveland Museum of Art` becomes `cleveland-museum-of-art`, and files without a group are in the group `collection`. A package gives each group's id in that form already, and `python -m src.collection check` refuses any other.
+A site for several institutions is one collection split into groups, such as museums or libraries: one index, one ranking, and a filter by group. The groups come from a `group` column of the manifest, or of the `files` table of a plugin's package. With `python -m src.ingest`, a group's id is its value in lowercase, with anything but letters and digits turned into hyphens, so `Cleveland Museum of Art` becomes `cleveland-museum-of-art`, and files without a group are in the group `collection`. A package gives each group's id in that form already, and `python -m src.collection check` refuses any other.
 
 `collection.json` can give each group its own name, institution, and license, named by its id or by its value, in the order the filter should list them:
 

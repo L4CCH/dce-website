@@ -13,7 +13,7 @@ Searching is the only expensive thing the site does, so only searches are limite
 | `concurrent_searches` | 2 | Searches that use the model at once. Others wait up to 15 seconds, then are asked to try again |
 | `proxy_hops` | 0 | Proxies in front of the site that add the visitor's address to `X-Forwarded-For`. Leave at 0 unless there is one, or visitors could pose as each other. On AWS, `--https` sets it |
 
-Two limits are fixed: an image may have at most 50 million pixels, and a query at most 500 characters. A visitor who is turned away is told why, in plain words. Searches from AI assistants through the [MCP server](../mcp-server/) count against `mcp_searches_per_minute`, not `searches_per_minute`, and share `concurrent_searches` and the upload limit with visitors. A proxy in front of the site has an upload limit of its own; see [Under a path on an existing website](../deploy/under-a-path/).
+Two limits are fixed: an image may have at most 50 million pixels, and a query at most 500 characters. A visitor who is turned away is told why, in plain words. Searches from AI assistants through the MCP server count against `mcp_searches_per_minute`, not `searches_per_minute`, and share `concurrent_searches` and the upload limit with visitors. A proxy in front of the site has an upload limit of its own; see [Under a path on an existing website](../deploy/under-a-path/).
 
 To change a limit, put it in `settings.json` in the collection folder, beside `collection.json`, as `{"searches_per_minute": 30}`. Values are whole numbers of 0 or more. Or run one of these, from a clone, on a site set up with `bootstrap.sh`, or on AWS. The site picks it up without a restart.
 

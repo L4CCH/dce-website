@@ -12,7 +12,7 @@ Put a `collection.json` in the collection folder, the one passed to `--data-dir`
 - `institution` names who holds the collection, in the link to each record ("View the full record at the Smithsonian"); `source_name` is its old name and still works. Without it, the link names the host of the record's web address.
 - In a collection split into groups, `groups` gives each group its own label, institution, and license, and `group_label` names what a group is, such as `Museum`. See [Several institutions in one site](../collection-format/#several-institutions-in-one-site).
 - `field_labels` renames catalog columns on an object's page, such as `{"creation_date": "Date"}`.
-- `sources` gives each [related source](../collection-format/#related-sources) its label, such as `{"flickr": {"label": "Flickr Commons"}}`.
+- `sources` gives each related source its label, such as `{"flickr": {"label": "Flickr Commons"}}`.
 - Without `links`, the footer links the paper and the source code.
 
 The site reads the file on every visit, so a change shows up without a restart. The same file fills the page title and description that search engines show, and the site's `llms.txt`.

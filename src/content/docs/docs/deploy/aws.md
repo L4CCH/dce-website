@@ -22,7 +22,7 @@ The images must already be reachable from the cloud: in an S3 bucket, or listed 
 - `--instance-type`, one of t3.small, t3.medium (the default), t3.large, t3.xlarge, c7i.xlarge, or c7i.2xlarge.
 - `--disk-gib`, the disk size in GB, 30 by default. It can be set only when the machine is first created.
 - `--allowed-cidr`, the addresses that may open the site, everyone by default. It cannot be combined with `--https`.
-- `--public-url`, the address visitors use when a website of your own serves the site under a path, so that the links the [MCP server](../../mcp-server/) hands out lead through it.
+- `--public-url`, the address visitors use when a website of your own serves the site under a path, so that the links the MCP server hands out lead through it.
 - `--no-https`, `--no-domain`, and `--no-public-url`, to undo `--https`, `--domain`, and `--public-url`.
 - `--collection-file collection.json`, to describe the site from the start.
 - `--budget` and `--email`, together, to receive an email when the account's monthly AWS bill passes an amount you choose.

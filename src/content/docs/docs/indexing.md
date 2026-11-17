@@ -44,7 +44,7 @@ Linking needs little disk, but the site then depends on the source: it must stay
 
 ## What indexing writes
 
-Indexing writes the collection in the [collection format](../collection-format/). Where the manifest has a catalog, each object's page shows its fields, and search reads the records as well as the pictures. Searches through the [API](../collection-format/#records-filters-and-dates) and the [MCP server](../mcp-server/) can also be narrowed by date, place, kind of object, culture, subject, and name. A `group` column adds the filter by group that visitors see. The report printed at the end says how many records search covers and which filters there are.
+Indexing writes the collection in the [collection format](../collection-format/). Where the manifest has a catalog, each object's page shows its fields, and search reads the records as well as the pictures. Searches through the API and the [MCP server](../mcp-server/) can also be narrowed by date, place, kind of object, culture, subject, and name. A `group` column adds the filter by group that visitors see. The report printed at the end says how many records search covers and which filters there are.
 
 A collection that `python -m src.ingest` indexed with v2.0.0-beta.2 or earlier is written in the new format by running the same command again. Every file is already indexed, so nothing is embedded twice. One built another way, as by version 1, is served with v2.0.0-beta.2 or indexed again into a new folder.
 
@@ -76,6 +76,6 @@ COLLECTION=my-collection docker compose up serve
 
 The published image runs on x86-64 and ARM machines and shows every kind of material. Build options for an image of your own:
 
-- `--build-arg MEDIA=pdf,zoom` builds the interface with only the [kinds of material](../kinds-of-material/) you list. Without it, an image of your own, such as the one Docker Compose builds, shows images only and cannot read PDFs.
+- `--build-arg MEDIA=pdf,zoom` builds the interface with only the kinds of material you list. Without it, an image of your own, such as the one Docker Compose builds, shows images only and cannot read PDFs.
 - `--build-arg TORCH_VARIANT=cu128` installs the CUDA build of PyTorch, for indexing on a GPU; run that image with `docker run --gpus all`. The default is the much smaller CPU build, which is all that serving needs.
 - `--build-arg PRELOAD_MODEL=false` leaves the model out of the image. It is then downloaded in every new container, unless `/app/.cache/huggingface` is kept in a volume, as the deploy scripts do.

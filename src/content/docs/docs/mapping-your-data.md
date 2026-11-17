@@ -183,7 +183,7 @@ COPY (
 ) TO 'manifest.parquet' (FORMAT parquet)
 ```
 
-Each keeps its own column names. Relative paths are then read relative to the new manifest, so keep it in the same folder as the old ones or make the paths absolute. Then give each group its label, institution, and license in `collection.json`, as in [Several institutions in one site](../collection-format/#several-institutions-in-one-site).
+Each keeps its own column names. Relative paths are then read relative to the new manifest, so keep it in the same folder as the old ones or make the paths absolute. Then give each group its label, institution, and license in [`collection.json`](../describing-a-collection/).
 
 ## A plugin of its own
 
