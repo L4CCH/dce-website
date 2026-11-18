@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import starlight from '@astrojs/starlight';
+import { site } from './src/site.ts';
 
 export default defineConfig({
   site: 'https://l4cch.github.io',
@@ -10,12 +11,14 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Digital Collections Explorer',
-      description: 'Technical documentation for running, deploying and extending Digital Collections Explorer.',
+      description: 'Technical documentation for running, deploying, and extending Digital Collections Explorer.',
       customCss: ['./src/styles/docs.css'],
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/L4CCH/digital-collections-explorer' }],
       editLink: { baseUrl: 'https://github.com/L4CCH/dce-website/edit/main/' },
       lastUpdated: true,
       head: [
+        { tag: 'meta', attrs: { property: 'og:image', content: `${site.url}/og.png` } },
+        { tag: 'meta', attrs: { property: 'og:image:alt', content: site.ogImageAlt } },
         { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },
         { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: true } },
         {
@@ -42,9 +45,16 @@ export default defineConfig({
           ],
         },
         { label: 'Deploying', items: [{ autogenerate: { directory: 'docs/deploy' } }] },
-        { label: 'Extending', items: [{ slug: 'docs/making-a-frontend' }, { slug: 'docs/mcp-server' }] },
+        {
+          label: 'Extending',
+          items: [
+            { slug: 'docs/making-a-frontend' },
+            { slug: 'docs/plugins' },
+            { slug: 'docs/mcp-server' },
+          ],
+        },
       ],
     }),
-    sitemap(),
+    sitemap({ filter: (page) => page.endsWith('/') }),
   ],
 });

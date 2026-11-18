@@ -1,7 +1,8 @@
 ---
-title: On AWS
+title: Deploying on AWS
 description: Deploy a Digital Collections Explorer site to AWS with one command, see its cost first, and open it to the public over HTTPS.
 sidebar:
+  label: On AWS
   order: 0
 ---
 
@@ -21,7 +22,8 @@ The images must already be reachable from the cloud: in an S3 bucket, or listed 
 - `--instance-type`, one of t3.small, t3.medium (the default), t3.large, t3.xlarge, c7i.xlarge, or c7i.2xlarge.
 - `--disk-gib`, the disk size in GB, 30 by default. It can be set only when the machine is first created.
 - `--allowed-cidr`, the addresses that may open the site, everyone by default. It cannot be combined with `--https`.
-- `--no-https` and `--no-domain`, to undo `--https` and `--domain`.
+- `--public-url`, the address visitors use when a website of your own serves the site under a path, so that the links the MCP server hands out lead through it.
+- `--no-https`, `--no-domain`, and `--no-public-url`, to undo `--https`, `--domain`, and `--public-url`.
 - `--collection-file collection.json`, to describe the site from the start.
 - `--budget` and `--email`, together, to receive an email when the account's monthly AWS bill passes an amount you choose.
 - `--yes`, to skip the confirmation.
@@ -59,7 +61,7 @@ deploy/aws/deploy.sh my-collection --https --domain collection.example.org --cer
 
 ## Under a path of your website
 
-`--base-path /maps` serves the site at `/maps/`, for a website of your own whose proxy forwards that path to it. It is set when the machine is first created. Without `--https`, point the proxy at the machine's fixed address on port 80, set `proxy_hops` to 1 with `configure.sh`, and limit `--allowed-cidr` to the proxy's address, so that visitors cannot go around it. See [Under a path on an existing website](../under-a-path/) for the proxy.
+`--base-path /maps` serves the site at `/maps/`, for a website of your own whose proxy forwards that path to it. It is set when the machine is first created. Without `--https`, point the proxy at the machine's fixed address on port 80, set `proxy_hops` to 1 with `configure.sh`, and limit `--allowed-cidr` to the proxy's address, so that visitors cannot go around it. Add `--public-url https://library.example.org/maps` to `deploy.sh` or `mcp.sh`, so that the links the MCP server hands out lead through your website. See [Under a path on an existing website](../under-a-path/) for the proxy.
 
 ## Describe it, limit it, update it
 
@@ -70,11 +72,11 @@ deploy/aws/update.sh my-collection --image ghcr.io/l4cch/digital-collections-exp
 deploy/aws/mcp.sh my-collection --on                                # answer AI assistants at /mcp
 ```
 
-`update.sh` moves the site to another version without indexing again; the site is offline for a minute or two. `mcp.sh` turns on the [MCP server](../../mcp-server/) with links to the site's own address, including its domain and path, and waits until it answers. Run it again, or add `--mcp` to `deploy.sh`, whenever the address changes. `mcp.sh --off` turns the server off.
+`update.sh` moves the site to another version without indexing again; the site is offline for a minute or two. `mcp.sh` turns on the [MCP server](../../mcp-server/) with links to the site's own address, including its domain and path, and waits until it answers. With `--public-url`, the links lead through that address instead, and later runs of `mcp.sh` and `deploy.sh` keep it. Run it again, or add `--mcp` to `deploy.sh`, whenever the address changes. `mcp.sh --off` turns the server off.
 
 ## A collection prepared elsewhere
 
-A collection built by your own pipeline needs no indexing on the machine. Copy the folder to a bucket in the region where the machine will run, and start from it with `--from` in place of `--source`.
+A collection indexed on another machine, or built from the package of a [plugin](../../plugins/), needs no indexing on the machine. Copy the folder to a bucket and start from it with `--from` in place of `--source`. A bucket in the machine's region is best: copying within a region is free and faster.
 
 ```bash
 aws s3 sync my-collection s3://my-bucket/my-collection

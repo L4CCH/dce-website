@@ -8,6 +8,10 @@ export const site = {
   tagline: 'The multimodal viewer for searching digital collections.',
   description:
     'The open-source, self-hosted multimodal viewer for searching digital collections: natural language queries and reverse image search, even for collections with little or no descriptive metadata, and catalog search where records exist. Made for galleries, libraries, archives, and museums.',
+  metaDescription:
+    'The open-source, self-hosted multimodal viewer for searching digital collections: natural language queries and reverse image search, with or without a catalog.',
+  ogImageAlt:
+    'Digital Collections Explorer: the multimodal viewer for searching digital collections, made for galleries, libraries, archives, and museums.',
   url: 'https://l4cch.github.io/dce-website',
   repo,
   repoUrl,
@@ -58,7 +62,7 @@ export const media: Medium[] = [
   {
     id: 'images',
     name: 'Images',
-    lead: 'Photographs, scans and other images, on every site.',
+    lead: 'Photographs, scans, and other images, on every site.',
   },
   {
     id: '3d',
@@ -76,7 +80,7 @@ export const media: Medium[] = [
     id: 'zoom',
     name: 'Deep zoom',
     option: 'zoom',
-    lead: 'Maps, plans and other large images served by IIIF image servers.',
+    lead: 'Maps, plans, and other large images served by IIIF image servers.',
   },
 ];
 
@@ -97,7 +101,7 @@ export const showcases: Showcase[] = [
     summary: '562,842 map sheets, from fire insurance maps to city views and charts, searched by what is drawn on them.',
     url: 'https://digital-collections-explorer.com/',
     image: '/showcases/loc-maps.jpg',
-    alt: "Search results for a bird's-eye view of a city: panoramic views of American cities",
+    alt: "Screenshot of search results for a bird's-eye view of a city: panoramic views of American cities.",
     tries: ["a bird's-eye view of a city", 'a battlefield map', 'a globe'],
   },
 ];

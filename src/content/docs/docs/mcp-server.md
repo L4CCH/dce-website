@@ -3,17 +3,19 @@ title: MCP server
 description: Let AI assistants such as Claude and ChatGPT search a Digital Collections Explorer site through the Model Context Protocol.
 ---
 
-Every site can also answer the [Model Context Protocol](https://modelcontextprotocol.io) at `/mcp`, so an AI assistant such as Claude, ChatGPT or an editor's agent can search the collection itself. The endpoint is stateless, needs no account and only reads.
+Every site can also answer the [Model Context Protocol](https://modelcontextprotocol.io) at `/mcp`, so an AI assistant such as Claude, ChatGPT, or an editor's agent can search the collection itself. The endpoint is stateless, needs no account, and only reads.
 
 ## Turn it on
 
-Set `DCE_MCP=1`. Links the server hands out are built from the address the assistant used. Also set `DCE_PUBLIC_URL` to the address visitors use, with the path if the site lives under one, behind a proxy or CDN that rewrites the address, and whenever the site serves its own images, so that [assistants can show them](#what-assistants-see).
+Set `DCE_MCP=1`. Links the server hands out are built from the address the assistant used, or, behind a proxy that [`proxy_hops`](../limits/) declares, from the scheme and host the proxy forwards in `X-Forwarded-Proto` and `X-Forwarded-Host`. Also set `DCE_PUBLIC_URL` to the address visitors use, with the path if the site lives under one, behind a proxy or CDN that rewrites the address, and whenever the site serves its own images, so that [assistants can show them](#what-assistants-see). `DCE_PUBLIC_URL` takes precedence over what a proxy forwards.
+
+To guard against DNS rebinding, the server answers a request for a domain name only if the name is the one in `DCE_PUBLIC_URL`, and turns others away with 421. A site reached by a domain name therefore needs `DCE_PUBLIC_URL`, unless a proxy that `proxy_hops` declares stands in front of it and decides which names reach it. An IP address or `localhost` always works.
 
 ```bash
 DCE_MCP=1 DCE_DATA_DIR=data/collections/my-collection python -m src.backend.main
 ```
 
-The deploy scripts set them from options. On any Linux machine, add `--mcp` and `--public-url` to `deploy/bootstrap.sh install`, or later run `sudo deploy/bootstrap.sh mcp --name my-collection --on`. On AWS, add `--mcp` to `deploy/aws/deploy.sh`, or later run `deploy/aws/mcp.sh my-collection --on`. With Docker Compose, set `MCP=1` and `PUBLIC_URL`. Turning it on or off restarts the site, which takes about a minute.
+The deploy scripts set them from options. On any Linux machine, add `--mcp` and `--public-url` to `deploy/bootstrap.sh install`, or later run `sudo deploy/bootstrap.sh mcp --name my-collection --on`. On AWS, add `--mcp` to `deploy/aws/deploy.sh`, or later run `deploy/aws/mcp.sh my-collection --on`; both take `--public-url` and keep it for later runs. With Docker Compose, set `MCP=1` and `PUBLIC_URL`. Turning it on or off restarts the site, which takes about a minute.
 
 ## Connect an assistant
 
@@ -27,14 +29,14 @@ In Claude or ChatGPT, add a custom connector with the same address. Assistants t
 
 | Tool | What it does |
 | --- | --- |
-| `describe_collection` | The collection's title, groups with their sizes, institutions and licenses, its license, and suggested searches |
-| `search_collection` | The site's search, with `mode` `auto`, `appearance` or `catalog`, for some groups or catalog values; up to 20 objects, each with why it was found |
+| `describe_collection` | The collection's title, license, and suggested searches; each group's size, institution, and license |
+| `search_collection` | The site's search, with `mode` `auto`, `appearance`, or `catalog`, for some groups or catalog values; up to 20 objects, each with why it was found |
 | `find_similar` | Objects whose images look most like one object |
 | `search_by_image` | Objects that look like a collection image, a crop of one, or an image the assistant sends |
-| `list_catalog_values` | The values the catalog uses for kinds of object, places, cultures, topics, names and dates |
+| `list_catalog_values` | The values the catalog uses for kinds of object, places, cultures, topics, names, and dates |
 | `get_object` | One object's record, its images, its institution and license, the link to the institution's record, and where else it appears |
 
-The three search tools take `catalog`, which keeps only objects whose record holds the given values: a year range, kinds of object, places, cultures, topics or names, spelled as `list_catalog_values` gives them. A term such as `date:1860s` or `place:china` in the query instead searches the catalog text alone. The filter needs a catalog with facets, and a field term a catalog with full-text search; `describe_collection` says which the collection has, as `catalog_filters` and `catalog_search`.
+The three search tools take `catalog`, which keeps only objects whose record holds the given values: a year range, kinds of object, places, cultures, topics, or names, spelled as `list_catalog_values` gives them. A term such as `date:1860s` or `place:china` in the query instead searches the catalog text alone. The filter needs a catalog with facets, and a field term a catalog with full-text search; `describe_collection` says which the collection has, as `catalog_filters` and `catalog_search`.
 
 ## What assistants see
 
@@ -42,4 +44,4 @@ Every result links to its page on the site and to its image, and says why it was
 
 ## Limits
 
-Searches, `find_similar` among them, count against the same limits as visitors' searches, and an image sent as base64 against the upload limit. A request may not exceed 4 MB, so an image sent as base64 can be at most about 3 MB. The endpoint never fetches a web address it is given. The server tells the assistant that text from catalog records is data, not instructions.
+Searches, `find_similar` among them, count against a limit of their own, `mcp_searches_per_minute`, so that assistants and visitors do not use up each other's searches. They share `concurrent_searches` with visitors, and an image sent as base64 counts against the upload limit. A request may not exceed 4 MB, so an image sent as base64 can be at most about 3 MB. The endpoint never fetches a web address it is given. A web page may call it only from the site itself or from `localhost`; any other page gets 403. Assistants send no `Origin` header, so this does not affect them. The server tells the assistant that text from catalog records is data, not instructions.

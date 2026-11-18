@@ -1,6 +1,6 @@
 ---
 title: Describing a collection to visitors
-description: Give a site its title, introduction, suggested searches, license and links with collection.json, and link every image back to its record.
+description: Give a site its title, introduction, suggested searches, license, and links with collection.json, and link every image back to its record.
 ---
 
 A site opens on a wall of images to wander through, suggests searches, shows each object once however many photographs it has, and gives every image its own page with similar images and, where the catalog has one, a link back to the institution's own record.
@@ -12,7 +12,7 @@ Put a `collection.json` in the collection folder, the one passed to `--data-dir`
 - `institution` names who holds the collection, in the link to each record ("View the full record at the Smithsonian"); `source_name` is its old name and still works. Without it, the link names the host of the record's web address.
 - In a collection split into groups, `groups` gives each group its own label, institution, and license, and `group_label` names what a group is, such as `Museum`. See [Several institutions in one site](../collection-format/#several-institutions-in-one-site).
 - `field_labels` renames catalog columns on an object's page, such as `{"creation_date": "Date"}`.
-- `sources` gives each [related source](../collection-format/#related-sources) its label, such as `{"flickr": {"label": "Flickr Commons"}}`.
+- `sources` gives each related source its label, such as `{"flickr": {"label": "Flickr Commons"}}`.
 - Without `links`, the footer links the paper and the source code.
 
 The site reads the file on every visit, so a change shows up without a restart. The same file fills the page title and description that search engines show, and the site's `llms.txt`.
@@ -26,6 +26,6 @@ deploy/aws/describe.sh my-collection --file collection.json
 
 ## Objects and links back
 
-The link back to the original record is taken from the catalog: a column named `source_url`, `guid`, `record_url`, `landing_page` or `permalink` that holds a web address. Images are grouped into objects by a column named `object_id`, `record_id` or `item_id`.
+The link back to the original record is taken from the catalog: a column named `source_url`, `guid`, `record_url`, `landing_page`, or `permalink` that holds a web address. Images are grouped into objects by a column named `object_id`, `record_id`, or `item_id`.
 
-Collections without a catalog work too. Every image is then its own object, shown as having no catalog record, and is found by what it shows. [Mapping your data](../mapping-your-data/) says how each catalog column is shown, searched and filtered.
+Collections without a catalog work too. Every image is then its own object, shown as having no catalog record, and is found by what it shows. [Mapping your data](../mapping-your-data/) says how each catalog column is shown, searched, and filtered.

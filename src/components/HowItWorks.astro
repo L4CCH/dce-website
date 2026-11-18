@@ -5,7 +5,7 @@ import { path } from '../site';
 const steps = [
   {
     title: 'Point it at a collection',
-    text: 'A folder, an S3 bucket, or a parquet manifest of images and their catalog. A profile of the collection first shows what it holds, what the site will do with it and what indexing will cost.',
+    text: 'A folder, an S3 bucket, or a parquet manifest of images and their catalog. A profile of the collection first shows what it holds, what the site will do with it, and what indexing will cost.',
   },
   {
     title: 'Build the index',
@@ -13,7 +13,7 @@ const steps = [
   },
   {
     title: 'Open the search site',
-    text: 'Visitors search in natural language or with an image, across photographs, maps, documents and 3D models. Where a catalog exists, search weighs what the images show against what the records say, and tells the visitor how it read the query.',
+    text: 'Visitors search in natural language or with an image, across photographs, maps, documents, and 3D models. Where a catalog exists, search weighs what the images show against what the records say, and tells the visitor how it read the query.',
   },
 ];
 
@@ -29,21 +29,21 @@ const examples = [
     text: 'is looked up in the records, so “amelia earhart” finds what is cataloged under her name.',
     query: 'amelia earhart',
     results: [
-      { file: 'name-1.jpg', width: 400, height: 247, alt: "Amelia Earhart 'Round The World Flight' envelope signed by Amelia Earhart, National Postal Museum" },
-      { file: 'name-2.jpg', width: 398, height: 400, alt: "Token commemorating Amelia Earhart's first transatlantic flight, National Postal Museum" },
-      { file: 'name-3.jpg', width: 361, height: 365, alt: 'Medal presented to Amelia Earhart, National Postal Museum' },
-      { file: 'name-4.jpg', width: 400, height: 247, alt: "Amelia Earhart 'Round The World Flight' envelope, National Postal Museum" },
+      { file: 'name-1.jpg', width: 400, height: 247, alt: "Amelia Earhart 'Round The World Flight' envelope signed by Amelia Earhart, National Postal Museum." },
+      { file: 'name-2.jpg', width: 398, height: 400, alt: "Token commemorating Amelia Earhart's first transatlantic flight, National Postal Museum." },
+      { file: 'name-3.jpg', width: 361, height: 365, alt: 'Medal presented to Amelia Earhart, National Postal Museum.' },
+      { file: 'name-4.jpg', width: 400, height: 247, alt: "Amelia Earhart 'Round The World Flight' envelope, National Postal Museum." },
     ],
   },
   {
     kind: 'A description',
-    text: `is matched against the pictures by an open model, such as <a href="${papers.siglip}" rel="noopener">SigLIP</a>, <a href="${papers.siglip2}" rel="noopener">SigLIP 2</a> or <a href="${papers.clip}" rel="noopener">CLIP</a>. None of these records mentions a handshake.`,
+    text: `is matched against the pictures by an open model, such as <a href="${papers.siglip}" rel="noopener">SigLIP</a>, <a href="${papers.siglip2}" rel="noopener">SigLIP 2</a>, or <a href="${papers.clip}" rel="noopener">CLIP</a>. None of these records mentions a handshake.`,
     query: 'two men shaking hands',
     results: [
-      { file: 'description-1.jpg', width: 263, height: 400, alt: 'Samuel Clemens and John T. Raymond shaking hands, a photograph, National Portrait Gallery' },
-      { file: 'description-2.jpg', width: 295, height: 400, alt: 'Silhouettes of David Osgood and George Parker facing each other, National Portrait Gallery' },
-      { file: 'description-3.jpg', width: 310, height: 400, alt: 'Silhouettes of Nathan Crocker and William Goddard facing each other, National Portrait Gallery' },
-      { file: 'description-4.jpg', width: 309, height: 400, alt: 'Silhouettes of Theodore McCaleb and Isaac Johnson facing each other, National Portrait Gallery' },
+      { file: 'description-1.jpg', width: 263, height: 400, alt: 'Samuel Clemens and John T. Raymond shaking hands, a photograph, National Portrait Gallery.' },
+      { file: 'description-2.jpg', width: 295, height: 400, alt: 'Silhouettes of David Osgood and George Parker facing each other, National Portrait Gallery.' },
+      { file: 'description-3.jpg', width: 310, height: 400, alt: 'Silhouettes of Nathan Crocker and William Goddard facing each other, National Portrait Gallery.' },
+      { file: 'description-4.jpg', width: 309, height: 400, alt: 'Silhouettes of Theodore McCaleb and Isaac Johnson facing each other, National Portrait Gallery.' },
     ],
   },
 ];
