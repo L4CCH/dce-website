@@ -51,7 +51,7 @@ A collection that `python -m src.ingest` indexed with v2.0.0-beta.2 or earlier i
 
 ## Stopping and resuming
 
-Indexing records each image as it finishes, so it can be stopped at any time and run again with the same `--data-dir`. `--retry-failed` tries the files that failed or were skipped once more, `--status` prints how far it has come as JSON, and `--report` prints how long the run took, how fast it went, and the files that failed, also for a run that finished long ago. Files over 200 MB are skipped without being downloaded, unless `--max-file-mb` allows more. `python -m src.ingest --help` lists the other options, such as `--limit` and `--device`.
+Indexing records each image as it finishes, so it can be stopped at any time and run again with the same `--data-dir`. `--retry-failed` tries the files that failed or were skipped once more, `--status` prints how far it has come as JSON, and `--report` prints how long the run took, how fast it went, and the files that failed, also for a run that finished long ago. Files over 200 MB are skipped without being downloaded, unless `--max-file-mb` allows more. A request that fails for a moment is tried again for about half a minute, and a file that still cannot be read is listed with the reason, such as `the server answered 404 Not Found`. `--requests-per-second` keeps indexing to the pace a source's terms ask for. `python -m src.ingest --help` lists the other options, such as `--limit` and `--device`.
 
 ## With an AI coding agent
 

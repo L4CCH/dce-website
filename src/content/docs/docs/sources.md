@@ -3,16 +3,19 @@ title: Writing a source
 description: "Bring a museum's API, or anything else Digital Collections Explorer does not read itself, into a site with a short program that writes a manifest."
 ---
 
-DCE reads a folder, an S3 bucket, or a [manifest](../mapping-your-data/#the-manifest). A collection kept anywhere else, such as behind a museum's API, in a collection management system, or with an aggregator of several institutions, reaches a site through a source: a short program, in any language, that reads it and writes a manifest. DCE does the rest: it fetches the images, keeps what the site shows of them, computes their vectors, and builds the collection. A source is best kept in a repository of its own and run again whenever the collection changes.
+DCE reads a folder, an S3 bucket, or a [manifest](../mapping-your-data/#the-manifest). A collection kept anywhere else, such as behind a museum's API, in a collection management system, or with an aggregator of several institutions, reaches a site through a source: a short program, in any language, that reads it and writes a manifest. DCE does the rest: it fetches the images, keeps what the site shows of them, computes their vectors, and builds the collection. A source is best kept in a repository of its own, so that it can be run again when the collection changes.
 
 ## An example
 
-This program reads the public-domain works of the Statens Museum for Kunst (SMK), Denmark's national gallery, from its open API, and writes a manifest of about 39,000 images, each named by its IIIF image service. It needs Python and DuckDB, which DCE installs, and takes about 12 minutes.
+This program reads the public-domain works of the Statens Museum for Kunst (SMK), Denmark's national gallery, from its open API, and writes a manifest of about 39,000 images beside itself, each named by its IIIF image service. It needs Python and DuckDB, which DCE installs, and sends about 400 requests, at most one a second.
 
 ```python
 import json
+import sys
 import time
+import urllib.error
 import urllib.request
+from pathlib import Path
 
 import duckdb
 
@@ -21,18 +24,24 @@ API = (
     "&filters=[has_image:true],[public_domain:true]&rows=100&offset={}"
 )
 HEADERS = {"User-Agent": "dce-source-smk/1.0"}
+HERE = Path(__file__).resolve().parent
+LIMIT = int(sys.argv[1]) if len(sys.argv) > 1 else None
 
 
 def fetch(url):
-    for wait in (1, 2, 4, 8, None):
+    for wait in (2, 4, 8, 16, None):
+        time.sleep(1)
         try:
             request = urllib.request.Request(url, headers=HEADERS)
-            with urllib.request.urlopen(request, timeout=60) as response:
+            with urllib.request.urlopen(request, timeout=120) as response:
                 return json.load(response)
+        except urllib.error.HTTPError as error:
+            if (error.code != 429 and error.code < 500) or wait is None:
+                raise
         except (urllib.error.URLError, TimeoutError):
             if wait is None:
                 raise
-            time.sleep(wait)
+        time.sleep(wait)
 
 
 def joined(values, key=None):
@@ -57,39 +66,46 @@ def row_of(work):
 
 
 rows, read = [], 0
-while True:
+while LIMIT is None or read < LIMIT:
     works = fetch(API.format(read))["items"]
     if not works:
         break
     read += len(works)
     rows += [row for row in map(row_of, works) if row]
 
-with open("rows.json", "w") as file:
-    json.dump(rows, file)
+(HERE / "rows.json").write_text(json.dumps(rows))
 duckdb.sql(
-    "COPY (SELECT * FROM read_json_auto('rows.json')) "
-    "TO 'manifest.parquet' (FORMAT PARQUET)"
+    f"COPY (SELECT * FROM read_json_auto('{HERE / 'rows.json'}')) "
+    f"TO '{HERE / 'manifest.parquet'}' (FORMAT PARQUET)"
 )
 print(f"{len(rows):,} images of {read:,} works")
 ```
 
-Then check the manifest and index it:
+Saved as `data/sources/smk/source.py` in the DCE folder, it can be tried on the first 300 works, checked, run in full, and indexed:
 
 ```bash
-python -m src.profiling manifest.parquet
-python -m src.ingest manifest.parquet --images link --data-dir data/collections/smk
+python data/sources/smk/source.py 300
+python -m src.profiling data/sources/smk/manifest.parquet
+python data/sources/smk/source.py
+python -m src.ingest data/sources/smk/manifest.parquet --images link \
+  --requests-per-second 4 --data-dir data/collections/smk
 ```
 
-The profile says what the site will do with each column and, under "Must fix before indexing," what keeps the manifest from being indexed. With `--images link`, the site keeps no copies, and visitors' browsers load each image from the museum's IIIF server.
+The profile says what the site will do with each column and, under "Must fix before indexing," what keeps the manifest from being indexed. With `--images link`, the site keeps no copies, and visitors' browsers load each image from the museum's IIIF server. SMK states no pace for either, so the program waits a second before each request, and indexing keeps to four requests a second.
 
 The example does what any source should:
 
 - It names itself in a `User-Agent` header, since many APIs refuse Python's default one.
-- It tries a failed request again after a pause, since a busy API sometimes answers late or with an error.
+- It tries a request again after a pause when the failure may pass, as with a lost connection or a busy server that answers 429 or 5xx, but not when the API refuses it.
+- It takes a number of works on its command line, so that it can be tried on a few hundred first.
 - It skips records without an image and reads each field with `.get`, since real records leave fields out.
 - It gives each field the name of a column the site knows, such as `object_type` for SMK's `object_names`, and puts several values in one cell, separated by `;`. [Mapping your data](../mapping-your-data/#how-columns-are-read) lists the names.
 
-Read an API's terms of use before running a source in full. They may limit how often the API may be asked, how long what it returns may be kept, and whether its images may be copied or only shown from its own servers. Send one request at a time, as the example does, at the pace they allow. Index with `--images link` when they forbid copies, and with a low `--download-workers`, such as 1, when they ask for a slow pace, since indexing fetches 16 images at once by default. Credit the API in [`collection.json`](../describing-a-collection/) as they ask.
+Read an API's terms of use before running a source in full. They may limit how often the API may be asked, how long what it returns may be kept, and whether its images may be copied or only shown from its own servers. Send one request at a time, as the example does, at the pace they allow, or a second apart when they give none. Index with `--images link` when they forbid copies, and with `--requests-per-second` when they ask for a slow pace; when they say nothing about the image server, keep to a few requests a second, such as 4. Credit the API in [`collection.json`](../describing-a-collection/) as they ask. When licenses differ from image to image, give each row its license and credit line in columns such as `license` and `credit_line`, which each object's page shows.
+
+## Running it again
+
+Indexing the manifest into the same folder again adds what the source has gained, and computes vectors only for the new images. Records already indexed keep the catalog text they had, and records gone from the source stay on the site. To bring in corrections and removals, such as a work an institution has taken down, index into a new folder and serve that one.
 
 ## With an AI coding agent
 
@@ -120,6 +136,8 @@ When the images already have vectors, as when a collection was indexed before, a
 Indexing refuses a related table that lacks a required column, leaves one empty, or repeats a `source_id`, and leaves out a row that names an object the manifest does not have. The profile checks the table as well:
 
 ```bash
-python -m src.profiling manifest.parquet --related related.parquet
-python -m src.ingest manifest.parquet --related related.parquet --data-dir data/collections/smk
+python -m src.profiling data/sources/smk/manifest.parquet \
+  --related data/sources/smk/related.parquet
+python -m src.ingest data/sources/smk/manifest.parquet \
+  --related data/sources/smk/related.parquet --data-dir data/collections/smk
 ```
