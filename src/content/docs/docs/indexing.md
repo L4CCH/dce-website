@@ -55,7 +55,7 @@ Indexing records each image as it finishes, so it can be stopped at any time and
 
 ## With an AI coding agent
 
-With an agent that supports [Agent Skills](https://agentskills.io), such as Claude Code, Codex, Gemini CLI, or Cursor, the `dce-setup` skill walks through these steps and asks only what a person must decide. Agents started in the repository find it on their own: Claude Code in `.claude/skills/`, the others in `.agents/skills/`. Ask it to make your collection searchable.
+With an agent that supports [Agent Skills](https://agentskills.io), such as Claude Code, Codex, Gemini CLI, or Cursor, the `dce-setup` skill walks through these steps and asks only what a person must decide. Agents started in the repository find it on their own: Claude Code in `.claude/skills/`, the others in `.agents/skills/`. Ask it to make your collection searchable. When the collection can be read only through an API or another system, it first writes a [source](../sources/) that reads it.
 
 ## With Docker
 

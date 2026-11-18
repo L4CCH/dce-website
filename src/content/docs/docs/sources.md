@@ -91,7 +91,7 @@ The example does what any source should:
 
 ## With an AI coding agent
 
-An AI coding agent, such as Claude Code, Codex, Gemini CLI, or Cursor, can write a source from this page. Give it the address of the API and of its documentation, and ask it to run the profile until nothing must be fixed, then to index a few hundred images with `--limit` and try the site before indexing them all.
+The [`dce-setup` skill](../indexing/#with-an-ai-coding-agent) writes a source on its own when a collection can be read only through an API: it asks for the address of the API and of its documentation, tries the program on a few hundred records, and runs the profile until nothing must be fixed. Without the skill, an AI coding agent, such as Claude Code, Codex, Gemini CLI, or Cursor, can follow this page in the same way.
 
 ## Vectors made elsewhere
 
