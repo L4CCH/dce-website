@@ -30,7 +30,7 @@ The profile also says which [kinds of material](../kinds-of-material/) the colle
 
 ## What the site keeps of each image
 
-Indexing reads every image once, for the model, and never stores the original. What it keeps for visitors to see is chosen with `--images`:
+Indexing reads every image once, for the model, and never stores the original. Only PDFs and `.glb` models are copied whole, so that visitors can open them. What it keeps for visitors to see is chosen with `--images`:
 
 | `--images` | The site keeps | Browsers load |
 | --- | --- | --- |

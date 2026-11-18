@@ -35,11 +35,11 @@ Rendering can be stopped and run again, and it ends by printing the command that
 
 The views become images of their object, so a model is found by what it looks like, and the object's page opens the model, which visitors can turn and zoom. A shape index, made from untextured views with a second image model (DINOv2), lists objects of a similar shape on the object's page. `--no-shape` leaves it out. The viewer is loaded only on the page of an object that has a model.
 
-A model kept on the site must be a `.glb` file. A `.gltf` file refers to other files, so it can be served only from a web address. Models in other formats, such as `.obj`, `.ply`, or `.stl`, are left out; export them to `.glb` first, for example with Blender. The site serves each `.glb` from where it was when its views were drawn, without copying it into the collection, so the file must stay there.
+A model kept on the site must be a `.glb` file. A `.gltf` file refers to other files, so it can be served only from a web address. Models in other formats, such as `.obj`, `.ply`, or `.stl`, are left out; export them to `.glb` first, for example with Blender. Indexing copies each `.glb` into the collection folder, and the site serves it from there. A model that cannot be found when indexing is left out.
 
 ## PDFs
 
-`python -m src.ingest` reads the PDFs in a folder, bucket, or manifest page by page. Each page is searched by its image; the text on it is not read. The pages of one PDF are shown as one object. When the PDF was read from a web address or from this machine, each page links to it, opening at that page. A PDF on this machine is served from where it was read, so it must stay there.
+`python -m src.ingest` reads the PDFs in a folder, bucket, or manifest page by page. Each page is searched by its image; the text on it is not read. The pages of one PDF are shown as one object. Each page links to the PDF, opening at that page. Indexing keeps a copy of the PDF in the collection folder; one read from a web address is opened there instead.
 
 An install without the PDF reader indexes the images and leaves the PDFs out, saying how many and what to install.
 
