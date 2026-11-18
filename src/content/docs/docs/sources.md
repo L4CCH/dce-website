@@ -89,9 +89,11 @@ The example does what any source should:
 - It skips records without an image and reads each field with `.get`, since real records leave fields out.
 - It gives each field the name of a column the site knows, such as `object_type` for SMK's `object_names`, and puts several values in one cell, separated by `;`. [Mapping your data](../mapping-your-data/#how-columns-are-read) lists the names.
 
+Read an API's terms of use before running a source in full. They may limit how often the API may be asked, how long what it returns may be kept, and whether its images may be copied or only shown from its own servers. Send one request at a time, as the example does, at the pace they allow. Index with `--images link` when they forbid copies, and with a low `--download-workers`, such as 1, when they ask for a slow pace, since indexing fetches 16 images at once by default. Credit the API in [`collection.json`](../describing-a-collection/) as they ask.
+
 ## With an AI coding agent
 
-The [`dce-setup` skill](../indexing/#with-an-ai-coding-agent) writes a source on its own when a collection can be read only through an API: it asks for the address of the API and of its documentation, tries the program on a few hundred records, and runs the profile until nothing must be fixed. Without the skill, an AI coding agent, such as Claude Code, Codex, Gemini CLI, or Cursor, can follow this page in the same way.
+The [`dce-setup` skill](../indexing/#with-an-ai-coding-agent) writes a source on its own when a collection can be read only through an API: it asks for the address of the API and of its documentation, reads the API's terms, tries the program on a few hundred records, and runs the profile until nothing must be fixed. Without the skill, an AI coding agent, such as Claude Code, Codex, Gemini CLI, or Cursor, can follow this page in the same way.
 
 ## Vectors made elsewhere
 
