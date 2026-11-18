@@ -27,6 +27,7 @@ The profile also says which [kinds of material](../kinds-of-material/) the colle
 - **A folder** on this machine, searched through all its subfolders except hidden ones.
 - **An S3 prefix.** Add `--anonymous` for a public bucket.
 - **A parquet manifest**, on this machine or at an `s3://` or `https://` address, with one row per file: its address in a column such as `image_url`, or only its IIIF image service in a column such as `iiif`, the object it shows in `object_id`, its group in `group`, and the catalog beside them. [Mapping your data](../mapping-your-data/) lists the columns and how each is read. Paths in a manifest on this machine are read relative to it. `--fetch-via s3://bucket` reads the files from a bucket instead of their web addresses, each under the same path as its web address.
+- **Anything else**, such as a museum's API, through a short program that writes a manifest: see [Writing a source](../sources/).
 
 ## What the site keeps of each image
 

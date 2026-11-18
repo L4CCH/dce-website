@@ -5,7 +5,7 @@ description: How a search compares words or a picture with every image, reads th
 
 Every collection can be searched by appearance: a multimodal model compares the visitor's words, or picture, with every image. When the catalog holds text, text search also reads the records: it runs two channels and fuses them, which is hybrid search.
 
-Indexing builds the catalog's full-text index in `metadata.sqlite` from the [catalog columns](../mapping-your-data/#how-columns-are-read) of a manifest, and leaves it out when no column holds text other than catalog numbers. A [plugin](../plugins/#tables) can give the words of each field itself, in the `text` table of its package.
+Indexing builds the catalog's full-text index in `metadata.sqlite` from the [catalog columns](../mapping-your-data/#how-columns-are-read) of a manifest, and leaves it out when no column holds text other than catalog numbers.
 
 The index is two tables. `records_fts` is an FTS5 table with one row per object: `record_id` and the text columns `title`, `names`, `dates`, `places`, `topics`, `object_types`, `notes`, `physical`, and `identifiers`. `entity_vocab(term, field, record_count)` holds the names, places, subjects, and kinds of object that Auto recognizes, with `field` set to `name`, `place`, `topic`, or `object_type`.
 

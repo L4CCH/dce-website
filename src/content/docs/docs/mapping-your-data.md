@@ -18,6 +18,7 @@ A manifest is a parquet table with one row per file, an image or a PDF, and the 
 | `object_id`, or `record_id`, `item_id` | the object the file shows | showing an object's files together |
 | `group` | the group it belongs to, such as a museum | the filter by group, and each group's institution and license |
 | `model_url`, or `model`, `glb`, `gltf`, `3d_model`, and `view_orbit` | a 3D model, and the camera of a view drawn from it | [3D models](../kinds-of-material/#3d-models) |
+| `vector` | the image's vector, made by the model that `config.json` names | indexing without computing it again; see [Writing a source](../sources/#vectors-made-elsewhere) |
 | any other column | the catalog | the fields on the object's page, search over the catalog, and the filters |
 
 The rows of one object repeat its `object_id`, and its catalog is read from its files, each column from the first file that fills it. A file without an `object_id` is an object of its own, shown as having no catalog record unless it has catalog text. A spreadsheet lying next to the images is not read: save it as parquet first, as in the examples below. A `group_id` column still names objects, as it did in earlier versions, and indexing says so; name the column `group` to split the collection into groups. A manifest that names 3D models goes first to `python -m src.render3d render`, which draws views of each model and writes the manifest to index.
@@ -185,6 +186,6 @@ COPY (
 
 Each keeps its own column names. Relative paths are then read relative to the new manifest, so keep it in the same folder as the old ones or make the paths absolute. Then give each group its label, institution, and license in [`collection.json`](../describing-a-collection/).
 
-## A plugin of its own
+## A source of its own
 
-A source with more structure than a table can carry, such as a museum's API or the Smithsonian's EDAN, is read by a [plugin](../plugins/) of its own. The plugin writes a collection package, its tables and vectors, and DCE builds the collection from it.
+A catalog kept behind an API rather than in a file, or with more structure than a table can carry, such as the Smithsonian's EDAN, is read by a short program that writes the manifest: see [Writing a source](../sources/).

@@ -76,7 +76,7 @@ deploy/aws/mcp.sh my-collection --on                                # answer AI 
 
 ## A collection prepared elsewhere
 
-A collection indexed on another machine, or built from the package of a [plugin](../../plugins/), needs no indexing on the machine. Copy the folder to a bucket and start from it with `--from` in place of `--source`. A bucket in the machine's region is best: copying within a region is free and faster.
+A collection indexed on another machine needs no indexing on the machine. Copy the folder to a bucket and start from it with `--from` in place of `--source`. A bucket in the machine's region is best: copying within a region is free and faster.
 
 ```bash
 aws s3 sync my-collection s3://my-bucket/my-collection
