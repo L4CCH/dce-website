@@ -15,14 +15,14 @@ my-collection/
     metadata.sqlite      the images, the records, and what the site shows and searches
     shape/               optional, the shape index of 3D models
     ingest_state.sqlite  python -m src.ingest only: what it has indexed, to resume and rewrite
-  thumbnails/  processed/  models3d/  related/   files the database points to
+  thumbnails/  processed/  documents/  models/  models3d/  related/   files the database points to
 ```
 
 ## index_info.json
 
 - `format` is 3. The site also reads format 2, which lacks the `iiif`, `page`, `document`, and `pages` columns, so collections prepared for earlier versions keep working.
 - `models` lists each model the vectors come from: its `key`, the folder under `vectors/`; its `type`, `clip`, `siglip`, or `siglip2`; and its `name`, `revision`, and `dimensions`. The site searches with `default_model`, loading the recorded revision, so queries and stored vectors come from the same weights. `python -m src.ingest` records the `model_revision` of `config.json`, if it has one. Set `DCE_MODEL` to the key or name of another of its models to search with that one. The site refuses to start if the collection holds no vectors from the model it would use.
-- `groups` lists each group with its `id`, `label`, and `images`, the number of its images, PDF pages, and views of 3D models. A collection that is not split has one group, and the site then shows no group filter.
+- `groups` lists each group with its `id`, `label`, and `images`, the number of its images, PDF pages, and views of 3D models. A collection that is not split has one group, and the site then shows no group filter and names no group.
 - `built_at` says when it was written. A collection built from a package also has `producer`, the plugin that wrote the package and its version, and, when the package gives it, `provenance`, what the plugin read.
 
 ## metadata.sqlite
@@ -92,9 +92,9 @@ Unlike a field term in the query, such as `date:1860s`, which leaves only the ke
 
 ## 3D models and PDFs
 
-A record's `model_url` names its 3D model: a `.glb` file, by a path relative to the collection folder or an absolute one, or a web address. Images drawn from the model carry the camera position in `items.view_orbit`; they are searched with the photographs but stand for the object only when it has no photograph. A shape index in `embeddings/shape/` lists objects of a similar shape.
+A record's `model_url` names its 3D model: a `.glb` file, by a path relative to the collection folder or an absolute one, or a web address. `python -m src.ingest` copies each model it finds on this machine into `models/` and names that copy. Images drawn from the model carry the camera position in `items.view_orbit`; they are searched with the photographs but stand for the object only when it has no photograph. A shape index in `embeddings/shape/` lists objects of a similar shape.
 
-A PDF is one record, its `document` naming the file and `pages` counting them, and each page is an item with its `page`. See [Kinds of material](../kinds-of-material/).
+A PDF is one record, its `document` naming the file and `pages` counting them, and each page is an item with its `page`. `python -m src.ingest` copies the PDF into `documents/`, unless it was read from a web address. See [Kinds of material](../kinds-of-material/).
 
 ## Collections from earlier versions
 
