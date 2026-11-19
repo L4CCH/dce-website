@@ -105,7 +105,7 @@ Read an API's terms of use before running a source in full. They may limit how o
 
 ## Running it again
 
-Indexing the manifest into the same folder again adds what the source has gained, and computes vectors only for the new images. Records already indexed keep the catalog text they had, and records gone from the source stay on the site. To bring in corrections and removals, such as a work an institution has taken down, index into a new folder and serve that one.
+Running the source and then the same indexing command again brings the site up to date. New records are indexed, the catalog text of those already indexed is read again, and records gone from the source, such as a work an institution has taken down, leave the site. No vector is computed twice, so an image changed at the same address keeps its old one until the collection is indexed anew into a new folder. Files that leave the site stay indexed, and any copies of them stay in the collection folder, so they come back at no cost if the source lists them again. When more than a tenth of the indexed files are gone at once, indexing stops instead, since a source that loses so many is more often broken than pruned; `--allow-removals` lets it go ahead.
 
 ## With an AI coding agent
 
