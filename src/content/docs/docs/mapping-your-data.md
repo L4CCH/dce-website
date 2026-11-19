@@ -48,6 +48,28 @@ Columns are read by name, whatever their case, with a space read as an underscor
 - A page shows each field under its column name, as `Date created` for `date_created`, unless `field_labels` in `collection.json` gives it another: `"field_labels": {"date_created": "Date"}`.
 - Names, places, subjects, and kinds of object also teach Auto search which words of a query to look up in the catalog.
 
+### Display and indexing
+
+Cataloging standards keep the text a page shows apart from the values a search looks up. CCO and LIDO call them display and indexing: a display date such as `ca. 1864`, and beside it the year `1864` that a date filter reads. MARC's relator terms, MODS's `roleTerm`, and LIDO's `roleActor` also give each name its own role, and the `metadata` of an IIIF Presentation manifest gives each value a label of its own. Two forms of column name carry both:
+
+| Column | On the page | Searched as | Filter |
+| --- | --- | --- | --- |
+| `person: Photographer` | as Photographer | names | |
+| `person:` | | names | `name` |
+
+- Before the colon comes any column name from the table above, which says how the values are searched; after it, the label the page shows. `date: Date made` is shown as Date made and searched as a date.
+- With nothing after the colon, the column holds indexing values: they are searched and filtered, but not shown. Filters read these columns and the columns without a colon, never a column with a label, so a name filter lists `Lincoln, Abraham` rather than every way a page writes the name.
+- A name with a colon whose first part is not a column name from the table, such as `dc:creator`, is read whole, as before.
+
+A photograph whose MODS record names two people,
+
+```xml
+<name><namePart>Lincoln, Abraham</namePart><role><roleTerm type="text">depicted</roleTerm></role></name>
+<name><namePart>Brady, Mathew B.</namePart><role><roleTerm type="text">photographer</roleTerm></role></name>
+```
+
+takes three columns: `person: Depicted` holds `Lincoln, Abraham`, `person: Photographer` holds `Brady, Mathew B.`, and `person:` holds both, as a list or separated by `;`. Its page shows each name under its role, and the name filter lists both.
+
 ## What each part of the site needs
 
 | The site can | when the data has |
@@ -119,7 +141,7 @@ An export from CONTENTdm, Omeka, or an OAI-PMH feed in Dublin Core maps onto the
 
 ## IIIF manifests
 
-An IIIF Presentation manifest gives an object's label and metadata, and each canvas's image service. One row per canvas, with the manifest's metadata as columns:
+An IIIF Presentation manifest gives an object's label and metadata, and each canvas's image service. One row per canvas, with each metadata value in a column named for what it is and labeled as the manifest labels it, as [Display and indexing](#display-and-indexing) describes:
 
 ```python
 import json
@@ -128,8 +150,15 @@ import urllib.request
 import duckdb
 
 
+KINDS = {"Artist": "creator", "Date": "date", "Date made": "date", "Medium": "medium"}
+
+
 def first(language_map):
     return next(iter(language_map.values()))[0]
+
+
+def column(label):
+    return f"{KINDS.get(label, 'description')}: {label}"
 
 
 rows = []
@@ -139,7 +168,7 @@ for address in ["https://iiif.example.org/object/1/manifest.json"]:
         "object_id": manifest["id"],
         "title": first(manifest["label"]),
         "source_url": manifest.get("homepage", [{}])[0].get("id"),
-        **{first(m["label"]): first(m["value"]) for m in manifest.get("metadata", [])},
+        **{column(first(m["label"])): first(m["value"]) for m in manifest.get("metadata", [])},
     }
     for canvas in manifest["items"]:
         service = canvas["items"][0]["items"][0]["body"]["service"][0]
@@ -150,7 +179,7 @@ with open("rows.jsonl", "w") as handle:
 duckdb.sql("COPY (SELECT * FROM read_json('rows.jsonl')) TO 'manifest.parquet' (FORMAT parquet)")
 ```
 
-This reads version 3 of the Presentation API. Its image services may still follow version 2 of the Image API, which names the address `@id` rather than `id`, so the code reads either. In version 2 of the Presentation API, the service is at `sequences[0].canvases[].images[0].resource.service["@id"]`. Metadata labels such as `Creator` or `Date` become columns read by name. Since every row names an IIIF service, index with `--images thumbnails` to keep only small previews and let the server send the larger views. See [What the site keeps of each image](../indexing/#what-the-site-keeps-of-each-image).
+`KINDS` names the labels a collection uses; any other label becomes notes, still shown under its own label. This reads version 3 of the Presentation API. Its image services may still follow version 2 of the Image API, which names the address `@id` rather than `id`, so the code reads either. In version 2 of the Presentation API, the service is at `sequences[0].canvases[].images[0].resource.service["@id"]`. Metadata labels such as `Creator` or `Date` become columns read by name. Since every row names an IIIF service, index with `--images thumbnails` to keep only small previews and let the server send the larger views. See [What the site keeps of each image](../indexing/#what-the-site-keeps-of-each-image).
 
 ## An export from a collection management system
 
