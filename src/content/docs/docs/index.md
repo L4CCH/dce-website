@@ -48,5 +48,5 @@ Then open http://localhost:8000. `npm run setup` asks what the collection holds 
 ## Extending
 
 - [Making a frontend](making-a-frontend/): an interface of your own, in its own repository.
-- [Plugins](plugins/): write a collection package from a source that DCE does not read itself, then check it and build the collection from it.
+- [Writing a source](sources/): a short program that reads a collection from a museum's API or another system and writes the manifest DCE indexes.
 - [MCP server](mcp-server/): let Claude, ChatGPT, or an editor's agent search a site, with the tools it offers and the limits that apply.

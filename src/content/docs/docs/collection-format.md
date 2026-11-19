@@ -3,7 +3,7 @@ title: Collection format
 description: The folder every collection is served from, the SQLite tables behind each part of the site, and sites that hold the collections of several institutions.
 ---
 
-Every collection a site serves is one folder in the same format, whether `python -m src.ingest` indexed it or `python -m src.collection build` wrote it from the package of a [plugin](../plugins/). [Mapping your data](../mapping-your-data/) shows how a catalog gets there.
+Every collection a site serves is one folder in the same format, written by `python -m src.ingest`. [Mapping your data](../mapping-your-data/) shows how a catalog gets there.
 
 ```
 my-collection/
@@ -23,7 +23,7 @@ my-collection/
 - `format` is 3. The site also reads format 2, which lacks the `iiif`, `page`, `document`, and `pages` columns, so collections prepared for earlier versions keep working.
 - `models` lists each model the vectors come from: its `key`, the folder under `vectors/`; its `type`, `clip`, `siglip`, or `siglip2`; and its `name`, `revision`, and `dimensions`. The site searches with `default_model`, loading the recorded revision, so queries and stored vectors come from the same weights. `python -m src.ingest` records the `model_revision` of `config.json`, if it has one. Set `DCE_MODEL` to the key or name of another of its models to search with that one. The site refuses to start if the collection holds no vectors from the model it would use.
 - `groups` lists each group with its `id`, `label`, and `images`, the number of its images, PDF pages, and views of 3D models. A collection that is not split has one group, and the site then shows no group filter and names no group.
-- `built_at` says when it was written. A collection built from a package also has `producer`, the plugin that wrote the package and its version, and, when the package gives it, `provenance`, what the plugin read.
+- `built_at` says when it was written.
 
 ## metadata.sqlite
 
@@ -41,11 +41,11 @@ my-collection/
 - Images of the same record are shown together as one object, and the record's `source_url` is the link back. An image without a record is its own object, shown as having no catalog record.
 - `thumbnail`, `processed`, and `original` are paths relative to the collection folder, absolute paths, or web addresses. For a folder of images, `original` is the file's path on the machine that indexed it. They may be empty when `iiif` names a service that serves every size. When `original` is a web address, `/static/<id>` sends the visitor there.
 - Tables without content are left out, and the site then offers less: no fields on the page, no filters, or no search over the catalog.
-- The site ignores any column or table it does not know, and every run of `python -m src.ingest` or `python -m src.collection build` writes `metadata.sqlite` anew.
+- The site ignores any column or table it does not know, and every run of `python -m src.ingest` writes `metadata.sqlite` anew.
 
 ## Several institutions in one site
 
-A site for several institutions is one collection split into groups, such as museums or libraries: one index, one ranking, and a filter by group. The groups come from a `group` column of the manifest, or of the `files` table of a plugin's package. With `python -m src.ingest`, a group's id is its value in lowercase, with anything but letters and digits turned into hyphens, so `Cleveland Museum of Art` becomes `cleveland-museum-of-art`, and files without a group are in the group `collection`. A package gives each group's id in that form already, and `python -m src.collection check` refuses any other.
+A site for several institutions is one collection split into groups, such as museums or libraries: one index, one ranking, and a filter by group. The groups come from a `group` column of the manifest. A group's id is its value in lowercase, with anything but letters and digits turned into hyphens, so `Cleveland Museum of Art` becomes `cleveland-museum-of-art`, and files without a group are in the group `collection`.
 
 `collection.json` can give each group its own name, institution, and license, named by its id or by its value, in the order the filter should list them:
 
@@ -88,7 +88,7 @@ Unlike a field term in the query, such as `date:1860s`, which leaves only the ke
 
 ## Related sources
 
-`related_sources` holds, for each record, where else it appears: `record_id`, `source_id`, `source`, `link_type`, `image_id`, `url`, `title`, `thumbnail`, `rights`, `rights_url`, and `counts`, a JSON object; `related_tags` holds `source_id`, `position`, and `tag`. An object's page then notes, for example, the same object on Flickr Commons: one line per photo, those showing one of the record's images first, its title linking to it, followed by its faves and comments from `counts`. `/api/items/<id>` returns them under `record.related`, together with what the page leaves out: the photo's tags, its rights, and `has_thumbnail`. The thumbnail is served from `/images/related/<source_id>`, so it must be a file, such as one under `related/` in the collection folder, not a web address. Name each source for visitors in `collection.json`, for example `"sources": {"flickr": {"label": "Flickr Commons"}}`: the lines are headed "Also on Flickr Commons."
+`related_sources` holds, for each record, where else it appears: `record_id`, `source_id`, `source`, `link_type`, `image_id`, `url`, `title`, `thumbnail`, `rights`, `rights_url`, and `counts`, a JSON object; `related_tags` holds `source_id`, `position`, and `tag`. An object's page then notes, for example, the same object on Flickr Commons: one line per photo, those showing one of the record's images first, its title linking to it, followed by its faves and comments from `counts`. `/api/items/<id>` returns them under `record.related`, together with what the page leaves out: the photo's tags, its rights, and `has_thumbnail`. They come from the related table that `python -m src.ingest --related` reads, as [Writing a source](../sources/#related-items) shows; indexing keeps each thumbnail under `related/` in the collection folder, and the site serves it from `/images/related/<source_id>`. Name each source for visitors in `collection.json`, for example `"sources": {"flickr": {"label": "Flickr Commons"}}`: the lines are headed "Also on Flickr Commons."
 
 ## 3D models and PDFs
 

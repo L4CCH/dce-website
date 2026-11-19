@@ -18,9 +18,10 @@ A manifest is a parquet table with one row per file, an image or a PDF, and the 
 | `object_id`, or `record_id`, `item_id` | the object the file shows | showing an object's files together |
 | `group` | the group it belongs to, such as a museum | the filter by group, and each group's institution and license |
 | `model_url`, or `model`, `glb`, `gltf`, `3d_model`, and `view_orbit` | a 3D model, and the camera of a view drawn from it | [3D models](../kinds-of-material/#3d-models) |
+| `vector` | the image's vector, made by the model that `config.json` names | indexing without computing it again; see [Writing a source](../sources/#vectors-made-elsewhere) |
 | any other column | the catalog | the fields on the object's page, search over the catalog, and the filters |
 
-The rows of one object repeat its `object_id`, and its catalog is read from its files, each column from the first file that fills it. A file without an `object_id` is an object of its own, shown as having no catalog record unless it has catalog text. A spreadsheet lying next to the images is not read: save it as parquet first, as in the examples below. A `group_id` column still names objects, as it did in earlier versions, and indexing says so; name the column `group` to split the collection into groups. A manifest that names 3D models goes first to `python -m src.render3d render`, which draws views of each model and writes the manifest to index.
+The rows of one object repeat its `object_id`, and its catalog is read from its files, each column from the first file that fills it. A file without an `object_id` is an object of its own, shown as having no catalog record unless it has catalog text. A file that several rows name by the same address, as when one photograph shows several objects, is indexed once, for the first of those rows: the objects of the other rows are shown without it, an object left with no file at all is left out, and the profile names such objects before indexing. A spreadsheet lying next to the images is not read: save it as parquet first, as in the examples below. A `group_id` column still names objects, as it did in earlier versions, and indexing says so; name the column `group` to split the collection into groups. A manifest that names 3D models goes first to `python -m src.render3d render`, which draws views of each model and writes the manifest to index.
 
 ## How columns are read
 
@@ -38,14 +39,38 @@ Columns are read by name, whatever their case, with a space read as an underscor
 | Kinds of object | `object_type`, `genre`, `classification`, `kind`, `work_type` | yes | kinds of object | `object_type` |
 | Materials | `medium`, `material`, `technique`, `dimensions`, `measurements`, `extent`, `physical_description` | yes | materials | |
 | Catalog numbers | `identifier`, `accession_number`, `accession`, `object_number`, `call_number`, `catalog_number`, `inventory_number` | yes | catalog numbers | |
+| Rights and credit | `rights`, `license`, `copyright`, `credit_line`, `rights_statement` | yes | not searched | |
 | Notes | `description`, `notes`, `summary`, `abstract`, `caption`, `inscription`, `transcription`, and any other column of text | yes | notes | |
 
 - The link columns and the manifest's own columns above must be named as listed, without spaces or plurals: `Source URL` is not read as a link, nor `Object ID` as the object.
 - Several values in one cell, separated by `;` or `|`, become separate filter values; the page shows the cell as written. A date cell that names several years is filed as the span from the earliest to the latest.
+- Rights and credit lines are shown but not searched, as Dublin Core's `rights`, IIIF's `requiredStatement`, and LIDO's `creditLine` are kept apart from what describes the object, so a line that every record repeats, such as `© Museum, London`, does not make every object match `London`.
 - Web addresses, file names, media types, and columns of numbers whose names the site does not know are not catalog text. `type` and `format` are read as notes rather than as kinds of object or materials, since they often name a file's type; rename them, for example to `object_type` or `extent`, when they describe the object.
 - Filters list values as the catalog spells them, without enclosing square brackets and the trailing commas, semicolons, colons, and slashes of cataloging rules, so `[Japan],` is filed as `Japan`. Dates are read as years, spans, or decades; a date without a year or decade, such as `19th century`, is shown and searched but not filed.
 - A page shows each field under its column name, as `Date created` for `date_created`, unless `field_labels` in `collection.json` gives it another: `"field_labels": {"date_created": "Date"}`.
 - Names, places, subjects, and kinds of object also teach Auto search which words of a query to look up in the catalog.
+
+### Display and indexing
+
+Cataloging standards keep the text a page shows apart from the values a search looks up. CCO and LIDO call them display and indexing: a display date such as `ca. 1864`, and beside it the year `1864` that a date filter reads. MARC's relator terms, MODS's `roleTerm`, and LIDO's `roleActor` also give each name its own role, and the `metadata` of an IIIF Presentation manifest gives each value a label of its own. Two forms of column name carry both:
+
+| Column | On the page | Searched as | Filter |
+| --- | --- | --- | --- |
+| `person: Photographer` | as Photographer | names | |
+| `person:` | | names | `name` |
+
+- Before the colon comes any column name from the table above, which says how the values are searched; after it, the label the page shows. `date: Date made` is shown as Date made and searched as a date.
+- With nothing after the colon, the column holds indexing values: they are searched and filtered, but not shown. Filters read these columns and the columns without a colon, never a column with a label, so a name filter lists `Lincoln, Abraham` rather than every way a page writes the name.
+- A name with a colon whose first part is not a column name from the table, such as `dc:creator`, is read whole, as before.
+
+A photograph whose MODS record names two people,
+
+```xml
+<name><namePart>Lincoln, Abraham</namePart><role><roleTerm type="text">depicted</roleTerm></role></name>
+<name><namePart>Brady, Mathew B.</namePart><role><roleTerm type="text">photographer</roleTerm></role></name>
+```
+
+takes three columns: `person: Depicted` holds `Lincoln, Abraham`, `person: Photographer` holds `Brady, Mathew B.`, and `person:` holds both, as a list or separated by `;`. Its page shows each name under its role, and the name filter lists both.
 
 ## What each part of the site needs
 
@@ -118,7 +143,7 @@ An export from CONTENTdm, Omeka, or an OAI-PMH feed in Dublin Core maps onto the
 
 ## IIIF manifests
 
-An IIIF Presentation manifest gives an object's label and metadata, and each canvas's image service. One row per canvas, with the manifest's metadata as columns:
+An IIIF Presentation manifest gives an object's label and metadata, and each canvas's image service. One row per canvas, with each metadata value in a column named for what it is and labeled as the manifest labels it, as [Display and indexing](#display-and-indexing) describes:
 
 ```python
 import json
@@ -127,8 +152,15 @@ import urllib.request
 import duckdb
 
 
+KINDS = {"Artist": "creator", "Date": "date", "Date made": "date", "Medium": "medium"}
+
+
 def first(language_map):
     return next(iter(language_map.values()))[0]
+
+
+def column(label):
+    return f"{KINDS.get(label, 'description')}: {label}"
 
 
 rows = []
@@ -138,7 +170,7 @@ for address in ["https://iiif.example.org/object/1/manifest.json"]:
         "object_id": manifest["id"],
         "title": first(manifest["label"]),
         "source_url": manifest.get("homepage", [{}])[0].get("id"),
-        **{first(m["label"]): first(m["value"]) for m in manifest.get("metadata", [])},
+        **{column(first(m["label"])): first(m["value"]) for m in manifest.get("metadata", [])},
     }
     for canvas in manifest["items"]:
         service = canvas["items"][0]["items"][0]["body"]["service"][0]
@@ -149,7 +181,7 @@ with open("rows.jsonl", "w") as handle:
 duckdb.sql("COPY (SELECT * FROM read_json('rows.jsonl')) TO 'manifest.parquet' (FORMAT parquet)")
 ```
 
-This reads version 3 of the Presentation API. Its image services may still follow version 2 of the Image API, which names the address `@id` rather than `id`, so the code reads either. In version 2 of the Presentation API, the service is at `sequences[0].canvases[].images[0].resource.service["@id"]`. Metadata labels such as `Creator` or `Date` become columns read by name. Since every row names an IIIF service, index with `--images thumbnails` to keep only small previews and let the server send the larger views. See [What the site keeps of each image](../indexing/#what-the-site-keeps-of-each-image).
+`KINDS` names the labels a collection uses; any other label becomes notes, still shown under its own label. This reads version 3 of the Presentation API. Its image services may still follow version 2 of the Image API, which names the address `@id` rather than `id`, so the code reads either. In version 2 of the Presentation API, the service is at `sequences[0].canvases[].images[0].resource.service["@id"]`. Metadata labels such as `Creator` or `Date` become columns read by name. Since every row names an IIIF service, index with `--images thumbnails` to keep only small previews and let the server send the larger views. See [What the site keeps of each image](../indexing/#what-the-site-keeps-of-each-image).
 
 ## An export from a collection management system
 
@@ -185,6 +217,6 @@ COPY (
 
 Each keeps its own column names. Relative paths are then read relative to the new manifest, so keep it in the same folder as the old ones or make the paths absolute. Then give each group its label, institution, and license in [`collection.json`](../describing-a-collection/).
 
-## A plugin of its own
+## A source of its own
 
-A source with more structure than a table can carry, such as a museum's API or the Smithsonian's EDAN, is read by a [plugin](../plugins/) of its own. The plugin writes a collection package, its tables and vectors, and DCE builds the collection from it.
+A catalog kept behind an API rather than in a file, or with more structure than a table can carry, such as the Smithsonian's EDAN, is read by a short program that writes the manifest: see [Writing a source](../sources/).

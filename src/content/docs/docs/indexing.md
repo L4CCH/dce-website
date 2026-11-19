@@ -27,6 +27,7 @@ The profile also says which [kinds of material](../kinds-of-material/) the colle
 - **A folder** on this machine, searched through all its subfolders except hidden ones.
 - **An S3 prefix.** Add `--anonymous` for a public bucket.
 - **A parquet manifest**, on this machine or at an `s3://` or `https://` address, with one row per file: its address in a column such as `image_url`, or only its IIIF image service in a column such as `iiif`, the object it shows in `object_id`, its group in `group`, and the catalog beside them. [Mapping your data](../mapping-your-data/) lists the columns and how each is read. Paths in a manifest on this machine are read relative to it. `--fetch-via s3://bucket` reads the files from a bucket instead of their web addresses, each under the same path as its web address.
+- **Anything else**, such as a museum's API, through a short program that writes a manifest: see [Writing a source](../sources/).
 
 ## What the site keeps of each image
 
@@ -50,11 +51,11 @@ A collection that `python -m src.ingest` indexed with v2.0.0-beta.2 or earlier i
 
 ## Stopping and resuming
 
-Indexing records each image as it finishes, so it can be stopped at any time and run again with the same `--data-dir`. `--retry-failed` tries the files that failed or were skipped once more, `--status` prints how far it has come as JSON, and `--report` prints how long the run took, how fast it went, and the files that failed, also for a run that finished long ago. Files over 200 MB are skipped without being downloaded, unless `--max-file-mb` allows more. `python -m src.ingest --help` lists the other options, such as `--limit` and `--device`.
+Indexing records each image as it finishes, so it can be stopped at any time and run again with the same `--data-dir`. `--retry-failed` tries the files that failed or were skipped once more, `--status` prints how far it has come as JSON, and `--report` prints how long the run took, how fast it went, and the files that failed, also for a run that finished long ago. Files over 200 MB are skipped without being downloaded, unless `--max-file-mb` allows more. A request that fails for a moment is tried again for about half a minute, and a file that still cannot be read is listed with the reason, such as `the server answered 404 Not Found`. `--requests-per-second` keeps indexing to the pace a source's terms ask for. Run again after the source has changed, the same command brings the site up to date, as [Writing a source](../sources/#running-it-again) describes. `python -m src.ingest --help` lists the other options, such as `--limit` and `--device`.
 
 ## With an AI coding agent
 
-With an agent that supports [Agent Skills](https://agentskills.io), such as Claude Code, Codex, Gemini CLI, or Cursor, the `dce-setup` skill walks through these steps and asks only what a person must decide. Agents started in the repository find it on their own: Claude Code in `.claude/skills/`, the others in `.agents/skills/`. Ask it to make your collection searchable.
+With an agent that supports [Agent Skills](https://agentskills.io), such as Claude Code, Codex, Gemini CLI, or Cursor, the `dce-setup` skill walks through these steps and asks only what a person must decide. Agents started in the repository find it on their own: Claude Code in `.claude/skills/`, the others in `.agents/skills/`. Ask it to make your collection searchable. When the collection can be read only through an API or another system, it first writes a [source](../sources/) that reads it.
 
 ## With Docker
 

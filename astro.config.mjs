@@ -7,7 +7,10 @@ import { site } from './src/site.ts';
 export default defineConfig({
   site: 'https://l4cch.github.io',
   base: '/dce-website',
-  redirects: { '/docs/groups': '/dce-website/docs/collection-format/' },
+  redirects: {
+    '/docs/groups': '/dce-website/docs/collection-format/',
+    '/docs/plugins': '/dce-website/docs/sources/',
+  },
   integrations: [
     starlight({
       title: 'Digital Collections Explorer',
@@ -49,7 +52,7 @@ export default defineConfig({
           label: 'Extending',
           items: [
             { slug: 'docs/making-a-frontend' },
-            { slug: 'docs/plugins' },
+            { slug: 'docs/sources' },
             { slug: 'docs/mcp-server' },
           ],
         },

@@ -30,7 +30,7 @@ script on a Linux server or the AWS script, which shows its cost before creating
 ## Software
 
 - [Source code](${site.repoUrl})
-- [Documentation](${site.url}/docs/): indexing, mapping a catalog, the collection format, the kinds of material a site shows, describing a collection, search, models, limits, deploying, making a frontend, and the MCP server for AI assistants
+- [Documentation](${site.url}/docs/): indexing, mapping a catalog, the collection format, the kinds of material a site shows, describing a collection, search, models, limits, deploying, making a frontend, writing a source, and the MCP server for AI assistants
 - [The whole documentation in one file](${site.url}/llms-full.txt)
 - [Contributing guide](${site.contributingUrl})
 - [Agent Skill for setting up a collection](${site.skillUrl}): for Claude Code, Codex, Gemini CLI, and Cursor
