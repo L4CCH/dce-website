@@ -39,10 +39,12 @@ Columns are read by name, whatever their case, with a space read as an underscor
 | Kinds of object | `object_type`, `genre`, `classification`, `kind`, `work_type` | yes | kinds of object | `object_type` |
 | Materials | `medium`, `material`, `technique`, `dimensions`, `measurements`, `extent`, `physical_description` | yes | materials | |
 | Catalog numbers | `identifier`, `accession_number`, `accession`, `object_number`, `call_number`, `catalog_number`, `inventory_number` | yes | catalog numbers | |
+| Rights and credit | `rights`, `license`, `copyright`, `credit_line`, `rights_statement` | yes | not searched | |
 | Notes | `description`, `notes`, `summary`, `abstract`, `caption`, `inscription`, `transcription`, and any other column of text | yes | notes | |
 
 - The link columns and the manifest's own columns above must be named as listed, without spaces or plurals: `Source URL` is not read as a link, nor `Object ID` as the object.
 - Several values in one cell, separated by `;` or `|`, become separate filter values; the page shows the cell as written. A date cell that names several years is filed as the span from the earliest to the latest.
+- Rights and credit lines are shown but not searched, as Dublin Core's `rights`, IIIF's `requiredStatement`, and LIDO's `creditLine` are kept apart from what describes the object, so a line that every record repeats, such as `© Museum, London`, does not make every object match `London`.
 - Web addresses, file names, media types, and columns of numbers whose names the site does not know are not catalog text. `type` and `format` are read as notes rather than as kinds of object or materials, since they often name a file's type; rename them, for example to `object_type` or `extent`, when they describe the object.
 - Filters list values as the catalog spells them, without enclosing square brackets and the trailing commas, semicolons, colons, and slashes of cataloging rules, so `[Japan],` is filed as `Japan`. Dates are read as years, spans, or decades; a date without a year or decade, such as `19th century`, is shown and searched but not filed.
 - A page shows each field under its column name, as `Date created` for `date_created`, unless `field_labels` in `collection.json` gives it another: `"field_labels": {"date_created": "Date"}`.

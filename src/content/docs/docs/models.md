@@ -64,7 +64,7 @@ Any of the models above can take a `model_revision`: the commit of the model on 
 
 ## Changing the model
 
-An index can only be searched with the model that built it. `python -m src.ingest` will not add to a folder indexed with another model, so after choosing another model, index into a new folder with `--data-dir`. The site searches with the model the collection records, whatever `config.json` names, and `DCE_MODEL` picks another of its models by key or name. It refuses to start if the collection holds no vectors from the model it would use. An index built by version 1 is in a layout this version no longer reads: serve it with v2.0.0-beta.2, or index its images again.
+An index can only be searched with the model that built it. `python -m src.ingest` will not add to a folder indexed with another model, so after choosing another model, index into a new folder with `--data-dir`. `DCE_CONFIG` names another `config.json`, so that one copy of DCE can index two collections with two models. The site searches with the model the collection records, whatever `config.json` names, and `DCE_MODEL` picks another of its models by key or name. It refuses to start if the collection holds no vectors from the model it would use. An index built by version 1 is in a layout this version no longer reads: serve it with v2.0.0-beta.2, or index its images again.
 
 `device` in `model_config` sets where the site runs the model: `cuda` for an NVIDIA GPU, `mps` for an Apple Silicon GPU, or `cpu`. The default is `cuda`, and a device the machine lacks falls back to the CPU, so serving needs no GPU. Indexing uses the first of `cuda`, `mps`, and `cpu` that the machine has; `python -m src.ingest --device` overrides it.
 
