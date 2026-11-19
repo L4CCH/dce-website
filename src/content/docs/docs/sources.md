@@ -141,3 +141,7 @@ python -m src.profiling data/sources/smk/manifest.parquet \
 python -m src.ingest data/sources/smk/manifest.parquet \
   --related data/sources/smk/related.parquet --data-dir data/collections/smk
 ```
+
+## A larger example
+
+[dce-source-smithsonian](https://github.com/L4CCH/dce-source-smithsonian) writes the Smithsonian's Open Access images, read from Harvard LIL's mirror on Source Cooperative, as a manifest. It keeps each build of the catalog records it reads, matches Flickr Commons photos to them for a related table, names a 3D model where a record has one, and has tests that write a manifest from a small build without reading the mirror.
